@@ -2,7 +2,6 @@
 
 import { getTightnessIndex, compareBtiNodesDesc } from './utils.js';
 import { DOMAIN_TINTS, DOMAIN_LABELS, DOMAIN_ORDER } from './graph_data.js';
-import { isDomainExpanded, getExpandedDomains } from './filters.js';
 
 /* ── Module-level state for domain cell bounds (used by backdrop renderer) ── */
 let domainBounds = new Map(); // key → { x, y, w, h, label, tint }
@@ -11,7 +10,7 @@ export function getDomainBounds() {
   return domainBounds;
 }
 
-export function laneKeyForNode(node) {
+function laneKeyForNode(node) {
   const direct = (node.data('l1_component') || '').trim();
   if (direct) return direct;
   const id = String(node.id() || '');
@@ -32,164 +31,20 @@ function clamp(n, lo, hi) {
   return Math.max(lo, Math.min(hi, n));
 }
 
-/* ── Grid geometry (shared by layout + animation) ── */
-function computeGridGeometry(cy) {
+/* ── 2-row x 4-column grid domain cluster layout ──
+   Row 0: [Propulsion]  [Energy Storage]  [Flight Ctrl]  [Secure Comms]
+   Row 1:      [PNT]    [Manufacturing]   [Airframe]
+*/
+function applyDomainClusterLayout(cy) {
   const graphW = cy.width();
   const graphH = cy.height();
+
   const mx = 40, my = 36;
   const gapX = 32, gapY = 40;
   const usableW = Math.max(600, graphW - 2 * mx);
   const usableH = Math.max(400, graphH - 2 * my);
   const cellW = (usableW - 3 * gapX) / 4;
   const cellH = (usableH - gapY) / 2;
-  return { mx, my, gapX, gapY, usableW, usableH, cellW, cellH };
-}
-
-/* ── Compute final positions for nodes within a domain cell ──
-   Returns Map<nodeId, {x, y}> for all provided nodes */
-function computeCellPositions(nodes, cellX, cellY, cellW, cellH) {
-  const positions = new Map();
-  const cxCenter = cellX + cellW / 2;
-
-  const l1 = nodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L1');
-  const l2 = nodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L2');
-  const l3 = nodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L3');
-  const co = nodes.filter(n => (n.data('node_type') || '') === 'company');
-  const l4 = nodes.filter(n => {
-    const nt = (n.data('node_type') || '').toLowerCase();
-    return nt === 'source' || nt === 'gap' || nt === 'source_ref';
-  });
-
-  /* L1 anchor: centered at top of cell (~12% of cell height) */
-  l1.forEach(n => {
-    positions.set(n.id(), { x: cxCenter, y: cellY + cellH * 0.12 });
-  });
-
-  /* L2 row: evenly spread across cell width (~34% of cell height) */
-  if (l2.length) {
-    const l2Y = cellY + cellH * 0.34;
-    const l2Margin = cellW * 0.08;
-    const l2Span = cellW - 2 * l2Margin;
-    l2.forEach((n, i) => {
-      const frac = l2.length <= 1 ? 0.5 : i / (l2.length - 1);
-      positions.set(n.id(), {
-        x: cellX + l2Margin + l2Span * frac,
-        y: l2Y
-      });
-    });
-  }
-
-  /* L3 columns: group under parent L2, stacked vertically */
-  if (l3.length) {
-    const l3ByParent = new Map();
-    const orphanL3 = [];
-    for (const n of l3) {
-      const pid = n.data('parent_id') || '';
-      if (pid && l2.some(l2n => l2n.id() === pid)) {
-        if (!l3ByParent.has(pid)) l3ByParent.set(pid, []);
-        l3ByParent.get(pid).push(n);
-      } else {
-        orphanL3.push(n);
-      }
-    }
-
-    const l3YStart = cellY + cellH * 0.48;
-    const l3YEnd = cellY + cellH * 0.90;
-    const l3YSpan = l3YEnd - l3YStart;
-
-    if (l2.length > 0) {
-      const l2Margin = cellW * 0.08;
-      const l2Span = cellW - 2 * l2Margin;
-
-      l2.forEach((l2Node, l2Idx) => {
-        const children = l3ByParent.get(l2Node.id()) || [];
-        if (children.length === 0) return;
-        const l2Frac = l2.length <= 1 ? 0.5 : l2Idx / (l2.length - 1);
-        const colX = cellX + l2Margin + l2Span * l2Frac;
-
-        children.forEach((n, cIdx) => {
-          const yFrac = children.length <= 1 ? 0.5 : cIdx / (children.length - 1);
-          positions.set(n.id(), {
-            x: colX + (hash01(n.id() + '_l3x') - 0.5) * 8,
-            y: l3YStart + l3YSpan * yFrac
-          });
-        });
-      });
-
-      if (orphanL3.length > 0) {
-        const oMargin = cellW * 0.1;
-        const oSpan = cellW - 2 * oMargin;
-        orphanL3.forEach((n, i) => {
-          const frac = orphanL3.length <= 1 ? 0.5 : i / (orphanL3.length - 1);
-          positions.set(n.id(), {
-            x: cellX + oMargin + oSpan * frac,
-            y: l3YEnd + (hash01(n.id() + '_oy') - 0.5) * 8
-          });
-        });
-      }
-    } else {
-      const allL3 = [...l3];
-      const cols = Math.ceil(Math.sqrt(allL3.length));
-      const l3Margin = cellW * 0.08;
-      const l3Span = cellW - 2 * l3Margin;
-      allL3.forEach((n, i) => {
-        const c = i % cols;
-        const r = Math.floor(i / cols);
-        const rows = Math.ceil(allL3.length / cols);
-        const xFrac = cols <= 1 ? 0.5 : c / (cols - 1);
-        const yFrac = rows <= 1 ? 0.5 : r / (rows - 1);
-        positions.set(n.id(), {
-          x: cellX + l3Margin + l3Span * xFrac,
-          y: l3YStart + l3YSpan * yFrac
-        });
-      });
-    }
-  }
-
-  /* L4 (source/gap) nodes */
-  if (l4.length) {
-    const l4Y = cellY + cellH * 0.94;
-    const l4Margin = cellW * 0.12;
-    const l4Span = cellW - 2 * l4Margin;
-    l4.forEach((n, i) => {
-      const frac = l4.length <= 1 ? 0.5 : i / (l4.length - 1);
-      positions.set(n.id(), {
-        x: cellX + l4Margin + l4Span * frac + (hash01(n.id()) - 0.5) * 4,
-        y: l4Y + (hash01(n.id() + 'y') - 0.5) * 6
-      });
-    });
-  }
-
-  /* Company nodes */
-  if (co.length) {
-    const coY = cellY + cellH * 0.96;
-    const coMargin = cellW * 0.15;
-    const coSpan = cellW - 2 * coMargin;
-    co.forEach((n, i) => {
-      const frac = co.length <= 1 ? 0.5 : i / (co.length - 1);
-      positions.set(n.id(), {
-        x: cellX + coMargin + coSpan * frac + (hash01(n.id()) - 0.5) * 5,
-        y: coY + (hash01(n.id() + 'cy') - 0.5) * 8
-      });
-    });
-  }
-
-  return positions;
-}
-
-/* ── Count L2 and L3 children per domain from raw data ── */
-const _domainChildCounts = new Map(); // domainKey → { l2: N, l3: N }
-
-export function getDomainChildCounts() { return _domainChildCounts; }
-
-/* ── 2-row x 4-column grid domain cluster layout ──
-   Row 0: [Propulsion]  [Energy Storage]  [Flight Ctrl]  [Secure Comms]
-   Row 1:      [PNT]    [Manufacturing]   [Airframe]
-
-   Now supports collapsed/expanded dual mode per domain.
-*/
-function applyDomainClusterLayout(cy) {
-  const { mx, my, gapX, gapY, usableW, usableH, cellW, cellH } = computeGridGeometry(cy);
 
   /* Build domain → nodes map */
   const domMap = new Map();
@@ -246,56 +101,143 @@ function applyDomainClusterLayout(cy) {
 
     const cellX = gp.x;
     const cellY = gp.y;
-    const expanded = isDomainExpanded(domainKey);
 
     /* Store domain bounds for backdrop rendering */
     domainBounds.set(domainKey, {
       x: cellX, y: cellY, w: cellW, h: cellH,
       label: DOMAIN_LABELS[domainKey] || domainKey.replace(/_/g, ' '),
-      tint: DOMAIN_TINTS[domainKey] || DOMAIN_TINTS.other,
-      expanded
+      tint: DOMAIN_TINTS[domainKey] || DOMAIN_TINTS.other
     });
 
+    /* Separate nodes by layer */
+    const l1 = allNodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L1');
+    const l2 = allNodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L2');
+    const l3 = allNodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L3');
+    const co = allNodes.filter(n => (n.data('node_type') || '') === 'company');
+    const l4 = allNodes.filter(n => {
+      const nt = (n.data('node_type') || '').toLowerCase();
+      return nt === 'source' || nt === 'gap' || nt === 'source_ref';
+    });
+
+    /* Cell-relative coordinates */
     const cxCenter = cellX + cellW / 2;
 
-    if (expanded) {
-      /* ── Expanded: full layout (same as original) ── */
-      const positions = computeCellPositions(allNodes, cellX, cellY, cellW, cellH);
-      for (const n of allNodes) {
-        const pos = positions.get(n.id());
-        if (pos) n.position(pos);
-      }
-      /* Remove collapsed/hotspot classes */
-      for (const n of allNodes) {
-        n.removeClass('collapsed hotspot');
-      }
-    } else {
-      /* ── Collapsed: L1 centered, hotspot L3 below ── */
-      const l1 = allNodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L1');
+    /* L1 anchor: centered at top of cell (~12% of cell height) */
+    l1.forEach(n => {
+      n.position({ x: cxCenter, y: cellY + cellH * 0.12 });
+    });
 
-      /* L1 centered both horizontally and vertically in cell */
-      l1.forEach(n => {
-        n.position({ x: cxCenter, y: cellY + cellH * 0.42 });
-        n.addClass('collapsed');
+    /* L2 row: evenly spread across cell width (~34% of cell height) */
+    if (l2.length) {
+      const l2Y = cellY + cellH * 0.34;
+      const l2Margin = cellW * 0.08;
+      const l2Span = cellW - 2 * l2Margin;
+      l2.forEach((n, i) => {
+        const frac = l2.length <= 1 ? 0.5 : i / (l2.length - 1);
+        n.position({
+          x: cellX + l2Margin + l2Span * frac,
+          y: l2Y
+        });
       });
+    }
 
-      /* Hotspot L3 nodes — small arc below L1 */
-      const visibleL3 = allNodes.filter(n => {
-        const layer = String(n.data('layer') || '').toUpperCase();
-        return layer === 'L3';
-      });
-      if (visibleL3.length > 0) {
-        const hotspotY = cellY + cellH * 0.65;
-        const hSpan = Math.min(cellW * 0.5, visibleL3.length * 50);
-        visibleL3.forEach((n, i) => {
-          const frac = visibleL3.length <= 1 ? 0.5 : i / (visibleL3.length - 1);
-          n.position({
-            x: cxCenter - hSpan / 2 + hSpan * frac,
-            y: hotspotY + (hash01(n.id() + '_hy') - 0.5) * 10
+    /* L3 columns: group under parent L2, stacked vertically */
+    if (l3.length) {
+      /* Build parent_id → [L3 nodes] map */
+      const l3ByParent = new Map();
+      const orphanL3 = [];
+      for (const n of l3) {
+        const pid = n.data('parent_id') || '';
+        if (pid && l2.some(l2n => l2n.id() === pid)) {
+          if (!l3ByParent.has(pid)) l3ByParent.set(pid, []);
+          l3ByParent.get(pid).push(n);
+        } else {
+          orphanL3.push(n);
+        }
+      }
+
+      const l3YStart = cellY + cellH * 0.48;
+      const l3YEnd = cellY + cellH * 0.90;
+      const l3YSpan = l3YEnd - l3YStart;
+
+      if (l2.length > 0) {
+        /* Position L3 nodes in columns aligned under their parent L2 */
+        const l2Margin = cellW * 0.08;
+        const l2Span = cellW - 2 * l2Margin;
+
+        l2.forEach((l2Node, l2Idx) => {
+          const children = l3ByParent.get(l2Node.id()) || [];
+          if (children.length === 0) return;
+          const l2Frac = l2.length <= 1 ? 0.5 : l2Idx / (l2.length - 1);
+          const colX = cellX + l2Margin + l2Span * l2Frac;
+
+          children.forEach((n, cIdx) => {
+            const yFrac = children.length <= 1 ? 0.5 : cIdx / (children.length - 1);
+            n.position({
+              x: colX + (hash01(n.id() + '_l3x') - 0.5) * 8,
+              y: l3YStart + l3YSpan * yFrac
+            });
           });
-          n.addClass('hotspot');
+        });
+
+        /* Position orphan L3 nodes spread across the cell bottom */
+        if (orphanL3.length > 0) {
+          const oMargin = cellW * 0.1;
+          const oSpan = cellW - 2 * oMargin;
+          orphanL3.forEach((n, i) => {
+            const frac = orphanL3.length <= 1 ? 0.5 : i / (orphanL3.length - 1);
+            n.position({
+              x: cellX + oMargin + oSpan * frac,
+              y: l3YEnd + (hash01(n.id() + '_oy') - 0.5) * 8
+            });
+          });
+        }
+      } else {
+        /* No L2 nodes — spread all L3 in a grid inside the cell */
+        const allL3 = [...l3];
+        const cols = Math.ceil(Math.sqrt(allL3.length));
+        const l3Margin = cellW * 0.08;
+        const l3Span = cellW - 2 * l3Margin;
+        allL3.forEach((n, i) => {
+          const c = i % cols;
+          const r = Math.floor(i / cols);
+          const rows = Math.ceil(allL3.length / cols);
+          const xFrac = cols <= 1 ? 0.5 : c / (cols - 1);
+          const yFrac = rows <= 1 ? 0.5 : r / (rows - 1);
+          n.position({
+            x: cellX + l3Margin + l3Span * xFrac,
+            y: l3YStart + l3YSpan * yFrac
+          });
         });
       }
+    }
+
+    /* L4 (source/gap) nodes — small, tucked near bottom */
+    if (l4.length) {
+      const l4Y = cellY + cellH * 0.94;
+      const l4Margin = cellW * 0.12;
+      const l4Span = cellW - 2 * l4Margin;
+      l4.forEach((n, i) => {
+        const frac = l4.length <= 1 ? 0.5 : i / (l4.length - 1);
+        n.position({
+          x: cellX + l4Margin + l4Span * frac + (hash01(n.id()) - 0.5) * 4,
+          y: l4Y + (hash01(n.id() + 'y') - 0.5) * 6
+        });
+      });
+    }
+
+    /* Company nodes — positioned at bottom of cell */
+    if (co.length) {
+      const coY = cellY + cellH * 0.96;
+      const coMargin = cellW * 0.15;
+      const coSpan = cellW - 2 * coMargin;
+      co.forEach((n, i) => {
+        const frac = co.length <= 1 ? 0.5 : i / (co.length - 1);
+        n.position({
+          x: cellX + coMargin + coSpan * frac + (hash01(n.id()) - 0.5) * 5,
+          y: coY + (hash01(n.id() + 'cy') - 0.5) * 8
+        });
+      });
     }
   });
 
@@ -313,167 +255,6 @@ function applyDomainClusterLayout(cy) {
   }
 
   cy.endBatch();
-}
-
-/* ── Identify hotspot L3 nodes from raw data (before cy.add) ── */
-export function getCollapsedHotspots(allNodes, perDomain = 2) {
-  const byDomain = new Map();
-  for (const n of allNodes) {
-    const layer = String(n.data.layer || '').toUpperCase();
-    if (layer !== 'L3') continue;
-    const dk = (n.data.l1_component || '').trim();
-    if (!dk) continue;
-    if (!byDomain.has(dk)) byDomain.set(dk, []);
-    byDomain.get(dk).push(n);
-  }
-
-  /* Count children per domain for badge display */
-  _domainChildCounts.clear();
-  for (const n of allNodes) {
-    const dk = (n.data.l1_component || '').trim();
-    if (!dk) continue;
-    const layer = String(n.data.layer || '').toUpperCase();
-    if (layer !== 'L2' && layer !== 'L3') continue;
-    if (!_domainChildCounts.has(dk)) _domainChildCounts.set(dk, { l2: 0, l3: 0 });
-    const counts = _domainChildCounts.get(dk);
-    if (layer === 'L2') counts.l2++;
-    else counts.l3++;
-  }
-
-  const hotspots = new Map(); // domainKey → [node data]
-  for (const [dk, nodes] of byDomain) {
-    nodes.sort((a, b) => {
-      const btiA = Number(a.data.bottleneck_tightness_index_v2 ?? a.data.bottleneck_tightness_index_v1 ?? a.data.bottleneck_score) || 0;
-      const btiB = Number(b.data.bottleneck_tightness_index_v2 ?? b.data.bottleneck_tightness_index_v1 ?? b.data.bottleneck_score) || 0;
-      return btiB - btiA;
-    });
-    hotspots.set(dk, nodes.slice(0, perDomain));
-  }
-  return hotspots;
-}
-
-/* ── Animate domain expansion ── */
-export async function animateExpansion(cy, domainKey, newElements) {
-  const bounds = domainBounds.get(domainKey);
-  if (!bounds) return;
-
-  const l1Node = cy.nodes().filter(n => laneKeyForNode(n) === domainKey && String(n.data('layer') || '').toUpperCase() === 'L1');
-  const l1Pos = l1Node.length > 0 ? l1Node[0].position() : { x: bounds.x + bounds.w / 2, y: bounds.y + bounds.h * 0.12 };
-
-  /* Remove collapsed class from L1 */
-  l1Node.removeClass('collapsed');
-  /* Move L1 to expanded position */
-  const expandedL1Y = bounds.y + bounds.h * 0.12;
-  if (l1Node.length > 0) {
-    l1Node[0].animate({ position: { x: bounds.x + bounds.w / 2, y: expandedL1Y } }, { duration: 420, easing: 'ease-in-out-cubic' });
-  }
-
-  /* Remove existing hotspot L3 nodes for this domain before adding full set */
-  const existingHotspots = cy.nodes().filter(n =>
-    n.hasClass('hotspot') && laneKeyForNode(n) === domainKey
-  );
-  existingHotspots.removeClass('hotspot');
-
-  /* Filter new elements: only nodes/edges not already in cy */
-  const existingIds = new Set();
-  cy.elements().forEach(el => existingIds.add(el.id()));
-  const toAdd = newElements.filter(el => !existingIds.has(el.data.id));
-
-  if (toAdd.length === 0) {
-    /* All elements already present (hotspots) — just reposition them */
-    const domainNodes = cy.nodes().filter(n => laneKeyForNode(n) === domainKey);
-    const positions = computeCellPositions(domainNodes.toArray(), bounds.x, bounds.y, bounds.w, bounds.h);
-    const animPromises = [];
-    domainNodes.forEach(n => {
-      const pos = positions.get(n.id());
-      if (pos) {
-        animPromises.push(new Promise(resolve => {
-          n.animate({ position: pos }, { duration: 420, easing: 'ease-in-out-cubic', complete: resolve });
-        }));
-      }
-    });
-    await Promise.all(animPromises);
-    return;
-  }
-
-  /* Add new elements at L1's position with opacity 0 */
-  cy.startBatch();
-  const addedEles = cy.add(toAdd);
-  const addedNodes = addedEles.nodes();
-  addedNodes.forEach(n => {
-    n.position({ x: l1Pos.x, y: l1Pos.y });
-    n.style('opacity', 0);
-  });
-  cy.endBatch();
-
-  /* Compute final positions for all domain nodes (including new + existing) */
-  const allDomainNodes = cy.nodes().filter(n => laneKeyForNode(n) === domainKey);
-  const positions = computeCellPositions(allDomainNodes.toArray(), bounds.x, bounds.y, bounds.w, bounds.h);
-
-  /* Animate to final positions */
-  const animPromises = [];
-  allDomainNodes.forEach(n => {
-    const pos = positions.get(n.id());
-    if (!pos) return;
-    animPromises.push(new Promise(resolve => {
-      n.animate(
-        { position: pos, style: { opacity: n.data('_origOpacity') || 1 } },
-        { duration: 420, easing: 'ease-in-out-cubic', complete: resolve }
-      );
-    }));
-  });
-
-  await Promise.all(animPromises);
-
-  /* Update bounds to reflect expanded state */
-  bounds.expanded = true;
-}
-
-/* ── Animate domain collapse ── */
-export async function animateCollapse(cy, domainKey) {
-  const bounds = domainBounds.get(domainKey);
-  if (!bounds) return;
-
-  const l1Node = cy.nodes().filter(n => laneKeyForNode(n) === domainKey && String(n.data('layer') || '').toUpperCase() === 'L1');
-  const l1Pos = l1Node.length > 0 ? l1Node[0].position() : { x: bounds.x + bounds.w / 2, y: bounds.y + bounds.h * 0.42 };
-
-  /* Find all L2/L3/L4/company nodes for this domain */
-  const childNodes = cy.nodes().filter(n => {
-    if (laneKeyForNode(n) !== domainKey) return false;
-    const layer = String(n.data('layer') || '').toUpperCase();
-    return layer !== 'L1';
-  });
-
-  /* Animate children toward L1 position + fade */
-  const animPromises = [];
-  childNodes.forEach(n => {
-    animPromises.push(new Promise(resolve => {
-      n.animate(
-        { position: { x: l1Pos.x, y: l1Pos.y }, style: { opacity: 0 } },
-        { duration: 380, easing: 'ease-in-out-cubic', complete: resolve }
-      );
-    }));
-  });
-
-  await Promise.all(animPromises);
-
-  /* Remove collapsed children (except hotspot nodes that will be re-added) */
-  const childEdges = childNodes.connectedEdges();
-  cy.remove(childNodes);
-  cy.remove(childEdges);
-
-  /* Recenter L1 in its cell */
-  const cxCenter = bounds.x + bounds.w / 2;
-  if (l1Node.length > 0) {
-    l1Node[0].addClass('collapsed');
-    l1Node[0].animate(
-      { position: { x: cxCenter, y: bounds.y + bounds.h * 0.42 } },
-      { duration: 300, easing: 'ease-in-out-cubic' }
-    );
-  }
-
-  /* Update bounds to reflect collapsed state */
-  bounds.expanded = false;
 }
 
 /* ── Position company overlay nodes in domain cells by connectivity ── */
@@ -504,12 +285,10 @@ function positionCompanyNodesInGrid(cy) {
     }
 
     if (bestDomain && domainBounds.has(bestDomain)) {
-      /* Only position in expanded domains */
-      const db = domainBounds.get(bestDomain);
-      if (!db.expanded) return; // skip companies in collapsed domains
+      const bounds = domainBounds.get(bestDomain);
       n.position({
-        x: db.x + db.w * (0.15 + hash01(n.id() + '_cx') * 0.7),
-        y: db.y + db.h * (0.92 + (hash01(n.id() + '_cy') - 0.5) * 0.06)
+        x: bounds.x + bounds.w * (0.15 + hash01(n.id() + '_cx') * 0.7),
+        y: bounds.y + bounds.h * (0.92 + (hash01(n.id() + '_cy') - 0.5) * 0.06)
       });
     }
   });
@@ -667,7 +446,7 @@ export function drawDomainBackgrounds(cy) {
   const pan = cy.pan();
   const zoom = cy.zoom();
 
-  for (const [domainKey, bounds] of domainBounds) {
+  for (const [, bounds] of domainBounds) {
     const sx = bounds.x * zoom + pan.x;
     const sy = bounds.y * zoom + pan.y;
     const sw = bounds.w * zoom;
@@ -675,70 +454,32 @@ export function drawDomainBackgrounds(cy) {
 
     const radius = 12 * zoom;
 
-    /* Near-invisible panel fill — spatial grouping without visual mass */
-    ctx.fillStyle = 'rgba(26, 31, 38, 0.06)';
+    /* Dark panel fill — slightly lighter than #13171C base */
+    ctx.fillStyle = '#1A1F26';
     ctx.beginPath();
     roundRect(ctx, sx, sy, sw, sh, radius);
     ctx.fill();
 
-    /* Faint tint overlay — barely perceptible domain identity */
+    /* Faint tint overlay — preserves domain identity without competing */
     const { r, g, b } = hexToRgb(bounds.tint);
-    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.025)`;
+    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.06)`;
     ctx.beginPath();
     roundRect(ctx, sx, sy, sw, sh, radius);
     ctx.fill();
 
-    /* Faint border — structure by restraint */
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+    /* Subtle division border */
+    ctx.strokeStyle = '#222831';
     ctx.lineWidth = 1;
     ctx.beginPath();
     roundRect(ctx, sx, sy, sw, sh, radius);
     ctx.stroke();
 
-    /* Subtle header band — thin strip at top for label grounding */
-    const bandH = Math.max(18, 22 * zoom);
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.018)';
-    ctx.beginPath();
-    roundRect(ctx, sx, sy, sw, bandH, radius);
-    ctx.fill();
-
     /* Domain label — muted white */
     const fontSize = Math.max(9, Math.min(13, 11 * zoom));
     ctx.font = `700 ${fontSize}px "Inter", system-ui, sans-serif`;
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.22)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.28)';
     ctx.textBaseline = 'top';
     ctx.fillText(bounds.label, sx + 10 * zoom, sy + 6 * zoom);
-
-    /* ── Collapsed domain extras ── */
-    const isCollapsed = !bounds.expanded;
-    if (isCollapsed) {
-      /* Child count badge: "4 subsystems · 12 components" */
-      const counts = _domainChildCounts.get(domainKey);
-      if (counts) {
-        const badgeFontSize = Math.max(7, Math.min(10, 9 * zoom));
-        ctx.font = `400 ${badgeFontSize}px "Inter", system-ui, sans-serif`;
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.20)';
-        const badgeText = `${counts.l2} subsystems \u00b7 ${counts.l3} components`;
-        ctx.fillText(badgeText, sx + 10 * zoom, sy + 6 * zoom + fontSize + 4 * zoom);
-      }
-
-      /* Expand indicator — small "▾" near domain label */
-      const indicatorFontSize = Math.max(10, Math.min(16, 13 * zoom));
-      ctx.font = `400 ${indicatorFontSize}px "Inter", system-ui, sans-serif`;
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.30)';
-      const labelWidth = ctx.measureText(bounds.label).width;
-      ctx.fillText(' \u25BE', sx + 10 * zoom + labelWidth, sy + 6 * zoom);
-    } else {
-      /* Collapse indicator — small "▴" near domain label */
-      const indicatorFontSize = Math.max(10, Math.min(16, 13 * zoom));
-      ctx.font = `400 ${indicatorFontSize}px "Inter", system-ui, sans-serif`;
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.20)';
-      const labelMeasure = ctx.measureText(bounds.label);
-      ctx.font = `700 ${fontSize}px "Inter", system-ui, sans-serif`;
-      const labelW2 = ctx.measureText(bounds.label).width;
-      ctx.font = `400 ${indicatorFontSize}px "Inter", system-ui, sans-serif`;
-      ctx.fillText(' \u25B4', sx + 10 * zoom + labelW2, sy + 6 * zoom);
-    }
   }
 }
 

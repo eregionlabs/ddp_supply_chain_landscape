@@ -27,25 +27,25 @@ function btiRatio(ele) {
 }
 
 /* ── Pressure gradient for dark canvas ──
- *  Oxidized tones — structural stress, not UI error.
- *  Deep brick / burnt umber instead of vivid red.
- *  t=0.0  hsl(8, 6%, 26%)   — nearly invisible warm gray
- *  t=0.5  hsl(6, 28%, 30%)  — dusky oxide
- *  t=1.0  hsl(4, 48%, 34%)  — deep brick (≈ #8B2E2E territory)
+ *  Hue pinned near red (8→0) — no rainbow path through green/cyan.
+ *  Low pressure blends into dark bg; high pressure pops vivid red.
+ *  t=0.0  hsl(8, 8%, 30%)   — muted warm gray
+ *  t=0.5  hsl(4, 40%, 42%)  — dusky warm
+ *  t=1.0  hsl(0, 72%, 54%)  — vivid red
  */
 function pressureFill(ele) {
   const t = btiRatio(ele);
-  const h = 8 - t * 4;                  //  8 → 4  (warm → brick, restrained)
-  const s = 6 + t * 42;                 //  6% → 48%
-  const l = 26 + t * 8;                 // 26% → 34%
+  const h = 8 - t * 8;                  //  8 → 0  (warm → red, no rainbow)
+  const s = 8 + t * 64;                 //  8% → 72%
+  const l = 30 + t * 24;                // 30% → 54%
   return `hsl(${Math.round(h)}, ${Math.round(s)}%, ${Math.round(l)}%)`;
 }
 
 function pressureBorder(ele) {
   const t = btiRatio(ele);
-  const h = 8 - t * 4;
-  const s = 8 + t * 36;                 //  8% → 44%
-  const l = 20 + t * 10;                // 20% → 30%
+  const h = 8 - t * 8;
+  const s = 10 + t * 55;                // 10% → 65%
+  const l = 22 + t * 16;                // 22% → 38%
   return `hsl(${Math.round(h)}, ${Math.round(s)}%, ${Math.round(l)}%)`;
 }
 
@@ -189,28 +189,24 @@ export const cyStyles = [
     }
   },
 
-  /* ── Tier-3 bottleneck accent — oxidized glow ring ── */
+  /* ── Tier-3 bottleneck accent — bold ring ── */
   {
     selector: 'node[bottleneck_tightness_tier_v2 = 3], node[bottleneck_tightness_tier_v1 = 3], node[bottleneck_tier = 3]',
     style: {
-      'border-width': 2.4,
-      'border-color': 'rgba(139, 46, 46, 0.65)',
-      'overlay-color': 'rgba(139, 46, 46, 0.08)',
-      'overlay-padding': 6,
-      'overlay-opacity': 0.08
+      'border-width': 2.6
     }
   },
 
-  /* ── Edges — ghosted at rest, reveal on interaction ── */
+  /* ── Edges — rgba white on dark canvas, structural hints ── */
   {
     selector: 'edge',
     style: {
       'curve-style':        'bezier',
       'target-arrow-shape': 'triangle',
       'arrow-scale':        0.42,
-      'line-color':         'rgba(255, 255, 255, 0.03)',
-      'target-arrow-color': 'rgba(255, 255, 255, 0.03)',
-      'width':              0.4,
+      'line-color':         'rgba(255, 255, 255, 0.06)',
+      'target-arrow-color': 'rgba(255, 255, 255, 0.06)',
+      'width':              0.45,
       'opacity':            1,
       'line-style':         'solid'
     }
@@ -218,44 +214,44 @@ export const cyStyles = [
   {
     selector: 'edge[dependency_type = "decomposes_to"]',
     style: {
-      'line-color':         'rgba(255, 255, 255, 0.05)',
-      'target-arrow-color': 'rgba(255, 255, 255, 0.05)',
-      'width':              0.55
+      'line-color':         'rgba(255, 255, 255, 0.10)',
+      'target-arrow-color': 'rgba(255, 255, 255, 0.10)',
+      'width':              0.7
     }
   },
   {
     selector: 'edge[dependency_type = "constrained_by_gap"]',
     style: {
-      'line-color':         'rgba(255, 255, 255, 0.04)',
-      'target-arrow-color': 'rgba(255, 255, 255, 0.04)',
-      'width':              0.5,
+      'line-color':         'rgba(255, 255, 255, 0.08)',
+      'target-arrow-color': 'rgba(255, 255, 255, 0.08)',
+      'width':              0.6,
       'line-style':         'solid'
     }
   },
   {
     selector: 'edge[dependency_type = "evidenced_by"]',
     style: {
-      'line-color':         'rgba(255, 255, 255, 0.02)',
-      'target-arrow-color': 'rgba(255, 255, 255, 0.02)',
+      'line-color':         'rgba(255, 255, 255, 0.04)',
+      'target-arrow-color': 'rgba(255, 255, 255, 0.04)',
       'line-style':         'dashed',
-      'width':              0.35
+      'width':              0.4
     }
   },
   {
     selector: 'edge[dependency_type = "depends_on_company"], edge[dependency_type = "supplied_by"]',
     style: {
-      'line-color':         'rgba(255, 255, 255, 0.015)',
-      'target-arrow-color': 'rgba(255, 255, 255, 0.015)',
+      'line-color':         'rgba(255, 255, 255, 0.03)',
+      'target-arrow-color': 'rgba(255, 255, 255, 0.03)',
       'line-style':         'dotted',
-      'width':              0.3
+      'width':              0.35
     }
   },
   {
     selector: 'edge[hierarchy_rank = 1], edge[hierarchy_rank = 2]',
     style: {
-      'line-color':         'rgba(255, 255, 255, 0.06)',
-      'target-arrow-color': 'rgba(255, 255, 255, 0.06)',
-      'width': 0.6
+      'line-color':         'rgba(255, 255, 255, 0.14)',
+      'target-arrow-color': 'rgba(255, 255, 255, 0.14)',
+      'width': 0.8
     }
   },
   /* ── Cross-domain edges (company overlay) — thin, dotted, quiet ── */
@@ -263,10 +259,10 @@ export const cyStyles = [
     selector: 'edge[?cross_domain]',
     style: {
       'curve-style': 'unbundled-bezier',
-      'width': 0.4,
+      'width': 0.5,
       'line-style': 'dotted',
-      'line-color': 'rgba(255, 255, 255, 0.02)',
-      'target-arrow-color': 'rgba(255, 255, 255, 0.02)'
+      'line-color': 'rgba(255, 255, 255, 0.05)',
+      'target-arrow-color': 'rgba(255, 255, 255, 0.05)'
     }
   },
 
@@ -316,34 +312,8 @@ export const cyStyles = [
   }},
   { selector: '.focus-edge', style: {
     'opacity': 1,
-    'line-color': 'rgba(255, 255, 255, 0.42)', 'target-arrow-color': 'rgba(255, 255, 255, 0.42)',
+    'line-color': 'rgba(255, 255, 255, 0.40)', 'target-arrow-color': 'rgba(255, 255, 255, 0.40)',
     'width': 1.5
-  }},
-
-  /* ── Collapsed L1 container — expanded scale, container-like ── */
-  { selector: 'node.collapsed', style: {
-    'width': 160,
-    'height': 56,
-    'border-width': 2.8,
-    'border-color': 'rgba(255, 255, 255, 0.18)',
-    'background-color': '#1e2530',
-    'font-size': 14,
-    'text-valign': 'center',
-    'text-margin-y': 0
-  }},
-
-  /* ── Hotspot L3 nodes surfaced in collapsed domain view ── */
-  { selector: 'node.hotspot', style: {
-    'opacity': 0.72,
-    'border-width': 1.6,
-    'border-color': 'rgba(239, 68, 68, 0.45)',
-    'text-opacity': 0.55
-  }},
-
-  /* ── Expansion animation transition helper ── */
-  { selector: '.expanding', style: {
-    'transition-property': 'opacity',
-    'transition-duration': '400ms'
   }},
 
   /* ── Chain highlight (bottleneck panel hover) — overrides all prior state ── */

@@ -13,61 +13,11 @@ export function getActiveSpotlight()      { return activeSpotlight; }
 export function getCompanyOverlayActive() { return companyOverlayActive; }
 export function setCompanyOverlayActive(v){ companyOverlayActive = v; }
 
-/* ── Domain expansion state (executive progressive disclosure) ── */
-const expandedDomains = new Set();
-export function isDomainExpanded(domainKey)  { return expandedDomains.has(domainKey); }
-export function toggleDomainExpansion(domainKey) {
-  if (expandedDomains.has(domainKey)) expandedDomains.delete(domainKey);
-  else expandedDomains.add(domainKey);
-}
-export function getExpandedDomains()        { return expandedDomains; }
-
 /* ── Visible elements for current mode ── */
-const HOTSPOT_PER_DOMAIN = 2;
-
 export function getVisibleElements(allNodes, allEdges) {
-  let nodes;
-
-  if (currentMode === 'executive') {
-    const execNodes = allNodes.filter(n => n.data.visibility === 'executive');
-
-    /* Progressive disclosure: in executive mode, respect domain expansion state */
-    nodes = [];
-    /* Group non-L1 exec nodes by domain */
-    const domainChildren = new Map(); // domainKey → [node]
-    for (const n of execNodes) {
-      const layer = String(n.data.layer || '').toUpperCase();
-      if (layer === 'L1') {
-        nodes.push(n); // L1 always visible
-        continue;
-      }
-      const dk = (n.data.l1_component || '').trim();
-      if (!dk) { nodes.push(n); continue; } // no domain → always visible
-      if (expandedDomains.has(dk)) {
-        nodes.push(n); // expanded domain → include
-      } else {
-        if (!domainChildren.has(dk)) domainChildren.set(dk, []);
-        domainChildren.get(dk).push(n);
-      }
-    }
-
-    /* For collapsed domains, surface top HOTSPOT_PER_DOMAIN bottleneck L3 nodes */
-    for (const [dk, children] of domainChildren) {
-      const l3Only = children.filter(n => String(n.data.layer || '').toUpperCase() === 'L3');
-      l3Only.sort((a, b) => {
-        const btiA = Number(a.data.bottleneck_tightness_index_v2 ?? a.data.bottleneck_tightness_index_v1 ?? a.data.bottleneck_score) || 0;
-        const btiB = Number(b.data.bottleneck_tightness_index_v2 ?? b.data.bottleneck_tightness_index_v1 ?? b.data.bottleneck_score) || 0;
-        return btiB - btiA;
-      });
-      const hotspots = l3Only.slice(0, HOTSPOT_PER_DOMAIN);
-      for (const h of hotspots) {
-        nodes.push(h);
-      }
-    }
-  } else {
-    nodes = [...allNodes];
-  }
-
+  const nodes = currentMode === 'executive'
+    ? allNodes.filter(n => n.data.visibility === 'executive')
+    : allNodes;
   nodes.sort((a, b) => {
     const layerDelta = layerSortRank(a.data.layer) - layerSortRank(b.data.layer);
     if (layerDelta !== 0) return layerDelta;
