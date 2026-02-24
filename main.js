@@ -159,11 +159,18 @@ document.querySelectorAll('.mode-btn').forEach(btn => {
   });
 });
 
+/* ── Active filter highlight ── */
+function syncFilterHighlights() {
+  domainEl.classList.toggle('filter-active', domainEl.value !== 'all');
+  confEl.classList.toggle('filter-active', confEl.value !== 'all');
+  pressureEl.classList.toggle('filter-active', pressureEl.value !== 'all');
+}
+
 /* ── Filter listeners ── */
-searchEl.addEventListener('input', () => applyFilters(cy, filterEls));
-domainEl.addEventListener('change', () => applyFilters(cy, filterEls));
-confEl.addEventListener('change', () => applyFilters(cy, filterEls));
-pressureEl.addEventListener('change', () => applyFilters(cy, filterEls));
+searchEl.addEventListener('input', () => { applyFilters(cy, filterEls); syncFilterHighlights(); });
+domainEl.addEventListener('change', () => { applyFilters(cy, filterEls); syncFilterHighlights(); });
+confEl.addEventListener('change', () => { applyFilters(cy, filterEls); syncFilterHighlights(); });
+pressureEl.addEventListener('change', () => { applyFilters(cy, filterEls); syncFilterHighlights(); });
 
 companyToggleEl.addEventListener('change', () => {
   setCompanyOverlayActive(companyToggleEl.checked);
@@ -205,6 +212,7 @@ document.getElementById('reset').addEventListener('click', () => {
   domainEl.value = 'all';
   confEl.value   = 'all';
   pressureEl.value = 'all';
+  syncFilterHighlights();
   clearSpotlight(cy);
   clearFocusClasses(cy);
   cy.elements().removeClass('dim top10 hover');
