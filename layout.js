@@ -1,6 +1,14 @@
-/* ── layout.js ── Layout orchestration + grid-based collision resolution ── */
+/* ── layout.js ── Compositional spine layout + grid-based collision resolution ── */
 
 import { getTightnessIndex, compareBtiNodesDesc } from './utils.js';
+import { DOMAIN_TINTS, DOMAIN_LABELS, DOMAIN_ORDER } from './graph_data.js';
+
+/* ── Module-level state for domain cell bounds (used by backdrop renderer) ── */
+let domainBounds = new Map(); // key → { x, y, w, h, label, tint }
+
+export function getDomainBounds() {
+  return domainBounds;
+}
 
 function laneKeyForNode(node) {
   const direct = (node.data('l1_component') || '').trim();
@@ -23,20 +31,22 @@ function clamp(n, lo, hi) {
   return Math.max(lo, Math.min(hi, n));
 }
 
-function compareByDomainAndTightness(a, b, xOrder) {
-  const btiDelta = getTightnessIndex(b) - getTightnessIndex(a);
-  if (btiDelta !== 0) return btiDelta;
-  return (xOrder.get(a.id()) || 0) - (xOrder.get(b.id()) || 0);
-}
-
-/* ── Multi-band domain cluster layout (beauty pass) ── */
+/* ── 2-row x 4-column grid domain cluster layout ──
+   Row 0: [Propulsion]  [Energy Storage]  [Flight Ctrl]  [Secure Comms]
+   Row 1:      [PNT]    [Manufacturing]   [Airframe]
+*/
 function applyDomainClusterLayout(cy) {
   const graphW = cy.width();
   const graphH = cy.height();
 
-  const xOrder = new Map();
-  cy.nodes().forEach(n => xOrder.set(n.id(), n.position('x')));
+  const mx = 40, my = 36;
+  const gapX = 32, gapY = 40;
+  const usableW = Math.max(600, graphW - 2 * mx);
+  const usableH = Math.max(400, graphH - 2 * my);
+  const cellW = (usableW - 3 * gapX) / 4;
+  const cellH = (usableH - gapY) / 2;
 
+  /* Build domain → nodes map */
   const domMap = new Map();
   cy.nodes().forEach(n => {
     const key = laneKeyForNode(n);
@@ -44,120 +54,258 @@ function applyDomainClusterLayout(cy) {
     domMap.get(key).push(n);
   });
 
-  const domains = [...domMap.entries()].sort((a, b) => {
-    const ax = a[1].reduce((s, n) => s + (xOrder.get(n.id()) || 0), 0) / a[1].length;
-    const bx = b[1].reduce((s, n) => s + (xOrder.get(n.id()) || 0), 0) / b[1].length;
-    return ax - bx;
-  });
+  /* Use DOMAIN_ORDER for placement; domains not in the order go to 'other' */
+  const orderedDomains = DOMAIN_ORDER.filter(k => domMap.has(k));
+  /* Append any domains present in the graph but not in DOMAIN_ORDER */
+  for (const k of domMap.keys()) {
+    if (!orderedDomains.includes(k) && k !== 'other') orderedDomains.push(k);
+  }
 
-  const nd = domains.length;
-  const mx = 48, my = 40;
-  const usableW = Math.max(400, graphW - 2 * mx);
-  const usableH = Math.max(260, graphH - 2 * my);
-  const domainSpan = clamp(usableW / Math.max(2, nd * 0.85), 148, 260);
-  const waveAmp = Math.min(usableH * 0.13, 78);
-  const yMidBase = my + usableH * 0.48;
+  /* Grid positions: row 0 gets indices 0-3, row 1 gets indices 4-6 (centered) */
+  const gridPositions = [];
+  const topCount = Math.min(4, orderedDomains.length);
+  const botCount = orderedDomains.length - topCount;
+
+  /* Row 0 */
+  for (let i = 0; i < topCount; i++) {
+    gridPositions.push({
+      col: i, row: 0,
+      x: mx + i * (cellW + gapX),
+      y: my
+    });
+  }
+
+  /* Row 1 — centered horizontally */
+  if (botCount > 0) {
+    const botTotalW = botCount * cellW + (botCount - 1) * gapX;
+    const botOffsetX = mx + (usableW - botTotalW) / 2;
+    for (let i = 0; i < botCount; i++) {
+      gridPositions.push({
+        col: i, row: 1,
+        x: botOffsetX + i * (cellW + gapX),
+        y: my + cellH + gapY
+      });
+    }
+  }
+
+  /* Clear previous bounds */
+  domainBounds = new Map();
 
   cy.startBatch();
 
-  domains.forEach(([key, allNodes], idx) => {
-    const t = nd <= 1 ? 0.5 : idx / (nd - 1);
-    const cx = mx + t * usableW;
-    const cyPos = yMidBase + Math.sin((t * Math.PI * 1.8) + 0.5) * waveAmp;
-    const bandH = clamp(usableH * 0.66, 230, 360);
+  orderedDomains.forEach((domainKey, idx) => {
+    const allNodes = domMap.get(domainKey) || [];
+    if (allNodes.length === 0) return;
+    const gp = gridPositions[idx];
+    if (!gp) return;
 
+    const cellX = gp.x;
+    const cellY = gp.y;
+
+    /* Store domain bounds for backdrop rendering */
+    domainBounds.set(domainKey, {
+      x: cellX, y: cellY, w: cellW, h: cellH,
+      label: DOMAIN_LABELS[domainKey] || domainKey.replace(/_/g, ' '),
+      tint: DOMAIN_TINTS[domainKey] || DOMAIN_TINTS.other
+    });
+
+    /* Separate nodes by layer */
     const l1 = allNodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L1');
-    const l2 = allNodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L2')
-      .sort((a, b) => compareByDomainAndTightness(a, b, xOrder));
-    const l3 = allNodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L3')
-      .sort((a, b) => compareByDomainAndTightness(a, b, xOrder));
+    const l2 = allNodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L2');
+    const l3 = allNodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L3');
+    const co = allNodes.filter(n => (n.data('node_type') || '') === 'company');
     const l4 = allNodes.filter(n => {
       const nt = (n.data('node_type') || '').toLowerCase();
       return nt === 'source' || nt === 'gap' || nt === 'source_ref';
     });
-    const co = allNodes.filter(n => (n.data('node_type') || '') === 'company');
-    const untyped = allNodes.filter(n => {
-      const layer = String(n.data('layer') || '').toUpperCase();
-      const nt = String(n.data('node_type') || '').toLowerCase();
-      return layer !== 'L1' && layer !== 'L2' && layer !== 'L3' && nt !== 'source' && nt !== 'gap' && nt !== 'source_ref' && nt !== 'company';
-    }).sort((a, b) => compareByDomainAndTightness(a, b, xOrder));
-    const l3All = l3.concat(untyped);
 
-    l1.forEach(n => n.position({ x: cx, y: cyPos - bandH * 0.42 }));
+    /* Cell-relative coordinates */
+    const cxCenter = cellX + cellW / 2;
 
+    /* L1 anchor: centered at top of cell (~12% of cell height) */
+    l1.forEach(n => {
+      n.position({ x: cxCenter, y: cellY + cellH * 0.12 });
+    });
+
+    /* L2 row: evenly spread across cell width (~34% of cell height) */
     if (l2.length) {
-      const span = domainSpan * 0.96;
-      const yCenter = cyPos - bandH * 0.16;
-      const arcDip = Math.min(18, l2.length * 3);
+      const l2Y = cellY + cellH * 0.34;
+      const l2Margin = cellW * 0.08;
+      const l2Span = cellW - 2 * l2Margin;
       l2.forEach((n, i) => {
         const frac = l2.length <= 1 ? 0.5 : i / (l2.length - 1);
-        const arcY = arcDip * (4 * (frac - 0.5) * (frac - 0.5));
-        const tightnessBoost = (getTightnessIndex(n) / 100) * 18;
         n.position({
-          x: cx - span / 2 + span * frac + (hash01(`${n.id()}_l2x`) - 0.5) * 10,
-          y: yCenter + arcY - tightnessBoost + (hash01(`${n.id()}_l2y`) - 0.5) * 8
+          x: cellX + l2Margin + l2Span * frac,
+          y: l2Y
         });
       });
     }
 
-    if (l3All.length) {
-      const maxPerRow = Math.max(2, Math.ceil(Math.sqrt(l3All.length * 2.0)));
-      const nRows = Math.ceil(l3All.length / maxPerRow);
-      const xSpan = domainSpan * 1.06;
-      const yStart = cyPos + bandH * 0.0;
-      const yEnd   = cyPos + bandH * 0.28;
-      const ySpan = yEnd - yStart;
+    /* L3 columns: group under parent L2, stacked vertically */
+    if (l3.length) {
+      /* Build parent_id → [L3 nodes] map */
+      const l3ByParent = new Map();
+      const orphanL3 = [];
+      for (const n of l3) {
+        const pid = n.data('parent_id') || '';
+        if (pid && l2.some(l2n => l2n.id() === pid)) {
+          if (!l3ByParent.has(pid)) l3ByParent.set(pid, []);
+          l3ByParent.get(pid).push(n);
+        } else {
+          orphanL3.push(n);
+        }
+      }
 
-      l3All.forEach((n, i) => {
-        const r = Math.floor(i / maxPerRow);
-        const c = i % maxPerRow;
-        const inRow = Math.min(maxPerRow, l3All.length - r * maxPerRow);
-        const frac = inRow <= 1 ? 0.5 : c / (inRow - 1);
-        const stagger = (r % 2 === 1 && inRow > 1) ? (xSpan / maxPerRow) * 0.42 : 0;
-        const yFrac = nRows <= 1 ? 0.5 : r / (nRows - 1);
-        const tightnessBoost = (getTightnessIndex(n) / 100) * 24;
-        n.position({
-          x: cx - xSpan / 2 + xSpan * frac + stagger + (hash01(`${n.id()}_l3x`) - 0.5) * 10,
-          y: yStart + ySpan * yFrac - tightnessBoost + (hash01(`${n.id()}_l3y`) - 0.5) * 8
+      const l3YStart = cellY + cellH * 0.48;
+      const l3YEnd = cellY + cellH * 0.90;
+      const l3YSpan = l3YEnd - l3YStart;
+
+      if (l2.length > 0) {
+        /* Position L3 nodes in columns aligned under their parent L2 */
+        const l2Margin = cellW * 0.08;
+        const l2Span = cellW - 2 * l2Margin;
+
+        l2.forEach((l2Node, l2Idx) => {
+          const children = l3ByParent.get(l2Node.id()) || [];
+          if (children.length === 0) return;
+          const l2Frac = l2.length <= 1 ? 0.5 : l2Idx / (l2.length - 1);
+          const colX = cellX + l2Margin + l2Span * l2Frac;
+
+          children.forEach((n, cIdx) => {
+            const yFrac = children.length <= 1 ? 0.5 : cIdx / (children.length - 1);
+            n.position({
+              x: colX + (hash01(n.id() + '_l3x') - 0.5) * 8,
+              y: l3YStart + l3YSpan * yFrac
+            });
+          });
         });
-      });
+
+        /* Position orphan L3 nodes spread across the cell bottom */
+        if (orphanL3.length > 0) {
+          const oMargin = cellW * 0.1;
+          const oSpan = cellW - 2 * oMargin;
+          orphanL3.forEach((n, i) => {
+            const frac = orphanL3.length <= 1 ? 0.5 : i / (orphanL3.length - 1);
+            n.position({
+              x: cellX + oMargin + oSpan * frac,
+              y: l3YEnd + (hash01(n.id() + '_oy') - 0.5) * 8
+            });
+          });
+        }
+      } else {
+        /* No L2 nodes — spread all L3 in a grid inside the cell */
+        const allL3 = [...l3];
+        const cols = Math.ceil(Math.sqrt(allL3.length));
+        const l3Margin = cellW * 0.08;
+        const l3Span = cellW - 2 * l3Margin;
+        allL3.forEach((n, i) => {
+          const c = i % cols;
+          const r = Math.floor(i / cols);
+          const rows = Math.ceil(allL3.length / cols);
+          const xFrac = cols <= 1 ? 0.5 : c / (cols - 1);
+          const yFrac = rows <= 1 ? 0.5 : r / (rows - 1);
+          n.position({
+            x: cellX + l3Margin + l3Span * xFrac,
+            y: l3YStart + l3YSpan * yFrac
+          });
+        });
+      }
     }
 
+    /* L4 (source/gap) nodes — small, tucked near bottom */
     if (l4.length) {
-      const span = domainSpan * 0.78;
-      const baseY = cyPos + bandH * 0.38;
-      const perRow = 7;
-      const l4Rows = Math.ceil(l4.length / perRow);
+      const l4Y = cellY + cellH * 0.94;
+      const l4Margin = cellW * 0.12;
+      const l4Span = cellW - 2 * l4Margin;
       l4.forEach((n, i) => {
-        const r = Math.floor(i / perRow);
-        const c = i % perRow;
-        const inRow = Math.min(perRow, l4.length - r * perRow);
-        const x = inRow > 1 ? cx - span / 2 + span * c / (inRow - 1) : cx;
-        const yOff = l4Rows > 1 ? (bandH * 0.10) * r / (l4Rows - 1) : 0;
+        const frac = l4.length <= 1 ? 0.5 : i / (l4.length - 1);
         n.position({
-          x: x + (hash01(n.id()) - 0.5) * 5,
-          y: baseY + yOff + (hash01(n.id() + 'y') - 0.5) * 5
+          x: cellX + l4Margin + l4Span * frac + (hash01(n.id()) - 0.5) * 4,
+          y: l4Y + (hash01(n.id() + 'y') - 0.5) * 6
         });
       });
     }
 
+    /* Company nodes — positioned at bottom of cell */
     if (co.length) {
-      const span = domainSpan * 0.68;
-      const baseY = cyPos + bandH * 0.24;
+      const coY = cellY + cellH * 0.96;
+      const coMargin = cellW * 0.15;
+      const coSpan = cellW - 2 * coMargin;
       co.forEach((n, i) => {
-        const x = co.length > 1 ? cx - span / 2 + span * i / (co.length - 1) : cx;
+        const frac = co.length <= 1 ? 0.5 : i / (co.length - 1);
         n.position({
-          x: x + (hash01(n.id()) - 0.5) * 6,
-          y: baseY + (hash01(n.id() + 'y') - 0.5) * 9
+          x: cellX + coMargin + coSpan * frac + (hash01(n.id()) - 0.5) * 5,
+          y: coY + (hash01(n.id() + 'cy') - 0.5) * 8
         });
       });
     }
   });
 
+  /* Handle 'other' domain nodes — position them in remaining space */
+  const otherNodes = domMap.get('other') || [];
+  if (otherNodes.length > 0) {
+    const otherX = mx;
+    const otherY = my + 2 * (cellH + gapY);
+    otherNodes.forEach((n, i) => {
+      n.position({
+        x: otherX + (i % 6) * 40 + 20,
+        y: otherY + Math.floor(i / 6) * 40 + 20
+      });
+    });
+  }
+
   cy.endBatch();
 }
 
-/* ── Grid-based collision resolution (~O(n) per iteration) ── */
+/* ── Position company overlay nodes in domain cells by connectivity ── */
+function positionCompanyNodesInGrid(cy) {
+  const companyNodes = cy.nodes().filter(n => (n.data('node_type') || '') === 'company');
+  if (companyNodes.length === 0 || domainBounds.size === 0) return;
+
+  cy.startBatch();
+  companyNodes.forEach(n => {
+    /* Count connections per domain */
+    const domainCounts = new Map();
+    n.connectedEdges().forEach(e => {
+      const other = e.source().id() === n.id() ? e.target() : e.source();
+      const otherDomain = laneKeyForNode(other);
+      if (otherDomain && otherDomain !== 'other') {
+        domainCounts.set(otherDomain, (domainCounts.get(otherDomain) || 0) + 1);
+      }
+    });
+
+    /* Pick domain with most connections */
+    let bestDomain = null;
+    let bestCount = 0;
+    for (const [domain, count] of domainCounts) {
+      if (count > bestCount) {
+        bestDomain = domain;
+        bestCount = count;
+      }
+    }
+
+    if (bestDomain && domainBounds.has(bestDomain)) {
+      const bounds = domainBounds.get(bestDomain);
+      n.position({
+        x: bounds.x + bounds.w * (0.15 + hash01(n.id() + '_cx') * 0.7),
+        y: bounds.y + bounds.h * (0.92 + (hash01(n.id() + '_cy') - 0.5) * 0.06)
+      });
+    }
+  });
+  cy.endBatch();
+}
+
+/* ── Flag cross-domain edges ── */
+function flagCrossDomainEdges(cy) {
+  cy.edges().forEach(e => {
+    const srcDomain = laneKeyForNode(e.source());
+    const tgtDomain = laneKeyForNode(e.target());
+    const isCross = srcDomain !== tgtDomain;
+    e.data('cross_domain', isCross);
+  });
+}
+
+/* ── Grid-based collision resolution with domain boundary clamping ── */
 function resolveCollisions(cy, iterations) {
   const nodes = cy.nodes().toArray();
   const n = nodes.length;
@@ -170,6 +318,15 @@ function resolveCollisions(cy, iterations) {
     if (w > maxNodeW) maxNodeW = w;
   }
   const cellSize = maxNodeW + padding;
+
+  /* Pre-compute domain bounds for each node (for clamping) */
+  const nodeDomainBounds = new Map();
+  for (const node of nodes) {
+    const dk = laneKeyForNode(node);
+    if (domainBounds.has(dk)) {
+      nodeDomainBounds.set(node.id(), domainBounds.get(dk));
+    }
+  }
 
   for (let iter = 0; iter < iterations; iter++) {
     let moved = false;
@@ -219,11 +376,128 @@ function resolveCollisions(cy, iterations) {
         }
       }
     }
+
+    /* Clamp nodes back into their domain cell boundaries */
+    for (let i = 0; i < n; i++) {
+      const bounds = nodeDomainBounds.get(nodes[i].id());
+      if (!bounds) continue;
+      const nw = (nodes[i].data('node_w') || 20) / 2;
+      const nh = (nodes[i].data('node_h') || 20) / 2;
+      const pos = nodes[i].position();
+      const cx = clamp(pos.x, bounds.x + nw, bounds.x + bounds.w - nw);
+      const cy_ = clamp(pos.y, bounds.y + nh, bounds.y + bounds.h - nh);
+      if (cx !== pos.x || cy_ !== pos.y) {
+        nodes[i].position({ x: cx, y: cy_ });
+      }
+    }
+
     cy.endBatch();
     if (!moved) break;
   }
 }
 
+/* ── Domain region background renderer ── */
+
+let _backdropCanvas = null;
+
+export function initBackdropCanvas(cyContainer) {
+  if (_backdropCanvas) return _backdropCanvas;
+  _backdropCanvas = document.createElement('canvas');
+  _backdropCanvas.id = 'domainBackdrop';
+  _backdropCanvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;';
+  cyContainer.prepend(_backdropCanvas);
+  return _backdropCanvas;
+}
+
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return { r, g, b };
+}
+
+function darkenHex(hex, amount) {
+  const { r, g, b } = hexToRgb(hex);
+  const f = 1 - amount;
+  return `rgb(${Math.round(r * f)}, ${Math.round(g * f)}, ${Math.round(b * f)})`;
+}
+
+export function drawDomainBackgrounds(cy) {
+  if (!_backdropCanvas || domainBounds.size === 0) return;
+
+  const container = _backdropCanvas.parentElement;
+  if (!container) return;
+
+  const dpr = window.devicePixelRatio || 1;
+  const cw = container.clientWidth;
+  const ch = container.clientHeight;
+
+  if (_backdropCanvas.width !== cw * dpr || _backdropCanvas.height !== ch * dpr) {
+    _backdropCanvas.width = cw * dpr;
+    _backdropCanvas.height = ch * dpr;
+    _backdropCanvas.style.width = cw + 'px';
+    _backdropCanvas.style.height = ch + 'px';
+  }
+
+  const ctx = _backdropCanvas.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, cw, ch);
+
+  const pan = cy.pan();
+  const zoom = cy.zoom();
+
+  for (const [, bounds] of domainBounds) {
+    const sx = bounds.x * zoom + pan.x;
+    const sy = bounds.y * zoom + pan.y;
+    const sw = bounds.w * zoom;
+    const sh = bounds.h * zoom;
+
+    const radius = 12 * zoom;
+
+    /* Dark panel fill — slightly lighter than #13171C base */
+    ctx.fillStyle = '#1A1F26';
+    ctx.beginPath();
+    roundRect(ctx, sx, sy, sw, sh, radius);
+    ctx.fill();
+
+    /* Faint tint overlay — preserves domain identity without competing */
+    const { r, g, b } = hexToRgb(bounds.tint);
+    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.06)`;
+    ctx.beginPath();
+    roundRect(ctx, sx, sy, sw, sh, radius);
+    ctx.fill();
+
+    /* Subtle division border */
+    ctx.strokeStyle = '#222831';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    roundRect(ctx, sx, sy, sw, sh, radius);
+    ctx.stroke();
+
+    /* Domain label — muted white */
+    const fontSize = Math.max(9, Math.min(13, 11 * zoom));
+    ctx.font = `700 ${fontSize}px "Inter", system-ui, sans-serif`;
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.28)';
+    ctx.textBaseline = 'top';
+    ctx.fillText(bounds.label, sx + 10 * zoom, sy + 6 * zoom);
+  }
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  r = Math.min(r, w / 2, h / 2);
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.arcTo(x + w, y, x + w, y + r, r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+  ctx.lineTo(x + r, y + h);
+  ctx.arcTo(x, y + h, x, y + h - r, r);
+  ctx.lineTo(x, y + r);
+  ctx.arcTo(x, y, x + r, y, r);
+  ctx.closePath();
+}
+
+/* ── Viewport density tuning ── */
 function occupancyPct(cy) {
   const bb = cy.nodes(':visible').renderedBoundingBox({ includeLabels: false });
   const canvasArea = Math.max(1, cy.width() * cy.height());
@@ -250,15 +524,11 @@ export function runLayout(cy, currentMode) {
   const isExec = currentMode === 'executive';
   try {
     if (isExec) {
-      cy.layout({
-        name: 'dagre', rankDir: 'TB',
-        ranker: 'network-simplex',
-        nodeSep: 72, rankSep: 120, edgeSep: 32,
-        sort: (a, b) => compareBtiNodesDesc(a, b),
-        animate: false, fit: true, padding: 34
-      }).run();
+      /* Grid layout is deterministic — skip dagre entirely */
       applyDomainClusterLayout(cy);
-      resolveCollisions(cy, 25);
+      positionCompanyNodesInGrid(cy);
+      flagCrossDomainEdges(cy);
+      resolveCollisions(cy, 15);
       tuneViewportForDensity(cy);
     } else {
       cy.layout({

@@ -25,19 +25,31 @@ const CATEGORY_SPOTLIGHT_MAP = {
   assembly_integration_manufacturing: 'idea_3'
 };
 
-const DOMAIN_TINTS = {
-  manufacturing_system: '#e0e7ff',
-  flight_control_guidance: '#d1fae5',
-  warhead_integration_safing: '#fee2e2',
-  secure_communications: '#ede9fe',
-  propulsion_system: '#ffedd5',
-  power_energy_system: '#fef3c7',
-  navigation_system: '#dbeafe',
-  payload_system: '#f3e8ff',
-  software_autonomy_system: '#e0e7ff',
-  launch_support_system: '#dcfce7',
-  other: '#f1f5f9'
+export const DOMAIN_TINTS = {
+  airframe_structures:     '#dbeafe',  // blue-100
+  energy_storage:          '#fef3c7',  // amber-100
+  flight_control_guidance: '#d1fae5',  // emerald-100
+  manufacturing_system:    '#e0e7ff',  // indigo-100
+  pnt:                     '#e0f2fe',  // sky-100
+  propulsion:              '#ffedd5',  // orange-100
+  secure_comms:            '#ede9fe',  // violet-100
+  other:                   '#f1f5f9'
 };
+
+export const DOMAIN_LABELS = {
+  airframe_structures:     'Airframe & Structures',
+  energy_storage:          'Energy Storage & Power',
+  flight_control_guidance: 'Flight Control & Guidance',
+  manufacturing_system:    'Manufacturing System',
+  pnt:                     'PNT / Navigation',
+  propulsion:              'Propulsion',
+  secure_comms:            'Secure Communications'
+};
+
+export const DOMAIN_ORDER = [
+  'propulsion', 'energy_storage', 'flight_control_guidance', 'secure_comms',
+  'pnt', 'manufacturing_system', 'airframe_structures'
+];
 
 const TAXONOMY_REPRESENTATIVE_L3 = [
   {

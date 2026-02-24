@@ -3,7 +3,7 @@
 import { loadElements, loadCompanyOverlay, loadCompanyRollupL1, loadCompanyRollupL2, SPOTLIGHT_PATHS } from './graph_data.js';
 import { escHtml, isCoreLayerNode, compareBtiNodesDesc, getTightnessIndex } from './utils.js';
 import { cyStyles } from './styles.js';
-import { runLayout } from './layout.js';
+import { runLayout, initBackdropCanvas, drawDomainBackgrounds } from './layout.js';
 import { renderComponentDetail, renderCompanyDetail, closeMetricPopover, showMetricPopover } from './detail-panel.js';
 import {
   getCurrentMode, setCurrentMode,
@@ -134,6 +134,10 @@ const cy = cytoscape({
   style: cyStyles
 });
 
+/* ── Backdrop canvas for domain region backgrounds ── */
+const cyContainer = document.getElementById('cy');
+initBackdropCanvas(cyContainer);
+
 /* ── Rebuild graph (mode switch / company toggle) ── */
 function rebuildGraph() {
   cy.elements().remove();
@@ -142,6 +146,7 @@ function rebuildGraph() {
     cy.add([...companyOverlay.nodes, ...companyOverlay.edges]);
   }
   runLayout(cy, getCurrentMode());
+  drawDomainBackgrounds(cy);
   applyFilters(cy, filterEls);
   updateKPI(cy, { kpiEl, topBottlenecksPanelEl, TOP_BOTTLENECK_LIMIT });
 }
@@ -196,6 +201,7 @@ topBottlenecksPanelEl.addEventListener('click', async (evt) => {
   if (!nodeId) return;
   const node = cy.getElementById(nodeId);
   if (!node || node.empty()) return;
+  clearChainHighlight();
   clearFocusClasses(cy);
   node.addClass('focus');
   node.neighborhood('node').addClass('focus-context');
@@ -205,6 +211,49 @@ topBottlenecksPanelEl.addEventListener('click', async (evt) => {
   if (node.data('node_type') === 'company') renderCompanyDetail(node, ctx);
   else renderComponentDetail(node, ctx);
   openMobilePanel();
+});
+
+/* ── Bottleneck panel hover → chain highlight ── */
+let _chainActive = false;
+let _chainNodeId = null;
+
+function highlightChain(nodeId) {
+  if (_chainNodeId === nodeId) return;
+  const node = cy.getElementById(nodeId);
+  if (!node || node.empty()) return;
+
+  /* Collect full upstream + downstream chain via directed edges */
+  const chain = node.union(node.predecessors()).union(node.successors());
+  const chainNodes = chain.nodes();
+  const chainEdges = chain.edges();
+
+  cy.elements().addClass('chain-dim');
+  chainNodes.removeClass('chain-dim').addClass('chain-node');
+  chainEdges.removeClass('chain-dim').addClass('chain-edge');
+  node.addClass('chain-source');
+
+  _chainActive = true;
+  _chainNodeId = nodeId;
+}
+
+function clearChainHighlight() {
+  if (!_chainActive) return;
+  cy.elements().removeClass('chain-dim chain-node chain-source chain-edge');
+  _chainActive = false;
+  _chainNodeId = null;
+}
+
+topBottlenecksPanelEl.addEventListener('mouseover', (evt) => {
+  const row = evt.target.closest('.top-bottleneck-row[data-node-id]');
+  if (!row) {
+    clearChainHighlight();
+    return;
+  }
+  highlightChain(row.getAttribute('data-node-id') || '');
+});
+
+topBottlenecksPanelEl.addEventListener('mouseleave', () => {
+  clearChainHighlight();
 });
 
 document.getElementById('reset').addEventListener('click', () => {
@@ -217,6 +266,7 @@ document.getElementById('reset').addEventListener('click', () => {
   clearFocusClasses(cy);
   cy.elements().removeClass('dim top10 hover');
   runLayout(cy, getCurrentMode());
+  drawDomainBackgrounds(cy);
   renderTopBottlenecksPanel(cy, topBottlenecksPanelEl, { limit: TOP_BOTTLENECK_LIMIT });
 });
 
@@ -364,7 +414,12 @@ cy.on('mouseout',  'node', evt => evt.target.removeClass('hover'));
 buildSpotlightButtons(SPOTLIGHT_PATHS, document.getElementById('spotlightButtons'),
   (key) => toggleSpotlight(cy, key, SPOTLIGHT_PATHS, details));
 runLayout(cy, getCurrentMode());
+drawDomainBackgrounds(cy);
 updateKPI(cy, { kpiEl, topBottlenecksPanelEl, TOP_BOTTLENECK_LIMIT });
+
+/* ── Backdrop: track pan/zoom and container resize ── */
+cy.on('viewport', () => drawDomainBackgrounds(cy));
+new ResizeObserver(() => drawDomainBackgrounds(cy)).observe(cyContainer);
 
 /* ── Debug helpers (localhost only) ── */
 if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {

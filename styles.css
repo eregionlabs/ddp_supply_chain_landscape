@@ -495,31 +495,42 @@ main {
   z-index: 1;
 }
 
-/* ── Graph canvas — clean command-surface style ── */
+/* ── Graph canvas — dark command surface ── */
 .graph-wrap {
   position: relative;
   overflow: hidden;
-  background: var(--surface);
+  background: #111418;
   margin: 6px;
-  border: 1px solid var(--border);
+  border: 1px solid #222831;
   border-radius: var(--r-lg);
-  box-shadow: var(--shadow-md), inset 0 1px 0 0 rgba(255,255,255,0.7);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 0 rgba(255,255,255,0.03);
 }
 
 #cy {
+  position: relative;
   width: 100%;
   height: 100%;
-  /* Clean surface — no grid lines, subtle gradient only */
-  background: linear-gradient(168deg, #fafbfd 0%, #f7f8fb 50%, #f4f5f8 100%);
+  /* Deep cool graphite — reduces glare, makes accents pop */
+  background: #13171C;
 }
 
-/* Soft edge vignette — barely perceptible depth with green tint */
+#domainBackdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Soft edge vignette — subtle depth on dark canvas */
 .graph-wrap::after {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: var(--r-lg);
-  box-shadow: inset 0 0 40px rgba(15, 23, 42, 0.04), inset 0 0 80px rgba(45,106,79,0.03);
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.25), inset 0 0 120px rgba(0, 0, 0, 0.10);
   pointer-events: none;
   z-index: 1;
 }
@@ -962,7 +973,7 @@ body.resizing-panel * {
 /* ── Graph load error ── */
 .graph-load-error {
   padding: 20px;
-  color: #f97066;
+  color: #ef4444;
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -1068,15 +1079,15 @@ small { color: var(--text-secondary); font-size: 10.5px; }
   justify-content: center;
   gap: 12px;
   height: 100%;
-  color: var(--text-muted);
+  color: #6b7a8d;
   font-size: 13px;
   font-weight: 500;
 }
 .spinner-ring {
   width: 36px;
   height: 36px;
-  border: 3px solid var(--border);
-  border-top-color: var(--blue);
+  border: 3px solid #222831;
+  border-top-color: #3b6fb5;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
