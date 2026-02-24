@@ -1,0 +1,13 @@
+# Backups and iteration artifacts
+backups/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Editor artifacts
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
