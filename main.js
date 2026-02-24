@@ -3,14 +3,15 @@
 import { loadElements, loadCompanyOverlay, loadCompanyRollupL1, loadCompanyRollupL2, SPOTLIGHT_PATHS } from './graph_data.js';
 import { escHtml, isCoreLayerNode, compareBtiNodesDesc, getTightnessIndex } from './utils.js';
 import { cyStyles } from './styles.js';
-import { runLayout, initBackdropCanvas, drawDomainBackgrounds } from './layout.js';
+import { runLayout, initBackdropCanvas, drawDomainBackgrounds, laneKeyForNode, getCollapsedHotspots, animateExpansion, animateCollapse } from './layout.js';
 import { renderComponentDetail, renderCompanyDetail, closeMetricPopover, showMetricPopover } from './detail-panel.js';
 import {
   getCurrentMode, setCurrentMode,
   getCompanyOverlayActive, setCompanyOverlayActive,
   getVisibleElements, applyFilters, clearFocusClasses,
   buildSpotlightButtons, toggleSpotlight, clearSpotlight,
-  renderTopBottlenecksPanel, updateKPI
+  renderTopBottlenecksPanel, updateKPI,
+  isDomainExpanded, toggleDomainExpansion
 } from './filters.js';
 
 const LS_PREFIX = 'ddp.cy.';
@@ -371,9 +372,73 @@ window.addEventListener('scroll', closeMetricPopover, true);
 window.addEventListener('resize', closeMetricPopover);
 
 /* ── Cytoscape tap handlers ── */
+let _expandCollapseInProgress = false;
+
 cy.on('tap', 'node', async (evt) => {
-  clearFocusClasses(cy);
   const node = evt.target;
+  const layer = String(node.data('layer') || '').toUpperCase();
+
+  /* L1 tap in executive mode → toggle domain expansion */
+  if (layer === 'L1' && getCurrentMode() === 'executive' && !_expandCollapseInProgress) {
+    const domainKey = laneKeyForNode(node);
+    const wasExpanded = isDomainExpanded(domainKey);
+    toggleDomainExpansion(domainKey);
+
+    _expandCollapseInProgress = true;
+    try {
+      if (wasExpanded) {
+        await animateCollapse(cy, domainKey);
+        /* Re-add hotspot nodes for this collapsed domain */
+        const hotspots = getCollapsedHotspots(allNodes, 2);
+        const domainHotspots = hotspots.get(domainKey) || [];
+        const existingIds = new Set();
+        cy.nodes().forEach(n => existingIds.add(n.id()));
+        const toAdd = domainHotspots
+          .filter(h => !existingIds.has(h.data.id))
+          .map(h => ({ ...h, _hotspot: true }));
+        if (toAdd.length > 0) {
+          cy.add(toAdd);
+          /* Position hotspot nodes below L1 */
+          const bounds = cy.getElementById(node.id()).position();
+          const addedHotspots = cy.nodes().filter(n => toAdd.some(t => t.data.id === n.id()));
+          const hSpan = Math.min(80, toAdd.length * 50);
+          addedHotspots.forEach((n, i) => {
+            const frac = addedHotspots.length <= 1 ? 0.5 : i / (addedHotspots.length - 1);
+            n.position({
+              x: bounds.x - hSpan / 2 + hSpan * frac,
+              y: bounds.y + 60
+            });
+            n.addClass('hotspot');
+          });
+        }
+      } else {
+        /* Compute new visible elements for this domain */
+        const newElements = getVisibleElements(allNodes, allEdges)
+          .filter(el => {
+            const dk = (el.data.l1_component || '').trim();
+            const id = el.data.id || '';
+            if (id.startsWith('n_l1_')) return false; // L1 already present
+            return dk === domainKey;
+          });
+        await animateExpansion(cy, domainKey, newElements);
+      }
+
+      /* Mark onboarding as done on first L1 click */
+      try { localStorage.setItem(LS_PREFIX + 'onboarded', '1'); } catch {}
+      const tooltip = document.querySelector('.onboard-tooltip');
+      if (tooltip) tooltip.remove();
+
+      drawDomainBackgrounds(cy);
+      applyFilters(cy, filterEls);
+      updateKPI(cy, { kpiEl, topBottlenecksPanelEl, TOP_BOTTLENECK_LIMIT });
+    } finally {
+      _expandCollapseInProgress = false;
+    }
+    return; // Don't open detail panel on L1 expand/collapse
+  }
+
+  /* Normal node tap → detail panel */
+  clearFocusClasses(cy);
   node.addClass('focus');
   node.neighborhood('node').addClass('focus-context');
   node.connectedEdges().addClass('focus-edge');
@@ -411,6 +476,9 @@ cy.on('mouseover', 'node', evt => evt.target.addClass('hover'));
 cy.on('mouseout',  'node', evt => evt.target.removeClass('hover'));
 
 /* ── Init ── */
+/* Pre-compute hotspot data and child counts before first layout */
+getCollapsedHotspots(allNodes, 2);
+
 buildSpotlightButtons(SPOTLIGHT_PATHS, document.getElementById('spotlightButtons'),
   (key) => toggleSpotlight(cy, key, SPOTLIGHT_PATHS, details));
 runLayout(cy, getCurrentMode());
@@ -420,6 +488,57 @@ updateKPI(cy, { kpiEl, topBottlenecksPanelEl, TOP_BOTTLENECK_LIMIT });
 /* ── Backdrop: track pan/zoom and container resize ── */
 cy.on('viewport', () => drawDomainBackgrounds(cy));
 new ResizeObserver(() => drawDomainBackgrounds(cy)).observe(cyContainer);
+
+/* ── Micro-onboarding: pulse first L1 node on first load ── */
+try {
+  if (!localStorage.getItem(LS_PREFIX + 'onboarded') && getCurrentMode() === 'executive') {
+    setTimeout(() => {
+      const l1Nodes = cy.nodes().filter(n => String(n.data('layer') || '').toUpperCase() === 'L1');
+      if (l1Nodes.length === 0) return;
+      const firstL1 = l1Nodes[0];
+
+      /* Breathing animation: pulse border */
+      let pulseCount = 0;
+      const pulseInterval = setInterval(() => {
+        if (pulseCount >= 3) {
+          clearInterval(pulseInterval);
+          firstL1.style('border-width', firstL1.hasClass('collapsed') ? 2.8 : 2);
+          return;
+        }
+        firstL1.animate(
+          { style: { 'border-width': 4.5, 'border-color': 'rgba(255, 255, 255, 0.35)' } },
+          { duration: 600, easing: 'ease-in-out-cubic', complete: () => {
+            firstL1.animate(
+              { style: { 'border-width': 2.8, 'border-color': 'rgba(255, 255, 255, 0.18)' } },
+              { duration: 600, easing: 'ease-in-out-cubic' }
+            );
+          }}
+        );
+        pulseCount++;
+      }, 1200);
+
+      /* Floating tooltip */
+      const rp = firstL1.renderedPosition();
+      const tooltip = document.createElement('div');
+      tooltip.className = 'onboard-tooltip';
+      tooltip.textContent = 'Click to explore subsystem';
+      tooltip.style.left = (rp.x + 40) + 'px';
+      tooltip.style.top = (rp.y - 10) + 'px';
+      cyContainer.appendChild(tooltip);
+
+      /* Force reflow then add visible class for transition */
+      requestAnimationFrame(() => {
+        tooltip.classList.add('onboard-tooltip-visible');
+      });
+
+      /* Fade out after 3 seconds */
+      setTimeout(() => {
+        tooltip.classList.remove('onboard-tooltip-visible');
+        setTimeout(() => tooltip.remove(), 500);
+      }, 3000);
+    }, 1500);
+  }
+} catch {}
 
 /* ── Debug helpers (localhost only) ── */
 if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
