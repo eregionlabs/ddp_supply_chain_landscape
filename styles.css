@@ -2,8 +2,6 @@
    metric-forward panel, soft shadows, clearer layer hierarchy, subtle graph
    de-emphasis outside focus.  Built on the Final Beauty base. */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
-
 :root {
   /* ── Surfaces — slightly warmer whites, borrowed from command-surface ── */
   --bg-page:       #f6f7fa;
@@ -528,8 +526,6 @@ body.resizing-panel * {
   font-variant-numeric: tabular-nums;
 }
 
-.panel-metric-value.metric-pass  { color: var(--green); }
-.panel-metric-value.metric-fail  { color: var(--red); }
 .panel-metric-value.metric-blue  { color: var(--blue); }
 .panel-metric-value.metric-amber { color: var(--amber); }
 
@@ -780,7 +776,6 @@ body.resizing-panel * {
   text-align: right;
   font-weight: 700;
   color: #b45309;
-  text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
@@ -832,6 +827,20 @@ body.resizing-panel * {
   background: var(--l2-slate-fill);
   border: 1px solid var(--l2-slate-ring);
 }
+.legend-swatch.l1-swatch {
+  background: #f0f3f7;
+  border: 1px solid #9baaba;
+}
+.legend-swatch.l3-swatch {
+  background: #f6d8cb;
+  border: 1px solid #d88766;
+}
+.legend-swatch.company-swatch {
+  background: #8492a6;
+}
+.legend-swatch.conf-high   { background: #6882a0; opacity: 1.0; }
+.legend-swatch.conf-med    { background: #6882a0; opacity: 0.72; }
+.legend-swatch.conf-low    { background: #6882a0; opacity: 0.48; }
 
 .legend-section {
   margin-top: 8px;
@@ -842,6 +851,12 @@ body.resizing-panel * {
   letter-spacing: 0.04em;
 }
 
+
+/* ── Graph load error ── */
+.graph-load-error {
+  padding: 20px;
+  color: #f97066;
+}
 
 /* ════════════════════════════════════════════════════════════
    7. BADGES & STATUS PILLS
@@ -900,13 +915,106 @@ small { color: var(--text-secondary); font-size: 10.5px; }
 
 
 /* ════════════════════════════════════════════════════════════
-   9. RESPONSIVE
+   9. SKIP NAV
+   ════════════════════════════════════════════════════════════ */
+
+.skip-nav {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 9999;
+  background: var(--blue);
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 0 0 var(--r-sm) var(--r-sm);
+  text-decoration: none;
+}
+.skip-nav:focus {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   10. LOADING SPINNER
+   ════════════════════════════════════════════════════════════ */
+
+.graph-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 100%;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+.spinner-ring {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+
+/* ════════════════════════════════════════════════════════════
+   11. MOBILE PANEL TOGGLE
+   ════════════════════════════════════════════════════════════ */
+
+.panel-toggle-btn {
+  display: none;
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 200;
+  padding: 10px 20px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+}
+.panel-toggle-btn:hover { opacity: 0.9; }
+
+
+/* ════════════════════════════════════════════════════════════
+   12. RESPONSIVE
    ════════════════════════════════════════════════════════════ */
 
 @media (max-width: 940px) {
   main { grid-template-columns: 1fr; }
   #topPanelResizer { display: none; }
   #panelResizer { display: none; }
-  #panel { display: none; }
   .graph-wrap { margin: 0; border-radius: 0; }
+
+  .panel-toggle-btn { display: block; }
+
+  #panel {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    transform: translateY(100%);
+    transition: transform 0.3s var(--ease);
+    border-left: none;
+    border-top: 1px solid var(--border);
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    box-shadow: var(--shadow-lg);
+    top: 20vh;
+  }
+  #panel.panel-open {
+    transform: translateY(0);
+  }
 }

@@ -550,8 +550,8 @@ export async function loadElements(options = {}) {
     const panelPayload = JSON.parse(panelText);
     const adapted = buildElementsFromHierarchyPanel(hierarchyPayload, panelPayload);
     if (adapted.length > 0) return adapted;
-  } catch (_) {
-    // Fall back to legacy synthesis pipeline.
+  } catch (err) {
+    console.warn('Primary data path failed, trying legacy:', err);
   }
 
   const componentsOnly = options.componentsOnly !== false;

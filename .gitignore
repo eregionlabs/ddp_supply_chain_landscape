@@ -1,5 +1,6 @@
 # Backups and iteration artifacts
 backups/
+screenshots/
 
 # OS metadata
 .DS_Store
@@ -11,3 +12,7 @@ Thumbs.db
 *~
 .vscode/
 .idea/
+
+# Legacy/stale data
+company_overlay_v1.json
+bottleneck_tightness_index_v1.*
