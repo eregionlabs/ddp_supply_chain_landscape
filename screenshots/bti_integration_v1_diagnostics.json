@@ -1,0 +1,41 @@
+{
+  "timestamp": "2026-02-24T03:54:57.036Z",
+  "screenshotPath": "/Users/alicelol/eregionlabs/ddp-resource-collection-2026-02-23/presentation/cytoscape/screenshots/bti_integration_v1.png",
+  "diagnostics": {
+    "occupiedBboxPct": 69.84,
+    "nodeCountVisible": 142,
+    "edgeCountVisible": 137,
+    "layerCountsVisible": {
+      "L1": 10,
+      "L2": 37,
+      "L3": 26,
+      "L4": 69,
+      "OTHER": 0
+    },
+    "labelCollisions": 29,
+    "crossingsEstimate": 516,
+    "canvasW": 1566,
+    "canvasH": 924,
+    "bboxW": 1778,
+    "bboxH": 568
+  },
+  "validation": {
+    "layerCounts": {
+      "L1": 10,
+      "L2": 37,
+      "L3": 26
+    },
+    "tierNodeTotal": 73,
+    "scoredNodeCount": 73,
+    "missingBtiNodeIds": [],
+    "nanBtiNodeIds": [],
+    "checks": {
+      "l1_l2_l3_bti_completeness": true,
+      "no_nan_bti_scores": true,
+      "sorted_rankings_stable": true,
+      "legend_explains_bti_encoding": true
+    },
+    "legendExcerpt": "Legend L1 anchor Component Company Gate status (fill) Pass Fail Unknown Confidence (opacity) High Med Low BTI (Bottleneck Threat Index): size tiers T0 0-39, T1 40-59, T2 60-79, T3 80-100 (red ring)"
+  },
+  "overallPass": true
+}

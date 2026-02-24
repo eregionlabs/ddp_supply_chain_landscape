@@ -1,0 +1,1160 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>DDP Command Surface v1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="command_surface_v1.css" />
+    <script src="https://unpkg.com/cytoscape@3.30.2/dist/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+    <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+  </head>
+  <body>
+    <header class="cs-header">
+      <div class="cs-brand">
+        <strong>DDP Supply Chain</strong>
+        <span class="cs-version">Command Surface v1</span>
+      </div>
+      <div class="cs-controls">
+        <div class="cs-depth-indicator" id="depthIndicator">
+          <span class="depth-badge active" data-level="1">L1</span>
+          <span class="depth-sep">&rsaquo;</span>
+          <span class="depth-badge" data-level="2">L2</span>
+          <span class="depth-sep">&rsaquo;</span>
+          <span class="depth-badge" data-level="3">L3</span>
+        </div>
+        <div class="cs-toggle-group">
+          <label class="cs-toggle">
+            <input type="checkbox" id="companyToggle" />
+            <span class="cs-toggle-slider"></span>
+          </label>
+          <span class="cs-toggle-label" id="companyToggleLabel">Companies (0)</span>
+        </div>
+        <button class="cs-btn" id="collapseAll">Collapse All</button>
+        <button class="cs-btn" id="resetView">Reset</button>
+      </div>
+    </header>
+
+    <main class="cs-main">
+      <div class="cs-graph-wrap">
+        <div id="cy"></div>
+      </div>
+      <aside class="cs-panel" id="panel">
+        <div class="cs-metrics" id="metricsGrid">
+          <div class="cs-metric">
+            <span class="cs-metric-value cs-metric-indigo" id="mDomains">10</span>
+            <span class="cs-metric-label">Domains</span>
+          </div>
+          <div class="cs-metric">
+            <span class="cs-metric-value" id="mVisible">10</span>
+            <span class="cs-metric-label">Visible</span>
+          </div>
+          <div class="cs-metric">
+            <span class="cs-metric-value cs-metric-pass" id="mPassRate">&mdash;</span>
+            <span class="cs-metric-label">Pass Rate</span>
+          </div>
+          <div class="cs-metric">
+            <span class="cs-metric-value cs-metric-risk" id="mTopRisk">&mdash;</span>
+            <span class="cs-metric-label">Top Risk</span>
+          </div>
+        </div>
+        <div class="cs-detail" id="detailSection">
+          <div class="cs-detail-empty">
+            <p><strong>Command Surface</strong></p>
+            <p>Click a domain to expand its component tree. Each level reveals deeper supply chain structure flowing left to right.</p>
+            <p style="margin-top:6px;font-size:11px;color:#94a3b8">L1 domains &rsaquo; L2 subcomponents &rsaquo; L3 bottlenecks</p>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <script type="module">
+      import { loadElements, loadCompanyOverlay, loadCompanyRollupL1, loadCompanyRollupL2, SPOTLIGHT_PATHS } from './graph_data.js';
+
+      /* ═══════════════════════════════════════════════════
+         1. CONSTANTS & STATE
+         ═══════════════════════════════════════════════════ */
+      const ANIM_DUR = 280;
+      const FADE_OPACITY = 0.15;
+
+      let allNodes = [];
+      let allEdges = [];
+      let companyOverlay = { nodes: [], edges: [] };
+      let companyRollupL1 = {};
+      let companyRollupL2 = {};
+      const companyRollupByL1NodeId = new Map();
+      const companyRollupByL2NodeId = new Map();
+      const companyEdgesByComponent = new Map();
+      const companyNodeById = new Map();
+
+      const expandedL1 = new Set();
+      const expandedL2 = new Set();
+      let companyOverlayActive = false;
+      let focusedNodeId = null;
+
+      /* ═══════════════════════════════════════════════════
+         2. UTILITIES
+         ═══════════════════════════════════════════════════ */
+      function escHtml(s) {
+        const d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+      }
+
+      function fmtScenario(s) {
+        if (!s || typeof s !== 'object') return String(s || 'n/a');
+        const parts = [];
+        if (s.tariff_penalty_pct != null) parts.push('tariff ' + s.tariff_penalty_pct + '%');
+        if (s.regulatory_delay_weeks != null) parts.push('delay ' + s.regulatory_delay_weeks + 'w');
+        if (s.narrative) parts.push(s.narrative.slice(0, 100));
+        return parts.join(' \u00b7 ') || 'n/a';
+      }
+
+      function gateClass(v) {
+        if (v === true || v === 'true') return 'pass';
+        if (v === false || v === 'false') return 'fail';
+        return 'unknown';
+      }
+
+      function gateBadgeClass(v) {
+        const g = gateClass(v);
+        return g === 'pass' ? 'cs-badge-pass' : g === 'fail' ? 'cs-badge-fail' : 'cs-badge-unknown';
+      }
+      function compareBtiNodesDesc(a, b) {
+        const btiA = Number(a.data('bottleneck_score')) || 0;
+        const btiB = Number(b.data('bottleneck_score')) || 0;
+        if (btiA !== btiB) return btiB - btiA;
+        const idA = String(a.data('id') || a.id() || '');
+        const idB = String(b.data('id') || b.id() || '');
+        return idA.localeCompare(idB);
+      }
+
+      /* ═══════════════════════════════════════════════════
+         3. SEMANTIC DOMAIN COLORS (indigo/amber/cyan/slate)
+         ═══════════════════════════════════════════════════ */
+      function domainColorSet(l1Component) {
+        const key = String(l1Component || '').toLowerCase();
+        switch (key) {
+          case 'propulsion':
+          case 'flight_control_guidance':
+          case 'airframe_structures':
+          case 'pnt':
+            return { main: '#4f46e5', fill: '#eef2ff', ring: '#a5b4fc', text: '#3730a3', css: 'indigo' };
+          case 'warhead_integration_safing':
+          case 'energy_storage':
+            return { main: '#d97706', fill: '#fffbeb', ring: '#fde68a', text: '#92400e', css: 'amber' };
+          case 'secure_comms':
+          case 'compliance_supply_risk':
+            return { main: '#0891b2', fill: '#ecfeff', ring: '#67e8f9', text: '#155e75', css: 'cyan' };
+          case 'manufacturing_system':
+          case 'test_qa_config':
+          default:
+            return { main: '#475569', fill: '#f1f5f9', ring: '#94a3b8', text: '#1e293b', css: 'slate' };
+        }
+      }
+
+      /* ═══════════════════════════════════════════════════
+         4. DATA LOADING
+         ═══════════════════════════════════════════════════ */
+      try {
+        const elements = await loadElements();
+        allNodes = elements.filter(el => !el.data.source);
+        allEdges = elements.filter(el => el.data.source);
+      } catch (err) {
+        const hint = location.protocol === 'file:'
+          ? 'Opened via file://. Use a local server so fetch() can load data files.'
+          : 'Failed to load graph data. Serve project root and open /presentation/cytoscape/.';
+        document.getElementById('cy').innerHTML =
+          `<div style="padding:20px;color:#dc2626">Graph load failed.<br><small>${hint}</small><br><small>${String(err.message || err)}</small></div>`;
+        throw err;
+      }
+
+      try {
+        companyOverlay = await loadCompanyOverlay();
+        document.getElementById('companyToggleLabel').textContent = `Companies (${companyOverlay.nodes.length})`;
+      } catch (err) {
+        console.warn('Company overlay load failed:', err);
+        document.getElementById('companyToggle').disabled = true;
+        document.getElementById('companyToggleLabel').textContent = 'Companies unavailable';
+      }
+
+      try {
+        companyRollupL1 = await loadCompanyRollupL1();
+        const byNode = companyRollupL1.by_l1_node_id || {};
+        Object.entries(byNode).forEach(([nodeId, rec]) => companyRollupByL1NodeId.set(nodeId, rec));
+      } catch (err) { console.warn('L1 company rollup load failed:', err); }
+
+      try {
+        companyRollupL2 = await loadCompanyRollupL2();
+        const byNode = companyRollupL2.by_l2_node_id || {};
+        Object.entries(byNode).forEach(([nodeId, rec]) => companyRollupByL2NodeId.set(nodeId, rec));
+      } catch (err) { console.warn('L2 company rollup load failed:', err); }
+
+      for (const cn of companyOverlay.nodes) companyNodeById.set(cn.data.id, cn.data);
+      for (const ce of companyOverlay.edges) {
+        const src = ce.data.source;
+        if (!companyEdgesByComponent.has(src)) companyEdgesByComponent.set(src, []);
+        companyEdgesByComponent.get(src).push(ce.data);
+      }
+
+      /* ═══════════════════════════════════════════════════
+         5. BUILD PARENT-CHILD MAPS
+         ═══════════════════════════════════════════════════ */
+      const nodeById = new Map();
+      allNodes.forEach(n => nodeById.set(n.data.id, n));
+
+      // Store domain color on each node for Cytoscape style access
+      allNodes.forEach(n => {
+        const dc = domainColorSet(n.data.l1_component);
+        n.data.domain_main = dc.main;
+        n.data.domain_fill = dc.fill;
+        n.data.domain_ring = dc.ring;
+        n.data.domain_text = dc.text;
+        n.data.domain_css = dc.css;
+      });
+
+      const childrenOfL1 = new Map();  // l1_id -> [node elements] (L2 + L3)
+      const childrenOfL1_L2 = new Map(); // l1_id -> [L2 node elements]
+      const childrenOfL1_L3 = new Map(); // l1_id -> [L3 node elements]
+      const childrenOfL2 = new Map();    // l2_id -> [L3 node elements]
+      const parentOfL2 = new Map();      // l2_id -> l1_id
+      const parentOfL3 = new Map();      // l3_id -> l2_id or l1_id
+
+      allEdges.forEach(e => {
+        if (e.data.dependency_type !== 'decomposes_to') return;
+        const src = nodeById.get(e.data.source);
+        const tgt = nodeById.get(e.data.target);
+        if (!src || !tgt) return;
+
+        const srcLayer = (src.data.layer || '').toUpperCase();
+        const tgtLayer = (tgt.data.layer || '').toUpperCase();
+
+        if (srcLayer === 'L1' && tgtLayer === 'L2') {
+          if (!childrenOfL1_L2.has(e.data.source)) childrenOfL1_L2.set(e.data.source, []);
+          childrenOfL1_L2.get(e.data.source).push(tgt);
+          parentOfL2.set(e.data.target, e.data.source);
+        }
+        if (srcLayer === 'L1' && tgtLayer === 'L3') {
+          if (!childrenOfL1_L3.has(e.data.source)) childrenOfL1_L3.set(e.data.source, []);
+          childrenOfL1_L3.get(e.data.source).push(tgt);
+          if (!parentOfL3.has(e.data.target)) parentOfL3.set(e.data.target, e.data.source);
+        }
+        if (srcLayer === 'L2' && tgtLayer === 'L3') {
+          if (!childrenOfL2.has(e.data.source)) childrenOfL2.set(e.data.source, []);
+          childrenOfL2.get(e.data.source).push(tgt);
+          parentOfL3.set(e.data.target, e.data.source);
+        }
+      });
+
+      // Merge L2+L3 into childrenOfL1
+      allNodes.filter(n => n.data.layer === 'L1').forEach(l1 => {
+        const id = l1.data.id;
+        childrenOfL1.set(id, [
+          ...(childrenOfL1_L2.get(id) || []),
+          ...(childrenOfL1_L3.get(id) || [])
+        ]);
+      });
+
+      /* ═══════════════════════════════════════════════════
+         6. EDGE WEIGHT SEMANTICS
+         ═══════════════════════════════════════════════════ */
+      allEdges.forEach(e => {
+        const type = e.data.dependency_type || 'depends_on';
+        const conf = (e.data.confidence || 'low').toLowerCase();
+        const confFactor = conf.includes('high') ? 1.0 : conf.includes('medium') ? 0.7 : 0.4;
+        let baseWeight;
+        switch (type) {
+          case 'decomposes_to':      baseWeight = 3.0; break;
+          case 'depends_on':         baseWeight = 2.0; break;
+          case 'constrained_by_gap': baseWeight = 2.2; break;
+          case 'evidenced_by':       baseWeight = 0.8; break;
+          default:                   baseWeight = 1.5;
+        }
+        e.data.edge_weight = Math.max(0.5, Math.min(3.5, baseWeight * confFactor));
+      });
+
+      /* ═══════════════════════════════════════════════════
+         7. COMPUTE VISIBLE ELEMENTS
+         ═══════════════════════════════════════════════════ */
+      function computeVisible() {
+        const visibleIds = new Set();
+
+        // Always show all L1
+        allNodes.filter(n => n.data.layer === 'L1').forEach(n => visibleIds.add(n.data.id));
+
+        // Expanded L1: show L2 children
+        for (const l1Id of expandedL1) {
+          const l2Children = childrenOfL1_L2.get(l1Id) || [];
+          l2Children.forEach(n => visibleIds.add(n.data.id));
+        }
+
+        // Expanded L2: show L3 children + orphan L3 under parent L1
+        for (const l2Id of expandedL2) {
+          const l3Children = childrenOfL2.get(l2Id) || [];
+          l3Children.forEach(n => visibleIds.add(n.data.id));
+
+          // Also show L3 nodes directly connected to parent L1
+          const parentL1Id = parentOfL2.get(l2Id);
+          if (parentL1Id) {
+            const orphanL3 = childrenOfL1_L3.get(parentL1Id) || [];
+            orphanL3.forEach(n => visibleIds.add(n.data.id));
+          }
+        }
+
+        const nodes = allNodes.filter(n => visibleIds.has(n.data.id));
+        const edges = allEdges.filter(e =>
+          visibleIds.has(e.data.source) && visibleIds.has(e.data.target)
+        );
+
+        return [...nodes, ...edges];
+      }
+
+      /* ═══════════════════════════════════════════════════
+         8. CYTOSCAPE STYLES
+         ═══════════════════════════════════════════════════ */
+
+      function nodeFillFn(ele) {
+        const layer = (ele.data('layer') || '').toUpperCase();
+        const nt = (ele.data('node_type') || '').toLowerCase();
+        if (nt === 'company') return '#64748b';
+        if (layer === 'L1') return ele.data('domain_fill') || '#eef2ff';
+        if (layer === 'L2') return ele.data('domain_fill') || '#f1f5f9';
+        if (layer === 'L3') {
+          const p = ele.data('gate_pass');
+          if (p === true || p === 'true') return '#d1fae5';
+          if (p === false || p === 'false') return '#fee2e2';
+          return '#f1f5f9';
+        }
+        return '#e2e8f0';
+      }
+
+      function nodeBorderFn(ele) {
+        const layer = (ele.data('layer') || '').toUpperCase();
+        const nt = (ele.data('node_type') || '').toLowerCase();
+        if (nt === 'company') return '#475569';
+        if (layer === 'L1') return ele.data('domain_main') || '#4f46e5';
+        if (layer === 'L2') return ele.data('domain_ring') || '#94a3b8';
+        if (layer === 'L3') {
+          const p = ele.data('gate_pass');
+          if (p === true || p === 'true') return '#059669';
+          if (p === false || p === 'false') return '#dc2626';
+          return '#94a3b8';
+        }
+        return '#cbd5e1';
+      }
+
+      function edgeColorFn(ele) {
+        const type = (ele.data('dependency_type') || '').toLowerCase();
+        if (type === 'decomposes_to') {
+          const srcNode = nodeById.get(ele.data('source'));
+          return srcNode ? (srcNode.data.domain_main || '#475569') : '#475569';
+        }
+        if (type === 'constrained_by_gap') return '#d97706';
+        if (type === 'depends_on') return '#64748b';
+        if (type === 'evidenced_by') return '#cbd5e1';
+        return '#94a3b8';
+      }
+
+      const cyStyles = [
+        /* ── Base node ── */
+        {
+          selector: 'node',
+          style: {
+            'label': 'data(short_label)',
+            'text-wrap': 'wrap',
+            'text-max-width': ele => {
+              const layer = (ele.data('layer') || '').toUpperCase();
+              if (layer === 'L1') return 160;
+              if (layer === 'L2') return 110;
+              return 80;
+            },
+            'font-size': 10,
+            'font-family': '"Inter", system-ui, sans-serif',
+            'font-weight': 600,
+            'color': '#0f172a',
+            'text-outline-color': '#fafbfd',
+            'text-outline-width': 1.8,
+            'text-background-color': '#f7f8fb',
+            'text-background-opacity': 0.82,
+            'text-background-shape': 'roundrectangle',
+            'text-background-padding': 2,
+            'text-valign': 'bottom',
+            'text-margin-y': 7,
+            'text-opacity': ele => {
+              const layer = (ele.data('layer') || '').toUpperCase();
+              if (layer === 'L1') return 1;
+              if (layer === 'L2') return 0.92;
+              if (layer === 'L3') return 0.85;
+              return 0.3;
+            },
+            'background-color': nodeFillFn,
+            'border-width': ele => {
+              const layer = (ele.data('layer') || '').toUpperCase();
+              if (layer === 'L1') return 2.2;
+              if (layer === 'L2') return 1.5;
+              return 1.0;
+            },
+            'border-color': nodeBorderFn,
+            'width': 'data(node_w)',
+            'height': 'data(node_h)',
+            'shape': ele => {
+              const nt = (ele.data('node_type') || '').toLowerCase();
+              if (nt === 'company') return 'diamond';
+              if (nt.includes('l1')) return 'round-rectangle';
+              if (nt.includes('l2')) return 'round-rectangle';
+              return 'ellipse';
+            },
+            'opacity': 1,
+            'overlay-padding': 3,
+            'overlay-opacity': 0,
+            'transition-property': 'opacity, border-width, border-color, width, height',
+            'transition-duration': ANIM_DUR + 'ms',
+            'transition-timing-function': 'ease-in-out-cubic'
+          }
+        },
+
+        /* ── L1 domain anchors ── */
+        {
+          selector: 'node[layer = "L1"]',
+          style: {
+            'font-family': '"Manrope", "Inter", system-ui, sans-serif',
+            'font-size': 12,
+            'font-weight': 800,
+            'text-valign': 'center',
+            'text-margin-y': 0,
+            'text-background-opacity': 0,
+            'text-outline-width': 2.4,
+            'text-outline-color': ele => ele.data('domain_fill') || '#eef2ff',
+            'color': ele => ele.data('domain_text') || '#3730a3'
+          }
+        },
+
+        /* ── L2 subcomponents ── */
+        {
+          selector: 'node[layer = "L2"]',
+          style: {
+            'font-size': 9.5,
+            'font-weight': 600,
+            'text-background-opacity': 0.72
+          }
+        },
+
+        /* ── L3 bottleneck nodes ── */
+        {
+          selector: 'node[layer = "L3"]',
+          style: {
+            'font-size': 8.5,
+            'font-weight': 560,
+            'text-background-opacity': 0.6,
+            'text-margin-y': 6
+          }
+        },
+
+        /* ── Tier-3 high-risk ring ── */
+        {
+          selector: 'node[bottleneck_tier = 3]',
+          style: {
+            'border-width': 2.4,
+            'border-color': '#dc2626'
+          }
+        },
+
+        /* ── Source/gap dots (hidden in command surface) ── */
+        {
+          selector: 'node[node_type = "source"], node[node_type = "gap"]',
+          style: { 'font-size': 0, 'opacity': 0.2 }
+        },
+
+        /* ── Company diamonds ── */
+        {
+          selector: 'node[node_type = "company"]',
+          style: {
+            'font-size': 8,
+            'font-weight': 500,
+            'color': '#475569'
+          }
+        },
+
+        /* ── Edges — weighted semantics ── */
+        {
+          selector: 'edge',
+          style: {
+            'curve-style': 'bezier',
+            'target-arrow-shape': 'triangle',
+            'arrow-scale': 0.7,
+            'line-color': edgeColorFn,
+            'target-arrow-color': edgeColorFn,
+            'width': 'data(edge_weight)',
+            'opacity': 0.55,
+            'line-style': 'solid',
+            'transition-property': 'opacity, line-color, width',
+            'transition-duration': ANIM_DUR + 'ms'
+          }
+        },
+
+        {
+          selector: 'edge[dependency_type = "decomposes_to"]',
+          style: { 'opacity': 0.72 }
+        },
+        {
+          selector: 'edge[dependency_type = "constrained_by_gap"]',
+          style: { 'line-style': 'dashed', 'opacity': 0.65 }
+        },
+        {
+          selector: 'edge[dependency_type = "evidenced_by"]',
+          style: { 'line-style': 'dotted', 'opacity': 0.25 }
+        },
+        {
+          selector: 'edge[dependency_type = "depends_on_company"], edge[dependency_type = "supplied_by"]',
+          style: { 'line-style': 'dotted', 'opacity': 0.22 }
+        },
+
+        /* ── Hover ── */
+        {
+          selector: '.hover',
+          style: { 'text-opacity': 1, 'font-weight': 700, 'overlay-opacity': 0 }
+        },
+
+        /* ── Focus+Fade states ── */
+        {
+          selector: '.faded',
+          style: { 'opacity': FADE_OPACITY, 'text-opacity': 0 }
+        },
+        {
+          selector: '.focused',
+          style: {
+            'opacity': 1,
+            'text-opacity': 1,
+            'border-width': 3.0,
+            'border-color': '#4f46e5',
+            'overlay-opacity': 0
+          }
+        },
+        {
+          selector: '.focused-neighbor',
+          style: {
+            'opacity': 1,
+            'text-opacity': 1,
+            'border-width': 1.8,
+            'overlay-opacity': 0
+          }
+        },
+        {
+          selector: '.focused-edge',
+          style: {
+            'opacity': 0.85,
+            'width': ele => Math.min(4, (ele.data('edge_weight') || 1.5) * 1.3)
+          }
+        },
+
+        /* ── Expanded L1 indicator ── */
+        {
+          selector: '.expanded',
+          style: {
+            'border-width': 2.8,
+            'border-style': 'solid'
+          }
+        }
+      ];
+
+      /* ═══════════════════════════════════════════════════
+         9. CYTOSCAPE INIT
+         ═══════════════════════════════════════════════════ */
+      const cy = cytoscape({
+        container: document.getElementById('cy'),
+        elements: computeVisible(),
+        layout: { name: 'preset' },
+        style: cyStyles
+      });
+
+      /* ═══════════════════════════════════════════════════
+         10. STRICT LR COLUMN LAYOUT
+         ═══════════════════════════════════════════════════ */
+      function applyColumnLayout(animate) {
+        const W = cy.width();
+        const H = cy.height();
+        const pad = 50;
+
+        const hasL2 = expandedL1.size > 0;
+        const hasL3 = expandedL2.size > 0;
+
+        // Determine column x positions
+        let l1X, l2X, l3X;
+        if (!hasL2 && !hasL3) {
+          l1X = W * 0.5;
+        } else if (hasL2 && !hasL3) {
+          l1X = W * 0.22;
+          l2X = W * 0.68;
+        } else {
+          l1X = W * 0.14;
+          l2X = W * 0.48;
+          l3X = W * 0.82;
+        }
+
+        // Sort L1 nodes by domain key for stable order
+        const l1Nodes = cy.nodes('[layer = "L1"]').sort((a, b) =>
+          String(a.data('l1_component') || a.id()).localeCompare(String(b.data('l1_component') || b.id()))
+        );
+
+        // Compute vertical bands: expanded L1s need more space
+        const bands = [];
+        let totalUnits = 0;
+        l1Nodes.forEach(n => {
+          const isExpanded = expandedL1.has(n.id());
+          const l2Children = isExpanded
+            ? cy.nodes().filter(x => x.data('layer') === 'L2' && parentOfL2.get(x.id()) === n.id())
+            : cy.collection();
+          const l3Children = cy.collection();
+          l2Children.forEach(l2 => {
+            if (expandedL2.has(l2.id())) {
+              const l3 = cy.nodes().filter(x => {
+                if (x.data('layer') !== 'L3') return false;
+                const p = parentOfL3.get(x.id());
+                return p === l2.id() || p === n.id();
+              });
+              l3Children.merge(l3);
+            }
+          });
+          // Also include orphan L3 connected directly to L1 when any L2 is expanded
+          if (isExpanded) {
+            const anyL2Expanded = l2Children.some(l2 => expandedL2.has(l2.id()));
+            if (anyL2Expanded) {
+              const orphanL3 = cy.nodes().filter(x =>
+                x.data('layer') === 'L3' && parentOfL3.get(x.id()) === n.id()
+              );
+              l3Children.merge(orphanL3);
+            }
+          }
+
+          const childCount = Math.max(l2Children.length, l3Children.length, 1);
+          const units = isExpanded ? Math.max(childCount, 2) : 1;
+          bands.push({ node: n, units, l2Children, l3Children, isExpanded });
+          totalUnits += units;
+        });
+
+        const usableH = H - 2 * pad;
+        const unitH = Math.min(80, usableH / Math.max(totalUnits, 1));
+        const totalBandH = totalUnits * unitH;
+        let y = pad + (usableH - totalBandH) / 2;
+
+        const positions = new Map();
+
+        bands.forEach(band => {
+          const bandH = band.units * unitH;
+          const l1Y = y + bandH / 2;
+          positions.set(band.node.id(), { x: l1X, y: l1Y });
+
+          if (band.isExpanded && band.l2Children.length > 0) {
+            const l2Arr = band.l2Children.sort((a, b) => a.id().localeCompare(b.id()));
+            const l2Spacing = bandH / (l2Arr.length + 1);
+            l2Arr.forEach((l2, i) => {
+              const l2Y = y + l2Spacing * (i + 1);
+              positions.set(l2.id(), { x: l2X, y: l2Y });
+            });
+          }
+
+          if (band.l3Children.length > 0 && hasL3) {
+            const l3Arr = band.l3Children.sort((a, b) => a.id().localeCompare(b.id()));
+            const l3Spacing = bandH / (l3Arr.length + 1);
+            l3Arr.forEach((l3, i) => {
+              const l3Y = y + l3Spacing * (i + 1);
+              positions.set(l3.id(), { x: l3X, y: l3Y });
+            });
+          }
+
+          y += bandH;
+        });
+
+        // Position any remaining nodes (company nodes, etc.)
+        const positioned = new Set(positions.keys());
+        const remaining = cy.nodes().filter(n => !positioned.has(n.id()));
+        if (remaining.length > 0) {
+          const rx = hasL3 ? W * 0.95 : hasL2 ? W * 0.90 : W * 0.85;
+          const rSpacing = usableH / (remaining.length + 1);
+          remaining.forEach((n, i) => {
+            positions.set(n.id(), { x: rx, y: pad + rSpacing * (i + 1) });
+          });
+        }
+
+        // Apply positions
+        if (animate) {
+          cy.nodes().forEach(n => {
+            const pos = positions.get(n.id());
+            if (pos) {
+              n.animate({
+                position: pos,
+                duration: ANIM_DUR,
+                easing: 'ease-in-out-cubic'
+              });
+            }
+          });
+        } else {
+          cy.startBatch();
+          cy.nodes().forEach(n => {
+            const pos = positions.get(n.id());
+            if (pos) n.position(pos);
+          });
+          cy.endBatch();
+        }
+
+        // Fit after animation
+        setTimeout(() => {
+          cy.fit(undefined, 30);
+        }, animate ? ANIM_DUR + 50 : 10);
+      }
+
+      /* ═══════════════════════════════════════════════════
+         11. REBUILD GRAPH
+         ═══════════════════════════════════════════════════ */
+      function rebuildGraph(animate) {
+        cy.elements().remove();
+        const elements = computeVisible();
+        cy.add(elements);
+
+        // Add company overlay if active
+        if (companyOverlayActive) {
+          const visibleIds = new Set(cy.nodes().map(n => n.id()));
+          const coNodes = companyOverlay.nodes;
+          const coEdges = companyOverlay.edges.filter(e =>
+            visibleIds.has(e.data.source) || visibleIds.has(e.data.target)
+          );
+          cy.add([...coNodes, ...coEdges]);
+        }
+
+        // Mark expanded L1s
+        cy.nodes('[layer = "L1"]').forEach(n => {
+          if (expandedL1.has(n.id())) n.addClass('expanded');
+          else n.removeClass('expanded');
+        });
+
+        applyColumnLayout(animate !== false);
+        updateDepthIndicator();
+        updateMetrics();
+      }
+
+      /* ═══════════════════════════════════════════════════
+         12. PROGRESSIVE DISCLOSURE
+         ═══════════════════════════════════════════════════ */
+      function toggleL1(nodeId) {
+        if (expandedL1.has(nodeId)) {
+          // Collapse
+          expandedL1.delete(nodeId);
+          // Also collapse any expanded L2 children
+          const l2Children = childrenOfL1_L2.get(nodeId) || [];
+          l2Children.forEach(l2 => expandedL2.delete(l2.data.id));
+        } else {
+          expandedL1.add(nodeId);
+        }
+        rebuildGraph(true);
+      }
+
+      function toggleL2(nodeId) {
+        if (expandedL2.has(nodeId)) {
+          expandedL2.delete(nodeId);
+        } else {
+          expandedL2.add(nodeId);
+        }
+        rebuildGraph(true);
+      }
+
+      function collapseAll() {
+        expandedL1.clear();
+        expandedL2.clear();
+        focusedNodeId = null;
+        rebuildGraph(true);
+      }
+
+      /* ═══════════════════════════════════════════════════
+         13. FOCUS+FADE (15% out-of-focus)
+         ═══════════════════════════════════════════════════ */
+      function applyFocusFade(nodeId) {
+        clearFocusFade();
+        focusedNodeId = nodeId;
+        const node = cy.getElementById(nodeId);
+        if (!node || node.empty()) return;
+
+        const neighbors = node.neighborhood('node');
+        const connectedEdges = node.connectedEdges();
+
+        // Fade everything
+        cy.elements().addClass('faded');
+
+        // Unfade focused node + neighborhood
+        node.removeClass('faded').addClass('focused');
+        neighbors.removeClass('faded').addClass('focused-neighbor');
+        connectedEdges.removeClass('faded').addClass('focused-edge');
+      }
+
+      function clearFocusFade() {
+        focusedNodeId = null;
+        cy.elements().removeClass('faded focused focused-neighbor focused-edge');
+      }
+
+      /* ═══════════════════════════════════════════════════
+         14. DEPTH INDICATOR
+         ═══════════════════════════════════════════════════ */
+      function updateDepthIndicator() {
+        const hasL2 = expandedL1.size > 0;
+        const hasL3 = expandedL2.size > 0;
+        document.querySelectorAll('.depth-badge').forEach(b => {
+          const level = Number(b.dataset.level);
+          b.classList.toggle('active', level === 1 || (level === 2 && hasL2) || (level === 3 && hasL3));
+        });
+      }
+
+      /* ═══════════════════════════════════════════════════
+         15. HEADLINE METRICS
+         ═══════════════════════════════════════════════════ */
+      function updateMetrics() {
+        const visible = cy.nodes().filter(n => n.data('node_type') !== 'company');
+        const total = visible.length;
+        const pass = visible.filter(n => n.data('gate_pass') === true || n.data('gate_pass') === 'true').length;
+        const fail = visible.filter(n => n.data('gate_pass') === false || n.data('gate_pass') === 'false').length;
+        const passRate = total > 0 ? Math.round((pass / total) * 100) : 0;
+
+        const topRiskNode = visible
+          .sort(compareBtiNodesDesc)
+          .first();
+        const topRisk = topRiskNode && topRiskNode.length ? (topRiskNode.data('bottleneck_score') || 0) : 0;
+
+        document.getElementById('mDomains').textContent = cy.nodes('[layer = "L1"]').length;
+        document.getElementById('mVisible').textContent = total;
+        document.getElementById('mPassRate').textContent = passRate + '%';
+        document.getElementById('mTopRisk').textContent = topRisk;
+      }
+
+      /* ═══════════════════════════════════════════════════
+         16. RIGHT PANEL: DETAIL RENDERING
+         ═══════════════════════════════════════════════════ */
+      const detailSection = document.getElementById('detailSection');
+
+      function buildTopCompaniesHtml(nodeId) {
+        const nd = cy.getElementById(nodeId).data();
+        const nt = String((nd && nd.node_type) || '').toLowerCase();
+
+        let rows = [];
+        if (nt.startsWith('l1')) {
+          const rec = companyRollupByL1NodeId.get(nodeId);
+          rows = rec && Array.isArray(rec.top_companies) ? rec.top_companies : [];
+        } else if (nt.startsWith('l2')) {
+          const rec = companyRollupByL2NodeId.get(nodeId);
+          rows = rec && Array.isArray(rec.top_companies) ? rec.top_companies : [];
+        } else {
+          const directEdges = companyEdgesByComponent.get(nodeId) || [];
+          const l1Id = nd && nd.l1_component ? 'n_l1_' + nd.l1_component : null;
+          const l1Edges = l1Id ? (companyEdgesByComponent.get(l1Id) || []) : [];
+          const seen = new Set();
+          const merged = [];
+          for (const e of directEdges) { seen.add(e.target); merged.push(e); }
+          for (const e of l1Edges) { if (!seen.has(e.target)) { seen.add(e.target); merged.push(e); } }
+          merged.sort((a, b) => (b.composite_score ?? -1) - (a.composite_score ?? -1));
+
+          if (merged.length === 0) return '<small style="color:#94a3b8">No company data linked.</small>';
+          return merged.slice(0, 6).map(e => {
+            const co = companyNodeById.get(e.target);
+            const label = co ? escHtml(co.label) : escHtml(e.target);
+            const score = e.composite_score != null ? e.composite_score.toFixed(1) : 'n/a';
+            const conf = (e.confidence || 'low').toLowerCase();
+            const cls = conf === 'high' ? 'cs-conf-high' : conf === 'medium' ? 'cs-conf-medium' : 'cs-conf-low';
+            return `<div class="cs-company-row">
+              <div><span class="cs-company-name">${label}</span> <span class="cs-conf-badge ${cls}">${conf}</span></div>
+              <span class="cs-company-score">${score}</span>
+            </div>`;
+          }).join('');
+        }
+
+        if (rows.length === 0) return '<small style="color:#94a3b8">No companies linked.</small>';
+        return rows.slice(0, 6).map(r => {
+          const label = escHtml(r.company_name || r.company_id || 'unknown');
+          const weighted = Number.isFinite(Number(r.weighted_score_sum)) ? Number(r.weighted_score_sum).toFixed(2) : 'n/a';
+          const confAvg = Number(r.confidence_factor_avg);
+          const conf = Number.isFinite(confAvg) ? (confAvg >= 0.65 ? 'high' : confAvg >= 0.4 ? 'medium' : 'low') : 'low';
+          const cls = conf === 'high' ? 'cs-conf-high' : conf === 'medium' ? 'cs-conf-medium' : 'cs-conf-low';
+          return `<div class="cs-company-row">
+            <div><span class="cs-company-name">${label}</span> <span class="cs-conf-badge ${cls}">${conf}</span></div>
+            <span class="cs-company-score">${weighted}</span>
+          </div>`;
+        }).join('');
+      }
+
+      function formatBlockerProse(n) {
+        const nt = String(n.node_type || '').toLowerCase();
+        const blockerPrimary = String(n.key_blockers || '').trim();
+        const blockerFallback = nt.startsWith('l1')
+          ? (n.key_blockers_l1_display || n.key_blockers_fallback || n.key_blockers_synth || '')
+          : nt.startsWith('l2')
+            ? (n.key_blockers_l2_display || n.key_blockers_fallback || n.key_blockers_synth || '')
+            : (n.key_blockers_synth || n.key_blockers_fallback || '');
+
+        let raw = blockerPrimary || blockerFallback;
+        if (!raw && nt.startsWith('l1')) {
+          const rec = companyRollupByL1NodeId.get(n.id);
+          raw = (rec && rec.l1_blocker_text) || '';
+        }
+        if (!raw && nt.startsWith('l2')) {
+          const rec = companyRollupByL2NodeId.get(n.id);
+          raw = (rec && rec.l2_blocker_text) || '';
+        }
+
+        if (!raw) return '<p style="color:#94a3b8">No blocker intelligence available. Inspect downstream components.</p>';
+
+        // Split by pipe and format as prose items
+        const items = String(raw).split(/\s*\|\s*/).filter(Boolean).slice(0, 5);
+        if (items.length <= 1) {
+          return `<p>${escHtml(String(raw).slice(0, 400))}</p>`;
+        }
+        return items.map(item =>
+          `<div class="cs-blocker-item">${escHtml(item.trim().slice(0, 200))}</div>`
+        ).join('');
+      }
+
+      function renderDetail(node) {
+        const n = node.data();
+        const layer = (n.layer || '').toUpperCase();
+        const dc = domainColorSet(n.l1_component);
+        const domainBadge = `cs-badge-${dc.css}`;
+
+        const neighbors = node.neighborhood('node');
+        const edgeCount = node.connectedEdges().length;
+
+        const gateDisplay = (n.gate_pass === 'unknown' && layer === 'L1')
+          ? 'structural' : String(n.gate_pass || 'unknown');
+
+        const scenario = n.scenario_active || n.scenario_base;
+        const scenarioText = fmtScenario(scenario);
+
+        const cosHtml = buildTopCompaniesHtml(n.id);
+        const blockerHtml = formatBlockerProse(n);
+
+        // Children count for L1/L2
+        let childInfo = '';
+        if (layer === 'L1') {
+          const l2Count = (childrenOfL1_L2.get(n.id) || []).length;
+          const l3Count = (childrenOfL1_L3.get(n.id) || []).length;
+          childInfo = `${l2Count} L2 + ${l3Count} L3 children`;
+        } else if (layer === 'L2') {
+          const l3Count = (childrenOfL2.get(n.id) || []).length;
+          childInfo = `${l3Count} L3 children`;
+        }
+
+        detailSection.innerHTML = `
+          <div class="cs-detail-title">${escHtml(n.label)}</div>
+          <div class="cs-detail-subtitle">${layer} ${n.l1_component ? '\u00b7 ' + escHtml(n.l1_component.replace(/_/g, ' ')) : ''}</div>
+          <div class="cs-detail-badges">
+            <span class="cs-badge ${gateBadgeClass(n.gate_pass)}">gate: ${gateDisplay}</span>
+            <span class="cs-badge ${domainBadge}">${dc.css}</span>
+          </div>
+          <div class="cs-detail-grid">
+            <div class="cs-detail-row"><span>ID</span><span>${escHtml(n.id)}</span></div>
+            <div class="cs-detail-row"><span>Type</span><span>${n.node_type || '?'}</span></div>
+            <div class="cs-detail-row"><span>Confidence</span><span>${n.confidence || 'n/a'}</span></div>
+            <div class="cs-detail-row"><span>Bottleneck</span><span>${n.bottleneck_score ?? 'n/a'}</span></div>
+            <div class="cs-detail-row"><span>Neighbors</span><span>${neighbors.length}</span></div>
+            <div class="cs-detail-row"><span>Edges</span><span>${edgeCount}</span></div>
+            ${childInfo ? `<div class="cs-detail-row"><span>Children</span><span>${childInfo}</span></div>` : ''}
+            <div class="cs-detail-row"><span>Thesis</span><span>${n.thesis_tag || 'other'}</span></div>
+            <div class="cs-detail-row"><span>Lead Time</span><span>${n.lead_time ?? 'n/a'}</span></div>
+            <div class="cs-detail-row"><span>Capacity</span><span>${n.capacity_effective ?? 'n/a'}</span></div>
+            <div class="cs-detail-row"><span>Cost Uplift</span><span>${n.landed_cost_uplift_pct ?? 'n/a'}%</span></div>
+            <div class="cs-detail-row"><span>Tariff</span><span>${n.tariff_penalty_pct ?? 'n/a'}%</span></div>
+            <div class="cs-detail-row"><span>Scenario</span><span>${scenarioText}</span></div>
+          </div>
+
+          <div class="cs-blockers">
+            <div class="cs-section-title">Blockers</div>
+            <div class="cs-blocker-prose">${blockerHtml}</div>
+          </div>
+
+          <div class="cs-companies">
+            <div class="cs-section-title">Top Companies</div>
+            ${cosHtml}
+          </div>`;
+      }
+
+      function renderCompanyDetail(node) {
+        const n = node.data();
+        const conf = (n.confidence || 'low').toLowerCase();
+        const cls = conf === 'high' ? 'cs-conf-high' : conf === 'medium' ? 'cs-conf-medium' : 'cs-conf-low';
+
+        const linked = node.neighborhood('node')
+          .filter(x => x.data('node_type') !== 'company')
+          .map(x => escHtml(x.data('label')))
+          .slice(0, 10);
+
+        detailSection.innerHTML = `
+          <div class="cs-detail-title">${escHtml(n.label)} <span class="cs-conf-badge ${cls}">${conf}</span></div>
+          <div class="cs-detail-subtitle">Company</div>
+          <div class="cs-detail-grid">
+            <div class="cs-detail-row"><span>ID</span><span>${escHtml(n.id)}</span></div>
+            <div class="cs-detail-row"><span>Type</span><span>${n.company_type || 'n/a'}</span></div>
+            <div class="cs-detail-row"><span>Components</span><span>${n.component_count ?? 'n/a'}</span></div>
+            <div class="cs-detail-row"><span>Sources</span><span>${n.source_count ?? 'n/a'}</span></div>
+            <div class="cs-detail-row"><span>Avg Score</span><span>${n.avg_composite_score ?? 'n/a'}</span></div>
+            <div class="cs-detail-row"><span>Best Score</span><span>${n.best_composite_score ?? 'n/a'}</span></div>
+          </div>
+          ${linked.length > 0 ? `<div style="margin-top:8px;font-size:11px;color:#64748b">Linked: ${linked.join(', ')}</div>` : ''}`;
+      }
+
+      /* ═══════════════════════════════════════════════════
+         17. EVENT HANDLERS
+         ═══════════════════════════════════════════════════ */
+
+      cy.on('tap', 'node', evt => {
+        const node = evt.target;
+        const layer = (node.data('layer') || '').toUpperCase();
+        const nt = (node.data('node_type') || '').toLowerCase();
+
+        // Progressive disclosure: expand/collapse on L1/L2 click
+        if (layer === 'L1') {
+          toggleL1(node.id());
+          renderDetail(node);
+          applyFocusFade(node.id());
+          return;
+        }
+        if (layer === 'L2') {
+          toggleL2(node.id());
+          renderDetail(node);
+          applyFocusFade(node.id());
+          return;
+        }
+
+        // L3 / company: just focus+fade and show detail
+        clearFocusFade();
+        applyFocusFade(node.id());
+        if (nt === 'company') renderCompanyDetail(node);
+        else renderDetail(node);
+      });
+
+      cy.on('tap', 'edge', evt => {
+        clearFocusFade();
+        const e = evt.target.data();
+        detailSection.innerHTML = `
+          <div class="cs-detail-title">Edge</div>
+          <div class="cs-detail-subtitle">${escHtml(e.source)} &rarr; ${escHtml(e.target)}</div>
+          <div class="cs-detail-grid">
+            <div class="cs-detail-row"><span>Type</span><span>${escHtml(e.dependency_type || 'depends_on')}</span></div>
+            <div class="cs-detail-row"><span>Confidence</span><span>${e.confidence || 'n/a'}</span></div>
+            <div class="cs-detail-row"><span>Weight</span><span>${(e.edge_weight || 1).toFixed(1)}</span></div>
+            <div class="cs-detail-row"><span>Semantic</span><span>${e.edge_semantic || 'n/a'}</span></div>
+          </div>`;
+      });
+
+      // Click background: clear focus
+      cy.on('tap', evt => {
+        if (evt.target === cy) {
+          clearFocusFade();
+          detailSection.innerHTML = `
+            <div class="cs-detail-empty">
+              <p><strong>Command Surface</strong></p>
+              <p>Click a domain to expand its component tree. Each level reveals deeper supply chain structure flowing left to right.</p>
+              <p style="margin-top:6px;font-size:11px;color:#94a3b8">L1 domains &rsaquo; L2 subcomponents &rsaquo; L3 bottlenecks</p>
+            </div>`;
+        }
+      });
+
+      // Hover: reveal labels
+      cy.on('mouseover', 'node', evt => evt.target.addClass('hover'));
+      cy.on('mouseout', 'node', evt => evt.target.removeClass('hover'));
+
+      // Control buttons
+      document.getElementById('collapseAll').addEventListener('click', () => {
+        collapseAll();
+        clearFocusFade();
+        detailSection.innerHTML = `
+          <div class="cs-detail-empty">
+            <p><strong>Command Surface</strong></p>
+            <p>Click a domain to expand.</p>
+          </div>`;
+      });
+
+      document.getElementById('resetView').addEventListener('click', () => {
+        collapseAll();
+        clearFocusFade();
+        detailSection.innerHTML = `
+          <div class="cs-detail-empty">
+            <p><strong>Command Surface</strong></p>
+            <p>Click a domain to expand its component tree.</p>
+          </div>`;
+      });
+
+      // Company toggle
+      document.getElementById('companyToggle').addEventListener('change', () => {
+        companyOverlayActive = document.getElementById('companyToggle').checked;
+        rebuildGraph(true);
+      });
+
+      /* ═══════════════════════════════════════════════════
+         18. INIT
+         ═══════════════════════════════════════════════════ */
+      applyColumnLayout(false);
+      updateDepthIndicator();
+      updateMetrics();
+      window.__cy = cy;
+
+      /* ═══════════════════════════════════════════════════
+         19. DIAGNOSTICS (for screenshot scripts)
+         ═══════════════════════════════════════════════════ */
+      window.__layoutDiagnostics = function () {
+        const nodes = cy.nodes(':visible');
+        const edges = cy.edges(':visible');
+        const canvasW = cy.width();
+        const canvasH = cy.height();
+        const canvasArea = Math.max(1, canvasW * canvasH);
+        const bbox = nodes.renderedBoundingBox({ includeLabels: false });
+        const occupiedArea = Math.max(1, bbox.w * bbox.h);
+        const occupiedPct = (occupiedArea / canvasArea) * 100;
+
+        const layerCounts = { L1: 0, L2: 0, L3: 0, L4: 0, company: 0, OTHER: 0 };
+        nodes.forEach(n => {
+          const layer = String(n.data('layer') || '').toUpperCase();
+          const nt = (n.data('node_type') || '').toLowerCase();
+          if (nt === 'company') { layerCounts.company += 1; return; }
+          if (layerCounts[layer] != null) layerCounts[layer] += 1;
+          else layerCounts.OTHER += 1;
+        });
+
+        return {
+          occupiedBboxPct: Number(occupiedPct.toFixed(2)),
+          nodeCountVisible: nodes.length,
+          edgeCountVisible: edges.length,
+          layerCountsVisible: layerCounts,
+          expandedL1Count: expandedL1.size,
+          expandedL2Count: expandedL2.size,
+          canvasW: Math.round(canvasW),
+          canvasH: Math.round(canvasH),
+          bboxW: Math.round(bbox.w),
+          bboxH: Math.round(bbox.h)
+        };
+      };
+
+      /* ═══════════════════════════════════════════════════
+         20. AUTO-EXPAND API (for screenshot scripts)
+         ═══════════════════════════════════════════════════ */
+      window.__expandL1 = function (nodeId) {
+        if (!expandedL1.has(nodeId)) {
+          expandedL1.add(nodeId);
+          rebuildGraph(false);
+        }
+      };
+
+      window.__expandL2 = function (nodeId) {
+        if (!expandedL2.has(nodeId)) {
+          expandedL2.add(nodeId);
+          rebuildGraph(false);
+        }
+      };
+
+      window.__focusNode = function (nodeId) {
+        applyFocusFade(nodeId);
+        const node = cy.getElementById(nodeId);
+        if (node && node.length) {
+          if (node.data('node_type') === 'company') renderCompanyDetail(node);
+          else renderDetail(node);
+        }
+      };
+    </script>
+  </body>
+</html>

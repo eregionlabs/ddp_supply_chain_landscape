@@ -1,0 +1,74 @@
+{
+  "timestamp": "2026-02-24T04:38:37.264Z",
+  "screenshotPath": "/Users/alicelol/eregionlabs/ddp-resource-collection-2026-02-23/presentation/cytoscape/screenshots/bti_visual_tweak_v1.png",
+  "diagnostics": {
+    "layout": {
+      "occupiedBboxPct": 69.84,
+      "nodeCountVisible": 142,
+      "edgeCountVisible": 137,
+      "layerCountsVisible": {
+        "L1": 10,
+        "L2": 37,
+        "L3": 26,
+        "L4": 69,
+        "OTHER": 0
+      },
+      "labelCollisions": 16,
+      "crossingsEstimate": 150,
+      "canvasW": 1566,
+      "canvasH": 924,
+      "bboxW": 1701,
+      "bboxH": 594
+    },
+    "counts": {
+      "totalCore": 73,
+      "l2": 37
+    },
+    "l2Centered": true,
+    "l2ColorSample": [
+      "rgb(170,193,200)",
+      "rgb(171,194,201)",
+      "rgb(171,194,201)",
+      "rgb(174,196,203)",
+      "rgb(175,197,204)"
+    ],
+    "sizeSamples": {
+      "L1_min": {
+        "id": "n_l1_test_qa_config",
+        "bti": 40,
+        "w": 97,
+        "h": 35
+      },
+      "L1_max": {
+        "id": "n_l1_secure_comms",
+        "bti": 71,
+        "w": 107,
+        "h": 39
+      },
+      "L2_min": {
+        "id": "n_l2_test_qa_config_configuration_management_and_traceability",
+        "bti": 34,
+        "w": 96,
+        "h": 31
+      },
+      "L2_max": {
+        "id": "n_l2_energy_storage_l1_energy_faa_lithium_batteries_guidance",
+        "bti": 66,
+        "w": 110,
+        "h": 35
+      },
+      "L3_min": {
+        "id": "n_l3_propulsion_motor_winding",
+        "bti": 25,
+        "w": 25,
+        "h": 25
+      },
+      "L3_max": {
+        "id": "n_l3_securecomms_antenna_rf_frontend",
+        "bti": 86,
+        "w": 35,
+        "h": 35
+      }
+    }
+  }
+}

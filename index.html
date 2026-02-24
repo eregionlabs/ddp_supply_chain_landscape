@@ -1,0 +1,1668 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>DDP Supply Chain Graph v5</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/cytoscape@3.30.2/dist/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+    <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+  </head>
+  <body>
+    <div id="topPanel">
+    <header class="top-header">
+      <div class="brand-lockup">
+        <div class="brand-title-row">
+          <strong>DDP Supply Chain Command Graph</strong>
+          <span class="header-version">v5</span>
+        </div>
+        <small class="brand-subtitle">Executive dependency intelligence with supplier/evidence context</small>
+      </div>
+      <small id="kpi" class="kpi">loading&hellip;</small>
+    </header>
+
+
+    <section class="control-bar">
+      <div class="control-cluster control-mode">
+        <span class="cluster-label">View</span>
+        <div class="mode-toggle" id="modeToggle">
+          <button class="mode-btn active" data-mode="executive">Executive</button>
+          <button class="mode-btn" data-mode="analyst">Analyst</button>
+        </div>
+      </div>
+      <div class="control-cluster control-search">
+        <span class="cluster-label">Search</span>
+        <input id="search" placeholder="Node, id, or company" />
+      </div>
+      <div class="control-cluster">
+        <span class="cluster-label">Domain</span>
+        <select id="domainFilter">
+          <option value="all">All</option>
+          <option value="airframe_structures">Airframe</option>
+          <option value="energy_storage">Energy</option>
+          <option value="flight_control_guidance">Flight Ctrl</option>
+          <option value="manufacturing_system">Manufacturing</option>
+          <option value="pnt">PNT</option>
+          <option value="propulsion">Propulsion</option>
+          <option value="secure_comms">Secure Comms</option>
+        </select>
+      </div>
+      <div class="control-cluster">
+        <span class="cluster-label">Confidence</span>
+        <select id="confFilter">
+          <option value="all">All</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+      <div class="control-cluster">
+        <span class="cluster-label">Pressure</span>
+        <select id="pressureFilter">
+          <option value="all">All</option>
+          <option value="high">High (≥70)</option>
+          <option value="med">Medium (40–69)</option>
+          <option value="low">Low (&lt;40)</option>
+        </select>
+      </div>
+      <div class="control-cluster control-toggle">
+        <label class="toggle-switch">
+          <input type="checkbox" id="companyToggle" />
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label" id="companyToggleLabel">Company overlay (0)</span>
+      </div>
+      <div class="control-cluster control-actions">
+        <button id="showTop10">Top Bottlenecks</button>
+        <button id="reset">Reset</button>
+      </div>
+    </section>
+
+    <section class="idea-strip-wrap">
+      <div class="idea-strip-title">Candidate Paths</div>
+      <div id="spotlightButtons" class="spotlight-group"></div>
+    </section>
+    </div>
+    <div id="topPanelResizer" title="Drag to resize top panel"></div>
+
+    <main>
+      <div class="graph-wrap">
+        <div id="cy"></div>
+      </div>
+      <div id="panelResizer" title="Drag to resize panel"></div>
+      <aside id="panel">
+        <div class="panel-metrics" id="panelMetrics">
+          <div class="panel-metric">
+            <span class="panel-metric-value metric-blue" id="pmNodes">--</span>
+            <span class="panel-metric-label">L1/L2/L3</span>
+          </div>
+          <div class="panel-metric">
+            <span class="panel-metric-value metric-amber" id="pmBottleneck">--</span>
+            <span class="panel-metric-label">Bottlenecks (Top List)</span>
+          </div>
+        </div>
+        <div class="card detail-card">
+          <div class="card-header">Details</div>
+          <div id="details"><small>Select a node to inspect risk profile, dependencies, and linked companies.</small></div>
+          <div class="detail-subsection top-bottlenecks-wrap">
+            <div class="detail-subtitle">Top Bottlenecks</div>
+            <div id="topBottlenecksPanel"><small>Sorted by Bottleneck Pressure (0–100).</small></div>
+          </div>
+        </div>
+        <div class="card legend-card">
+          <details>
+            <summary>Legend</summary>
+            <div class="legend">
+              <div class="legend-item"><span class="legend-swatch roundrect" style="background:#f0f3f7;border:1px solid #9baaba"></span> L1 anchor</div>
+              <div class="legend-item"><span class="legend-swatch roundrect l2-swatch"></span> L2 component</div>
+              <div class="legend-item"><span class="legend-swatch circle" style="background:#f6d8cb;border:1px solid #d88766"></span> L3 component</div>
+              <div class="legend-item"><span class="legend-swatch diamond" style="background:#8492a6"></span> Company</div>
+            </div>
+            <div class="legend-section">Confidence (opacity)</div>
+            <div class="legend">
+              <div class="legend-item"><span class="legend-swatch circle" style="background:#6882a0;opacity:1.0"></span> High</div>
+              <div class="legend-item"><span class="legend-swatch circle" style="background:#6882a0;opacity:0.72"></span> Med</div>
+              <div class="legend-item"><span class="legend-swatch circle" style="background:#6882a0;opacity:0.48"></span> Low</div>
+            </div>
+            <div class="legend-section">Node size = Bottleneck Pressure (0–100)</div>
+            <div class="legend-section">Node color = Bottleneck Pressure (same metric; darker = tighter)</div>
+          </details>
+        </div>
+      </aside>
+    </main>
+
+    <script type="module">
+      import { loadElements, loadCompanyOverlay, loadCompanyRollupL1, loadCompanyRollupL2, SPOTLIGHT_PATHS } from './graph_data.js';
+
+      /* ── DOM refs ── */
+      const details             = document.getElementById('details');
+      const searchEl            = document.getElementById('search');
+      const domainEl            = document.getElementById('domainFilter');
+      const confEl              = document.getElementById('confFilter');
+      const pressureEl          = document.getElementById('pressureFilter');
+      const kpiEl               = document.getElementById('kpi');
+      const companyToggleEl     = document.getElementById('companyToggle');
+      const companyToggleLabelEl = document.getElementById('companyToggleLabel');
+      const topBottlenecksPanelEl = document.getElementById('topBottlenecksPanel');
+      const panelResizerEl       = document.getElementById('panelResizer');
+      const topPanelEl           = document.getElementById('topPanel');
+      const topPanelResizerEl    = document.getElementById('topPanelResizer');
+      const TOP_BOTTLENECK_LIMIT = 10;
+
+      let currentMode          = 'executive';
+      let activeSpotlight      = null;
+      let companyOverlayActive = false;
+      let allNodes  = [];
+      let allEdges  = [];
+      let companyOverlay = { nodes: [], edges: [] };
+      let companyRollupL1 = {};
+      let companyRollupL2 = {};
+      const companyRollupByL1NodeId = new Map();
+      const companyRollupByL2NodeId = new Map();
+
+      /* ── Utility ── */
+      function escHtml(s) {
+        const d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+      }
+      function fmtScenario(s) {
+        if (!s || typeof s !== 'object') return String(s || 'n/a');
+        const parts = [];
+        if (s.tariff_penalty_pct != null) parts.push('tariff ' + s.tariff_penalty_pct + '%');
+        if (s.regulatory_delay_weeks != null) parts.push('delay ' + s.regulatory_delay_weeks + 'w');
+        if (s.narrative) parts.push(s.narrative.slice(0, 100));
+        return parts.join(' \u00b7 ') || 'n/a';
+      }
+      function getLayerValue(v) {
+        return String(v || '').toUpperCase();
+      }
+      function isEvidenceNodeData(data) {
+        const nt = String((data && data.node_type) || '').toLowerCase();
+        const layer = getLayerValue(data && data.layer);
+        return nt === 'source' || nt === 'gap' || nt === 'source_ref' || layer === 'L4_SOURCE_REF';
+      }
+      function normalizeToken(v) {
+        return String(v || '')
+          .toLowerCase()
+          .replace(/[`']/g, '')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/-+/g, '-')
+          .replace(/^-+|-+$/g, '');
+      }
+      function getTightnessIndex(nodeOrEle) {
+        const fromV2 = Number(nodeOrEle.data('bottleneck_tightness_index_v2'));
+        if (Number.isFinite(fromV2)) return fromV2;
+        const fromV1 = Number(nodeOrEle.data('bottleneck_tightness_index_v1'));
+        if (Number.isFinite(fromV1)) return fromV1;
+        const fromLegacy = Number(nodeOrEle.data('bottleneck_score'));
+        return Number.isFinite(fromLegacy) ? fromLegacy : 0;
+      }
+      function getTightnessTier(nodeOrEle) {
+        const fromV2 = Number(nodeOrEle.data('bottleneck_tightness_tier_v2'));
+        if (Number.isFinite(fromV2)) return fromV2;
+        const fromV1 = Number(nodeOrEle.data('bottleneck_tightness_tier_v1'));
+        if (Number.isFinite(fromV1)) return fromV1;
+        const fromLegacy = Number(nodeOrEle.data('bottleneck_tier'));
+        return Number.isFinite(fromLegacy) ? fromLegacy : 0;
+      }
+      function isCoreLayerNode(nodeOrEle) {
+        const layer = getLayerValue(nodeOrEle.data('layer'));
+        return layer === 'L1' || layer === 'L2' || layer === 'L3';
+      }
+      function layerSortRank(layer) {
+        const l = getLayerValue(layer);
+        if (l === 'L1') return 1;
+        if (l === 'L2') return 2;
+        if (l === 'L3') return 3;
+        return 4;
+      }
+      function compareBtiNodesDesc(a, b) {
+        const btiA = getTightnessIndex(a);
+        const btiB = getTightnessIndex(b);
+        if (btiA !== btiB) return btiB - btiA;
+        const layerDelta = layerSortRank(a.data('layer')) - layerSortRank(b.data('layer'));
+        if (layerDelta !== 0) return layerDelta;
+        const idA = String(a.data('id') || a.id() || '');
+        const idB = String(b.data('id') || b.id() || '');
+        return idA.localeCompare(idB);
+      }
+
+      /* ── Load data ── */
+      try {
+        const elements = await loadElements();
+        allNodes = elements.filter(el => !el.data.source);
+        allEdges = elements.filter(el => el.data.source);
+      } catch (err) {
+        const hint = location.protocol === 'file:'
+          ? 'Opened via file://. Use a local server so fetch() can load data files.'
+          : 'Failed to load graph data. Serve project root and open /presentation/cytoscape/.';
+        document.getElementById('cy').innerHTML =
+          `<div style="padding:20px;color:#f97066">Graph load failed.<br><small>${hint}</small><br><small>${String(err.message||err)}</small></div>`;
+        throw err;
+      }
+
+      try {
+        companyOverlay = await loadCompanyOverlay();
+        companyToggleLabelEl.textContent = `Company overlay (${companyOverlay.nodes.length})`;
+      } catch (err) {
+        console.warn('Company overlay load failed:', err);
+        companyToggleEl.disabled = true;
+        companyToggleLabelEl.textContent = 'Company overlay unavailable';
+      }
+
+      try {
+        companyRollupL1 = await loadCompanyRollupL1();
+        const byNode = companyRollupL1.by_l1_node_id || {};
+        Object.entries(byNode).forEach(([nodeId, rec]) => companyRollupByL1NodeId.set(nodeId, rec));
+      } catch (err) {
+        console.warn('L1 company rollup load failed:', err);
+      }
+
+      try {
+        companyRollupL2 = await loadCompanyRollupL2();
+        const byNode = companyRollupL2.by_l2_node_id || {};
+        Object.entries(byNode).forEach(([nodeId, rec]) => companyRollupByL2NodeId.set(nodeId, rec));
+      } catch (err) {
+        console.warn('L2 company rollup load failed:', err);
+      }
+
+      /* ── Company indexes for detail panel ── */
+      const companyEdgesByComponent = new Map();
+      const companyNodeById = new Map();
+      for (const cn of companyOverlay.nodes) companyNodeById.set(cn.data.id, cn.data);
+      for (const ce of companyOverlay.edges) {
+        const src = ce.data.source;
+        if (!companyEdgesByComponent.has(src)) companyEdgesByComponent.set(src, []);
+        companyEdgesByComponent.get(src).push(ce.data);
+      }
+
+      /* ── Visible elements for current mode ── */
+      function getVisibleElements() {
+        const nodes = currentMode === 'executive'
+          ? allNodes.filter(n => n.data.visibility === 'executive')
+          : allNodes;
+        nodes.sort((a, b) => {
+          const layerDelta = layerSortRank(a.data.layer) - layerSortRank(b.data.layer);
+          if (layerDelta !== 0) return layerDelta;
+          const btiA = Number(a.data.bottleneck_tightness_index_v2 ?? a.data.bottleneck_tightness_index_v1 ?? a.data.bottleneck_score) || 0;
+          const btiB = Number(b.data.bottleneck_tightness_index_v2 ?? b.data.bottleneck_tightness_index_v1 ?? b.data.bottleneck_score) || 0;
+          if (btiA !== btiB) return btiB - btiA;
+          return String(a.data.id || '').localeCompare(String(b.data.id || ''));
+        });
+        const nodeIds = new Set(nodes.map(n => n.data.id));
+        const edges = allEdges.filter(
+          e => nodeIds.has(e.data.source) && nodeIds.has(e.data.target)
+        );
+        edges.sort((a, b) => String(a.data.id || '').localeCompare(String(b.data.id || '')));
+        return [...nodes, ...edges];
+      }
+
+      /* ─────────────────────────────────────────────────────
+         Final Beauty Pass — polished light-modern palette
+         Composition-first with semantic color and strong hierarchy.
+         ───────────────────────────────────────────────────── */
+
+      /* Confidence — slightly wider range for better differentiation */
+      function confOpacity(ele) {
+        const c = (ele.data('confidence') || '').toLowerCase();
+        if (c.includes('high'))   return 1.0;
+        if (c.includes('medium')) return 0.72;
+        return 0.48;
+      }
+      function btiRatio(ele) {
+        return Math.max(0, Math.min(1, getTightnessIndex(ele) / 100));
+      }
+      function btiFillColor(ele) {
+        const layer = getLayerValue(ele.data('layer'));
+        const t = btiRatio(ele);
+        if (layer === 'L1') return `hsl(214, 64%, ${94 - t * 46}%)`;
+        if (layer === 'L2') return `hsl(194, 22%, ${91 - t * 28}%)`;
+        if (layer === 'L3') return `hsl(16, 78%, ${92 - t * 50}%)`;
+        return '#d1d5db';
+      }
+      function btiBorderColor(ele) {
+        const layer = getLayerValue(ele.data('layer'));
+        const t = btiRatio(ele);
+        if (layer === 'L1') return `hsl(214, 70%, ${44 - t * 12}%)`;
+        if (layer === 'L2') return `hsl(194, 24%, ${38 - t * 10}%)`;
+        if (layer === 'L3') return `hsl(14, 78%, ${42 - t * 15}%)`;
+        return '#94a3b8';
+      }
+
+      /* Label visibility — L1/L2/L3 readable, L4 hidden until hover */
+      function labelOpacity(ele) {
+        const layer = String(ele.data('layer') || '').toUpperCase();
+        if (layer === 'L1') return 1;
+        if (layer === 'L2') return 0.92;
+        if (layer === 'L3') {
+          const tier = getTightnessTier(ele);
+          if (tier >= 3) return 0.88;
+          if (tier >= 2) return 0.72;
+          return 0.52;
+        }
+        if (getTightnessTier(ele) >= 3) return 0.74;
+        return 0.14;
+      }
+
+      /* Fill — BTI v2 intensity encoding */
+      function nodeFill(ele) {
+        const nt = (ele.data('node_type') || '').toLowerCase();
+        if (nt === 'company')                 return '#94a3b8';
+        if (nt === 'source' || nt === 'gap' || nt === 'source_ref')  return '#d1d5db';
+        return btiFillColor(ele);
+      }
+
+      /* Border — darker with tighter BTI */
+      function nodeBorder(ele) {
+        const nt = (ele.data('node_type') || '').toLowerCase();
+        if (nt === 'company')                 return '#64748b';
+        if (nt === 'source' || nt === 'gap' || nt === 'source_ref')  return '#b0b8c4';
+        return btiBorderColor(ele);
+      }
+
+      const cyStyles = [
+        /* ── Base node ── */
+        {
+          selector: 'node',
+          style: {
+            'label':              'data(short_label)',
+            'text-wrap':          'wrap',
+            'text-max-width':     ele => {
+              const layer = String(ele.data('layer') || '').toUpperCase();
+              if (layer === 'L1') return 130;
+              if (layer === 'L2') return 112;
+              return 86;
+            },
+            'font-size':          10,
+            'font-family':        '"Inter", system-ui, -apple-system, sans-serif',
+            'font-weight':        600,
+            'color':              '#0f172a',
+            'text-outline-color': '#f7f8fb',
+            'text-outline-width': 2.2,
+            'text-background-color': '#f5f6f9',
+            'text-background-opacity': 0.72,
+            'text-background-shape': 'roundrectangle',
+            'text-background-padding': 2,
+            'text-valign':        'bottom',
+            'text-margin-y':      7,
+            'text-opacity':       labelOpacity,
+            'background-color':   nodeFill,
+            'border-width':       ele => {
+              const nt = (ele.data('node_type') || '').toLowerCase();
+              if (nt === 'source' || nt === 'gap' || nt === 'source_ref') return 0.5;
+              if (nt.includes('l1')) return 2.2;
+              if (nt.includes('l2')) return 1.5;
+              return 1.0;
+            },
+            'border-color':       nodeBorder,
+            'width':              'data(node_w)',
+            'height':             'data(node_h)',
+            'shape':              ele => {
+              const nt = (ele.data('node_type') || '').toLowerCase();
+              if (nt === 'company')  return 'diamond';
+              if (nt.includes('l1')) return 'round-rectangle';
+              return 'ellipse';
+            },
+            'opacity':            confOpacity,
+            'overlay-padding':    3,
+            'overlay-opacity':    0
+          }
+        },
+
+        /* ── L1 capsule anchors — centered label, bold type ── */
+        {
+          selector: 'node[node_type = "l1_domain"], node[node_type = "l1_component"]',
+          style: {
+            'font-family':        '"Manrope", "Inter", system-ui, sans-serif',
+            'font-size':          11,
+            'font-weight':        800,
+            'color':              '#0f172a',
+            'text-outline-width': 2.8,
+            'text-background-opacity': 0.88,
+            'text-valign':        'center',
+            'text-margin-y':      0
+          }
+        },
+        {
+          selector: 'node[layer = "L2"]',
+          style: {
+            'font-size': 10,
+            'font-weight': 650,
+            'text-background-opacity': 0.2,
+            'text-valign': 'center',
+            'text-margin-y': 0,
+            'text-outline-width': 2.6,
+            'shape': 'round-rectangle'
+          }
+        },
+        {
+          selector: 'node[layer = "L3"]',
+          style: {
+            'font-size': 8.5,
+            'font-weight': 560,
+            'text-background-opacity': 0.58,
+            'text-margin-y': 6
+          }
+        },
+
+        /* ── Source / gap — contextual satellite dots ── */
+        {
+          selector: 'node[node_type = "source"], node[node_type = "gap"], node[node_type = "source_ref"]',
+          style: {
+            'font-size': 0,
+            'opacity':   0.32
+          }
+        },
+
+        /* ── Company — small, quiet ── */
+        {
+          selector: 'node[node_type = "company"]',
+          style: {
+            'font-size':  8,
+            'font-weight': 500,
+            'color':      '#5c6b7f'
+          }
+        },
+
+        /* ── Tier-3 bottleneck accent — bold ring ── */
+        {
+          selector: 'node[bottleneck_tightness_tier_v2 = 3], node[bottleneck_tightness_tier_v1 = 3], node[bottleneck_tier = 3]',
+          style: {
+            'border-width': 2.4
+          }
+        },
+
+        /* ── Edge hierarchy — quieter, cleaner ── */
+        {
+          selector: 'edge',
+          style: {
+            'curve-style':        'bezier',
+            'target-arrow-shape': 'triangle',
+            'arrow-scale':        0.52,
+            'line-color':         '#cbd5e1',
+            'target-arrow-color': '#cbd5e1',
+            'width':              0.8,
+            'opacity':            0.28,
+            'line-style':         'solid'
+          }
+        },
+        {
+          selector: 'edge[dependency_type = "decomposes_to"]',
+          style: {
+            'line-color':         '#94a3b8',
+            'target-arrow-color': '#94a3b8',
+            'width':              1.4,
+            'opacity':            0.46
+          }
+        },
+        {
+          selector: 'edge[dependency_type = "constrained_by_gap"]',
+          style: {
+            'line-color':         '#f59e0b',
+            'target-arrow-color': '#f59e0b',
+            'width':              1.1,
+            'opacity':            0.38,
+            'line-style':         'solid'
+          }
+        },
+        {
+          selector: 'edge[dependency_type = "evidenced_by"]',
+          style: {
+            'line-color':         '#cbd5e1',
+            'target-arrow-color': '#cbd5e1',
+            'line-style':         'dashed',
+            'width':              0.7,
+            'opacity':            0.18
+          }
+        },
+        {
+          selector: 'edge[dependency_type = "depends_on_company"], edge[dependency_type = "supplied_by"]',
+          style: {
+            'line-color':         '#e2e8f0',
+            'target-arrow-color': '#e2e8f0',
+            'line-style':         'dotted',
+            'width':              0.6,
+            'opacity':            0.14
+          }
+        },
+        {
+          selector: 'edge[hierarchy_rank = 1], edge[hierarchy_rank = 2]',
+          style: {
+            'width': 1.35,
+            'opacity': 0.44
+          }
+        },
+
+        /* ── Hover — label reveal ── */
+        {
+          selector: '.hover',
+          style: {
+            'text-opacity':    1,
+            'font-weight':     700,
+            'overlay-opacity': 0
+          }
+        },
+
+        /* ── State classes — subtle de-emphasis outside focus ── */
+        { selector: '.dim', style: {
+          'opacity': 0.08, 'text-opacity': 0
+        }},
+        { selector: '.top10', style: {
+          'opacity': 1, 'text-opacity': 1,
+          'border-width': 2.4, 'border-color': '#ea580c',
+          'overlay-opacity': 0
+        }},
+        { selector: '.spotlight', style: {
+          'opacity': 1, 'text-opacity': 1,
+          'border-width': 2.2, 'overlay-opacity': 0
+        }},
+        { selector: '.spotlight-1', style: { 'border-color': '#3b6fb5' } },
+        { selector: '.spotlight-2', style: { 'border-color': '#6e5ba8' } },
+        { selector: '.spotlight-3', style: { 'border-color': '#d97706' } },
+        { selector: '.spotlight-edge', style: {
+          'opacity': 0.78, 'width': 1.8,
+          'line-color': '#3b6fb5', 'target-arrow-color': '#3b6fb5'
+        }},
+        /* Focus — clean blue border + slight scale */
+        { selector: '.focus', style: {
+          'opacity': 1, 'text-opacity': 1,
+          'width': 'data(node_w_focus)', 'height': 'data(node_h_focus)',
+          'border-width': 2.6, 'border-color': '#3b82f6',
+          'overlay-opacity': 0
+        }},
+        { selector: '.focus-context', style: {
+          'opacity': 0.85, 'text-opacity': 1,
+          'border-width': 1.4, 'border-color': '#64748b',
+          'overlay-opacity': 0
+        }},
+        { selector: '.focus-edge', style: {
+          'opacity': 0.82, 'width': 1.6,
+          'line-color': '#3b82f6', 'target-arrow-color': '#3b82f6'
+        }}
+      ];
+
+      /* ── Cytoscape init ── */
+      const cy = cytoscape({
+        container: document.getElementById('cy'),
+        elements: getVisibleElements(),
+        layout: { name: 'preset' },
+        style: cyStyles
+      });
+
+      /* ── Layout ── */
+      function laneKeyForNode(node) {
+        const direct = (node.data('l1_component') || '').trim();
+        if (direct) return direct;
+        const id = String(node.id() || '');
+        if (id.startsWith('n_l1_')) return id.slice('n_l1_'.length);
+        return 'other';
+      }
+
+      function hash01(str) {
+        let h = 2166136261;
+        for (let i = 0; i < str.length; i++) {
+          h ^= str.charCodeAt(i);
+          h = Math.imul(h, 16777619);
+        }
+        return ((h >>> 0) % 10000) / 10000;
+      }
+
+      function clamp(n, lo, hi) {
+        return Math.max(lo, Math.min(hi, n));
+      }
+      function compareByDomainAndTightness(a, b, xOrder) {
+        const btiDelta = getTightnessIndex(b) - getTightnessIndex(a);
+        if (btiDelta !== 0) return btiDelta;
+        return (xOrder.get(a.id()) || 0) - (xOrder.get(b.id()) || 0);
+      }
+
+      /* ── Multi-band domain cluster layout (beauty pass) ── */
+      function applyDomainClusterLayout() {
+        const graphW = cy.width();
+        const graphH = cy.height();
+
+        /* read dagre x to preserve left-right ordering */
+        const xOrder = new Map();
+        cy.nodes().forEach(n => xOrder.set(n.id(), n.position('x')));
+
+        /* group by domain */
+        const domMap = new Map();
+        cy.nodes().forEach(n => {
+          const key = laneKeyForNode(n);
+          if (!domMap.has(key)) domMap.set(key, []);
+          domMap.get(key).push(n);
+        });
+
+        /* sort domains by average dagre-x to maintain narrative order */
+        const domains = [...domMap.entries()].sort((a, b) => {
+          const ax = a[1].reduce((s, n) => s + (xOrder.get(n.id()) || 0), 0) / a[1].length;
+          const bx = b[1].reduce((s, n) => s + (xOrder.get(n.id()) || 0), 0) / b[1].length;
+          return ax - bx;
+        });
+
+        const nd = domains.length;
+        const mx = 48, my = 40;
+        const usableW = Math.max(400, graphW - 2 * mx);
+        const usableH = Math.max(260, graphH - 2 * my);
+        const domainSpan = clamp(usableW / Math.max(2, nd * 0.85), 148, 260);
+        const waveAmp = Math.min(usableH * 0.13, 78);
+        const yMidBase = my + usableH * 0.48;
+
+        cy.startBatch();
+
+        domains.forEach(([key, allNodes], idx) => {
+          const t = nd <= 1 ? 0.5 : idx / (nd - 1);
+          const cx = mx + t * usableW;
+          /* gentler wave — sinusoidal offset for organic stagger */
+          const cyPos = yMidBase + Math.sin((t * Math.PI * 1.8) + 0.5) * waveAmp;
+          const bandH = clamp(usableH * 0.66, 230, 360);
+
+          const l1 = allNodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L1');
+          const l2 = allNodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L2')
+            .sort((a, b) => compareByDomainAndTightness(a, b, xOrder));
+          const l3 = allNodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L3')
+            .sort((a, b) => compareByDomainAndTightness(a, b, xOrder));
+          const l4 = allNodes.filter(n => {
+            const nt = (n.data('node_type') || '').toLowerCase();
+            return nt === 'source' || nt === 'gap' || nt === 'source_ref';
+          });
+          const co = allNodes.filter(n => (n.data('node_type') || '') === 'company');
+          const untyped = allNodes.filter(n => {
+            const layer = String(n.data('layer') || '').toUpperCase();
+            const nt = String(n.data('node_type') || '').toLowerCase();
+            return layer !== 'L1' && layer !== 'L2' && layer !== 'L3' && nt !== 'source' && nt !== 'gap' && nt !== 'source_ref' && nt !== 'company';
+          }).sort((a, b) => compareByDomainAndTightness(a, b, xOrder));
+          const l3All = l3.concat(untyped);
+
+          /* L1 — domain anchor at top of cell */
+          l1.forEach(n => n.position({ x: cx, y: cyPos - bandH * 0.42 }));
+
+          /* L2 — fan arc below L1 with organic jitter */
+          if (l2.length) {
+            const span = domainSpan * 0.96;
+            const yCenter = cyPos - bandH * 0.16;
+            const arcDip = Math.min(18, l2.length * 3);
+            l2.forEach((n, i) => {
+              const frac = l2.length <= 1 ? 0.5 : i / (l2.length - 1);
+              const arcY = arcDip * (4 * (frac - 0.5) * (frac - 0.5));
+              const tightnessBoost = (getTightnessIndex(n) / 100) * 18;
+              n.position({
+                x: cx - span / 2 + span * frac + (hash01(`${n.id()}_l2x`) - 0.5) * 10,
+                y: yCenter + arcY - tightnessBoost + (hash01(`${n.id()}_l2y`) - 0.5) * 8
+              });
+            });
+          }
+
+          /* L3 – staggered rows with tighter clustering and diagonal offset */
+          if (l3All.length) {
+            const maxPerRow = Math.max(2, Math.ceil(Math.sqrt(l3All.length * 2.0)));
+            const nRows = Math.ceil(l3All.length / maxPerRow);
+            const xSpan = domainSpan * 1.06;
+            const yStart = cyPos + bandH * 0.0;
+            const yEnd   = cyPos + bandH * 0.28;
+            const ySpan = yEnd - yStart;
+
+            l3All.forEach((n, i) => {
+              const r = Math.floor(i / maxPerRow);
+              const c = i % maxPerRow;
+              const inRow = Math.min(maxPerRow, l3All.length - r * maxPerRow);
+              const frac = inRow <= 1 ? 0.5 : c / (inRow - 1);
+              /* alternating row offset for brick-like stagger */
+              const stagger = (r % 2 === 1 && inRow > 1) ? (xSpan / maxPerRow) * 0.42 : 0;
+              const yFrac = nRows <= 1 ? 0.5 : r / (nRows - 1);
+              const tightnessBoost = (getTightnessIndex(n) / 100) * 24;
+              n.position({
+                x: cx - xSpan / 2 + xSpan * frac + stagger + (hash01(`${n.id()}_l3x`) - 0.5) * 10,
+                y: yStart + ySpan * yFrac - tightnessBoost + (hash01(`${n.id()}_l3y`) - 0.5) * 8
+              });
+            });
+          }
+
+          /* L4 — tight contextual cloud near bottom */
+          if (l4.length) {
+            const span = domainSpan * 0.78;
+            const baseY = cyPos + bandH * 0.38;
+            const perRow = 7;
+            const l4Rows = Math.ceil(l4.length / perRow);
+            l4.forEach((n, i) => {
+              const r = Math.floor(i / perRow);
+              const c = i % perRow;
+              const inRow = Math.min(perRow, l4.length - r * perRow);
+              const x = inRow > 1 ? cx - span / 2 + span * c / (inRow - 1) : cx;
+              const yOff = l4Rows > 1 ? (bandH * 0.10) * r / (l4Rows - 1) : 0;
+              n.position({
+                x: x + (hash01(n.id()) - 0.5) * 5,
+                y: baseY + yOff + (hash01(n.id() + 'y') - 0.5) * 5
+              });
+            });
+          }
+
+          /* Company – compact band tucked below L3 */
+          if (co.length) {
+            const span = domainSpan * 0.68;
+            const baseY = cyPos + bandH * 0.24;
+            co.forEach((n, i) => {
+              const x = co.length > 1 ? cx - span / 2 + span * i / (co.length - 1) : cx;
+              n.position({
+                x: x + (hash01(n.id()) - 0.5) * 6,
+                y: baseY + (hash01(n.id() + 'y') - 0.5) * 9
+              });
+            });
+          }
+        });
+
+        cy.endBatch();
+      }
+
+      /* ── Collision resolution: push overlapping nodes apart ── */
+      function resolveCollisions(iterations) {
+        const nodes = cy.nodes().toArray();
+        const n = nodes.length;
+        for (let iter = 0; iter < iterations; iter++) {
+          let moved = false;
+          cy.startBatch();
+          for (let i = 0; i < n; i++) {
+            for (let j = i + 1; j < n; j++) {
+              const a = nodes[i], b = nodes[j];
+              const ax = a.position('x'), ay = a.position('y');
+              const bx = b.position('x'), by = b.position('y');
+              const dx = bx - ax, dy = by - ay;
+              const dist = Math.sqrt(dx * dx + dy * dy) || 0.1;
+              const aw = (a.data('node_w') || 20), bw = (b.data('node_w') || 20);
+              const ah = (a.data('node_h') || 20), bh = (b.data('node_h') || 20);
+              const minDist = (aw + bw) / 2 + 16;
+              if (dist < minDist) {
+                const push = (minDist - dist) * 0.28;
+                const ux = dx / dist, uy = dy / dist;
+                a.position({ x: ax - ux * push, y: ay - uy * push });
+                b.position({ x: bx + ux * push, y: by + uy * push });
+                moved = true;
+              }
+            }
+          }
+          cy.endBatch();
+          if (!moved) break;
+        }
+      }
+
+      function occupancyPct() {
+        const bb = cy.nodes(':visible').renderedBoundingBox({ includeLabels: false });
+        const canvasArea = Math.max(1, cy.width() * cy.height());
+        const usedArea = Math.max(1, bb.w * bb.h);
+        return (usedArea / canvasArea) * 100;
+      }
+
+      function tuneViewportForDensity() {
+        cy.fit(undefined, 28);
+        const occ = occupancyPct();
+        const zoom = cy.zoom();
+        if (occ < 58) {
+          const ratio = Math.min(1.28, Math.sqrt(68 / Math.max(occ, 1)));
+          cy.zoom({ level: zoom * ratio, renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } });
+          cy.center();
+        } else if (occ > 84) {
+          const ratio = Math.max(0.82, Math.sqrt(78 / occ));
+          cy.zoom({ level: zoom * ratio, renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } });
+          cy.center();
+        }
+      }
+
+      function runLayout() {
+        const isExec = currentMode === 'executive';
+        try {
+          if (isExec) {
+            /* Step 1: dagre for initial rank ordering */
+            cy.layout({
+              name: 'dagre', rankDir: 'TB',
+              ranker: 'network-simplex',
+              nodeSep: 72, rankSep: 120, edgeSep: 32,
+              sort: (a, b) => compareBtiNodesDesc(a, b),
+              animate: false, fit: true, padding: 34
+            }).run();
+            /* Step 2: multi-band domain cluster reposition */
+            applyDomainClusterLayout();
+            /* Step 3: push apart overlapping nodes */
+            resolveCollisions(25);
+            /* Step 4: fit and density tune */
+            tuneViewportForDensity();
+          } else {
+            cy.layout({
+              name:    'dagre',
+              rankDir: 'LR',
+              ranker:  'network-simplex',
+              nodeSep: 48,
+              rankSep: 132,
+              edgeSep: 22,
+              sort: (a, b) => compareBtiNodesDesc(a, b),
+              animate: false,
+              fit: true,
+              padding: 28
+            }).run();
+            cy.fit(undefined, 26);
+          }
+        } catch (e) {
+          console.warn('primary layout failed, falling back to cose:', e);
+          cy.layout({ name: 'cose', animate: false, fit: true, padding: 24 }).run();
+        }
+      }
+
+      /* ── Rebuild graph (mode switch / company toggle) ── */
+      function rebuildGraph() {
+        cy.elements().remove();
+        cy.add(getVisibleElements());
+        if (companyOverlayActive) {
+          cy.add([...companyOverlay.nodes, ...companyOverlay.edges]);
+        }
+        runLayout();
+        applyFilters();
+        updateKPI();
+      }
+
+      /* ═══════════════════════════════════════════════════
+         Mode toggle
+         ═══════════════════════════════════════════════════ */
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const mode = btn.dataset.mode;
+          if (mode === currentMode) return;
+          currentMode = mode;
+          document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          clearSpotlight();
+          rebuildGraph();
+        });
+      });
+
+      /* ═══════════════════════════════════════════════════
+         Spotlight paths (3 candidate ideas)
+         ═══════════════════════════════════════════════════ */
+      function buildSpotlightButtons() {
+        const container = document.getElementById('spotlightButtons');
+        for (const [key, path] of Object.entries(SPOTLIGHT_PATHS)) {
+          const btn = document.createElement('button');
+          btn.className = 'spotlight-btn';
+          btn.dataset.idea = key;
+          btn.innerHTML = `
+            <span class="spotlight-color" style="background:${escHtml(path.color)}"></span>
+            <div>
+              <div class="spotlight-name">${escHtml(path.label)}</div>
+              <div class="spotlight-desc">${escHtml(path.description)}</div>
+            </div>`;
+          btn.addEventListener('click', () => toggleSpotlight(key));
+          container.appendChild(btn);
+        }
+      }
+
+      function toggleSpotlight(ideaKey) {
+        if (activeSpotlight === ideaKey) { clearSpotlight(); return; }
+        clearSpotlight();
+        activeSpotlight = ideaKey;
+        const path     = SPOTLIGHT_PATHS[ideaKey];
+        const classNum = ideaKey.replace('idea_', '');
+
+        // Match nodes by thesis_tag
+        const matchNodes = cy.nodes().filter(n => n.data('thesis_tag') === ideaKey);
+
+        // Include L1 parent nodes
+        const l1Ids = new Set();
+        matchNodes.forEach(n => {
+          const l1 = n.data('l1_component');
+          if (l1) l1Ids.add('n_l1_' + l1);
+        });
+        const l1Nodes = cy.nodes().filter(n => l1Ids.has(n.id()));
+
+        const spotlightNodes = matchNodes.union(l1Nodes);
+        const spotlightEdges = spotlightNodes.edgesWith(spotlightNodes);
+
+        // Dim everything, then light up the path
+        cy.elements().addClass('dim');
+        spotlightNodes.removeClass('dim').addClass('spotlight spotlight-' + classNum);
+        spotlightEdges.removeClass('dim').addClass('spotlight-edge');
+
+        // Button state
+        document.querySelectorAll('.spotlight-btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.idea === ideaKey);
+        });
+
+        // Detail panel summary
+        const nodeList = matchNodes
+          .sort(compareBtiNodesDesc)
+          .map(n => escHtml(n.data('label')) + ' (' + getTightnessIndex(n) + ')')
+          .join(', ');
+        details.innerHTML = `
+          <div class="detail-title">${escHtml(path.label)}</div>
+          <div class="detail-note">${escHtml(path.description)}</div>
+          <div class="detail-metrics-grid">
+            <div class="detail-metric-card"><small>Path nodes</small><strong>${spotlightNodes.length}</strong></div>
+            <div class="detail-metric-card"><small>Path edges</small><strong>${spotlightEdges.length}</strong></div>
+          </div>
+          <div class="detail-note">${nodeList || 'No matching nodes in current view.'}</div>
+          <div class="detail-note">Click a highlighted node for full details.</div>`;
+      }
+
+      function clearSpotlight() {
+        activeSpotlight = null;
+        cy.elements().removeClass('dim spotlight spotlight-1 spotlight-2 spotlight-3 spotlight-edge');
+        document.querySelectorAll('.spotlight-btn').forEach(b => b.classList.remove('active'));
+      }
+
+      function clearFocusClasses() {
+        cy.elements().removeClass('focus focus-context focus-edge');
+      }
+
+      /* ═══════════════════════════════════════════════════
+         Filters (search, domain, confidence, pressure)
+         ═══════════════════════════════════════════════════ */
+      function applyFilters() {
+        const q = (searchEl.value || '').trim().toLowerCase();
+        const domain = domainEl.value;
+        const conf = confEl.value;
+        const pressure = pressureEl.value;
+
+        if (activeSpotlight) return;
+
+        cy.elements().removeClass('dim');
+
+        cy.nodes().forEach(n => {
+          const label = String(n.data('label') || '').toLowerCase();
+          const id = String(n.data('id') || '').toLowerCase();
+          const isCompany = n.data('node_type') === 'company';
+
+          let ok = true;
+          if (q && !(label.includes(q) || id.includes(q))) ok = false;
+
+          if (!isCompany) {
+            if (domain !== 'all' && String(n.data('l1_component') || '').toLowerCase() !== domain) ok = false;
+            if (pressure !== 'all') {
+              const b = getTightnessIndex(n);
+              if (pressure === 'high' && b < 70) ok = false;
+              if (pressure === 'med' && (b < 40 || b >= 70)) ok = false;
+              if (pressure === 'low' && b >= 40) ok = false;
+            }
+          }
+
+          if (conf !== 'all') {
+            const ct = String(n.data('confidence') || n.data('confidence_tier') || '').toLowerCase();
+            if (!ct.includes(conf)) ok = false;
+          }
+
+          if (!ok) n.addClass('dim');
+        });
+
+        cy.edges().forEach(e => {
+          if (e.source().hasClass('dim') || e.target().hasClass('dim')) e.addClass('dim');
+        });
+      }
+
+      function renderTopBottlenecksPanel(limit = 10, selectedId = '') {
+        if (!topBottlenecksPanelEl) return;
+        const top = cy.nodes()
+          .filter(n => isCoreLayerNode(n))
+          .sort(compareBtiNodesDesc)
+          .slice(0, limit);
+        if (!top || top.length === 0) {
+          topBottlenecksPanelEl.innerHTML = '<small>No L1/L2/L3 nodes available.</small>';
+          return;
+        }
+        const header = `<div class="top-bottleneck-header">
+          <span>Rank</span>
+          <span>Component</span>
+          <span>Pressure</span>
+        </div>`;
+        topBottlenecksPanelEl.innerHTML = header + '<div class="top-bottleneck-list">' + top.map((n, idx) => {
+          const id = n.id();
+          const rowCls = id === selectedId ? 'top-bottleneck-row selected' : 'top-bottleneck-row';
+          const label = escHtml(String(n.data('label') || id));
+          const bti = getTightnessIndex(n);
+          return `<div class="${rowCls}" data-node-id="${escHtml(id)}">
+            <span class="top-bottleneck-rank">${idx + 1}</span>
+            <span class="top-bottleneck-name">${label}</span>
+            <span class="top-bottleneck-score">${bti}</span>
+          </div>`;
+        }).join('') + '</div>';
+      }
+
+      /* ═══════════════════════════════════════════════════
+         KPI bar
+         ═══════════════════════════════════════════════════ */
+      function updateKPI() {
+        const componentNodes = cy.nodes().filter(n => isCoreLayerNode(n));
+        const total = componentNodes.length;
+        const l1 = componentNodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L1').length;
+        const l2 = componentNodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L2').length;
+        const l3 = componentNodes.filter(n => String(n.data('layer') || '').toUpperCase() === 'L3').length;
+        const bottlenecks = Math.min(TOP_BOTTLENECK_LIMIT, total);
+        const coCount = cy.nodes().filter(n => n.data('node_type') === 'company').length;
+        const modeLabel = currentMode === 'executive' ? 'Exec' : 'Analyst';
+        let text = `${modeLabel} \u00b7 L1 ${l1} \u00b7 L2 ${l2} \u00b7 L3 ${l3} \u00b7 ${total} total \u00b7 ${pass} pass \u00b7 ${fail} fail`;
+        if (coCount > 0) text += ` \u00b7 ${coCount} cos`;
+        kpiEl.textContent = text;
+
+        /* ── Update panel metric cards ── */
+        const pmNodes = document.getElementById('pmNodes');
+        const pmBot   = document.getElementById('pmBottleneck');
+        if (pmNodes) pmNodes.textContent = `${l1}/${l2}/${l3}`;
+        if (pmBot)   pmBot.textContent   = bottlenecks;
+        renderTopBottlenecksPanel(TOP_BOTTLENECK_LIMIT);
+      }
+
+      /* ═══════════════════════════════════════════════════
+         Event listeners
+         ═══════════════════════════════════════════════════ */
+      searchEl.addEventListener('input', applyFilters);
+      domainEl.addEventListener('change', applyFilters);
+      confEl.addEventListener('change', applyFilters);
+
+      pressureEl.addEventListener('change', applyFilters);
+
+      companyToggleEl.addEventListener('change', () => {
+        companyOverlayActive = companyToggleEl.checked;
+        rebuildGraph();
+      });
+
+      document.getElementById('showTop10').addEventListener('click', () => {
+        clearSpotlight();
+        cy.nodes().removeClass('top10');
+        const topNodes = cy.nodes()
+          .filter(n => isCoreLayerNode(n))
+          .sort(compareBtiNodesDesc)
+          .slice(0, TOP_BOTTLENECK_LIMIT);
+        topNodes.forEach(n => n.addClass('top10'));
+        const selectedId = topNodes.length > 0 ? topNodes[0].id() : '';
+        renderTopBottlenecksPanel(TOP_BOTTLENECK_LIMIT, selectedId);
+      });
+      topBottlenecksPanelEl.addEventListener('click', evt => {
+        const row = evt.target.closest('[data-node-id]');
+        if (!row) return;
+        const nodeId = row.getAttribute('data-node-id') || '';
+        if (!nodeId) return;
+        const node = cy.getElementById(nodeId);
+        if (!node || node.empty()) return;
+        clearFocusClasses();
+        node.addClass('focus');
+        node.neighborhood('node').addClass('focus-context');
+        node.connectedEdges().addClass('focus-edge');
+        renderTopBottlenecksPanel(TOP_BOTTLENECK_LIMIT, node.id());
+        if (node.data('node_type') === 'company') renderCompanyDetail(node);
+        else renderComponentDetail(node);
+      });
+
+      document.getElementById('reset').addEventListener('click', () => {
+        searchEl.value = '';
+        domainEl.value = 'all';
+        confEl.value   = 'all';
+        pressureEl.value = 'all';
+        clearSpotlight();
+        clearFocusClasses();
+        cy.elements().removeClass('dim top10 hover');
+        runLayout();
+        renderTopBottlenecksPanel(TOP_BOTTLENECK_LIMIT);
+      });
+
+      // Top panel vertical resize (header + controls + paths)
+      if (topPanelEl && topPanelResizerEl) {
+        const DEFAULT_H = Math.max(110, topPanelEl.scrollHeight);
+        const MIN_H = 92;
+        const MAX_H = () => Math.min(window.innerHeight * 0.42, 360);
+        const applyTopH = (h) => {
+          const clamped = Math.max(MIN_H, Math.min(MAX_H(), Number(h) || DEFAULT_H));
+          document.documentElement.style.setProperty('--top-panel-height', `${clamped}px`);
+          try { localStorage.setItem('cy.topPanel.height', String(clamped)); } catch {}
+        };
+        try {
+          const saved = Number(localStorage.getItem('cy.topPanel.height') || DEFAULT_H);
+          applyTopH(saved);
+        } catch { applyTopH(DEFAULT_H); }
+
+        let startY = 0;
+        let startH = DEFAULT_H;
+        const onMove = (evt) => {
+          const dy = evt.clientY - startY;
+          applyTopH(startH + dy);
+        };
+        const onUp = () => {
+          document.body.classList.remove('resizing-top-panel');
+          window.removeEventListener('pointermove', onMove);
+          window.removeEventListener('pointerup', onUp);
+        };
+        topPanelResizerEl.addEventListener('pointerdown', (evt) => {
+          evt.preventDefault();
+          startY = evt.clientY;
+          const current = getComputedStyle(document.documentElement).getPropertyValue('--top-panel-height').trim();
+          startH = Number((current || `${DEFAULT_H}px`).replace('px', '')) || DEFAULT_H;
+          document.body.classList.add('resizing-top-panel');
+          window.addEventListener('pointermove', onMove);
+          window.addEventListener('pointerup', onUp, { once: true });
+        });
+        topPanelResizerEl.addEventListener('dblclick', () => applyTopH(DEFAULT_H));
+      }
+
+      // Panel resize handle (native-feeling splitter)
+      if (panelResizerEl) {
+        const DEFAULT_W = 460;
+        const MIN_W = 360;
+        const MAX_W = () => Math.min(window.innerWidth * 0.72, 920);
+
+        const applyWidth = (w) => {
+          const clamped = Math.max(MIN_W, Math.min(MAX_W(), Number(w) || DEFAULT_W));
+          document.documentElement.style.setProperty('--panel-width', `${clamped}px`);
+          try { localStorage.setItem('cy.panel.width', String(clamped)); } catch {}
+        };
+
+        try {
+          const saved = Number(localStorage.getItem('cy.panel.width') || DEFAULT_W);
+          applyWidth(saved);
+        } catch {
+          applyWidth(DEFAULT_W);
+        }
+
+        let startX = 0;
+        let startW = DEFAULT_W;
+
+        const onPointerMove = (evt) => {
+          const dx = startX - evt.clientX;
+          applyWidth(startW + dx);
+        };
+
+        const onPointerUp = () => {
+          document.body.classList.remove('resizing-panel');
+          window.removeEventListener('pointermove', onPointerMove);
+          window.removeEventListener('pointerup', onPointerUp);
+        };
+
+        panelResizerEl.addEventListener('pointerdown', (evt) => {
+          evt.preventDefault();
+          panelResizerEl.setPointerCapture?.(evt.pointerId);
+          startX = evt.clientX;
+          const current = getComputedStyle(document.documentElement).getPropertyValue('--panel-width').trim();
+          startW = Number((current || `${DEFAULT_W}px`).replace('px', '')) || DEFAULT_W;
+          document.body.classList.add('resizing-panel');
+          window.addEventListener('pointermove', onPointerMove);
+          window.addEventListener('pointerup', onPointerUp, { once: true });
+        });
+
+        // Double-click to reset width
+        panelResizerEl.addEventListener('dblclick', () => applyWidth(DEFAULT_W));
+
+        // Keep panel within bounds on resize
+        window.addEventListener('resize', () => {
+          const current = Number((getComputedStyle(document.documentElement).getPropertyValue('--panel-width') || '').replace('px', '')) || DEFAULT_W;
+          applyWidth(current);
+        });
+      }
+
+      /* ═══════════════════════════════════════════════════
+         Company HTML builder (for detail panel)
+         ═══════════════════════════════════════════════════ */
+      function buildTopCompaniesHtml(nodeId) {
+        const nodeData = cy.getElementById(nodeId).data();
+        const nt = String((nodeData && nodeData.node_type) || '').toLowerCase();
+        const panelTopCompanies = Array.isArray(nodeData?.top_companies) ? nodeData.top_companies : [];
+
+        if (panelTopCompanies.length > 0) {
+          return '<div class="company-list">' + panelTopCompanies.slice(0, 8).map(r => {
+            const label = escHtml(r.company_name || r.company_id || 'unknown');
+            const scoreRaw = r.weighted_score ?? r.composite_score ?? r.score;
+            const score = Number.isFinite(Number(scoreRaw)) ? Number(scoreRaw).toFixed(2) : 'n/a';
+            const coType = r.company_type ? escHtml(String(r.company_type)) : '';
+            return `<div class="company-row">
+              <div><span class="company-name">${label}</span><br><small>${coType}</small></div>
+              <span class="company-score">${score}</span>
+            </div>`;
+          }).join('') + '</div>';
+        }
+
+        if (nt.startsWith('l1')) {
+          const rec = companyRollupByL1NodeId.get(nodeId);
+          const rows = rec && Array.isArray(rec.top_companies) ? rec.top_companies : [];
+          if (rows.length === 0) return '<small>No L1 rollup companies linked.</small>';
+          return '<div class="company-list">' + rows.slice(0, 8).map(r => {
+            const label = escHtml(r.company_name || r.company_id || 'unknown');
+            const weighted = Number.isFinite(Number(r.weighted_score_sum)) ? Number(r.weighted_score_sum).toFixed(2) : 'n/a';
+            const confAvg = Number(r.confidence_factor_avg);
+            const conf = Number.isFinite(confAvg)
+              ? (confAvg >= 0.65 ? 'high' : confAvg >= 0.4 ? 'medium' : 'low')
+              : 'low';
+            const cls = conf === 'high' ? 'conf-high' : conf === 'medium' ? 'conf-medium' : 'conf-low';
+            const roles = Array.isArray(r.roles) ? r.roles.join(', ') : '';
+            const bits = [
+              roles,
+              r.company_type || '',
+              Number.isFinite(Number(r.component_count)) ? `components ${r.component_count}` : '',
+              r.fallback_scope ? 'fallback' : ''
+            ].filter(Boolean).map(escHtml).join(' \u00b7 ');
+            return `<div class="company-row">
+              <div><span class="company-name">${label}</span> <span class="conf-badge ${cls}">${conf}</span><br><small>${bits}</small></div>
+              <span class="company-score">${weighted}</span>
+            </div>`;
+          }).join('') + '</div>';
+        }
+
+        if (nt.startsWith('l2')) {
+          const rec = companyRollupByL2NodeId.get(nodeId);
+          const rows = rec && Array.isArray(rec.top_companies) ? rec.top_companies : [];
+          if (rows.length === 0) return '<small>No L2 rollup companies linked.</small>';
+          return '<div class="company-list">' + rows.slice(0, 8).map(r => {
+            const label = escHtml(r.company_name || r.company_id || 'unknown');
+            const weighted = Number.isFinite(Number(r.weighted_score_sum)) ? Number(r.weighted_score_sum).toFixed(2) : 'n/a';
+            const confAvg = Number(r.confidence_factor_avg);
+            const conf = Number.isFinite(confAvg)
+              ? (confAvg >= 0.65 ? 'high' : confAvg >= 0.4 ? 'medium' : 'low')
+              : 'low';
+            const cls = conf === 'high' ? 'conf-high' : conf === 'medium' ? 'conf-medium' : 'conf-low';
+            const roles = Array.isArray(r.roles) ? r.roles.join(', ') : '';
+            const bits = [
+              roles,
+              r.company_type || '',
+              Number.isFinite(Number(r.component_count)) ? `components ${r.component_count}` : '',
+              r.fallback_scope ? 'fallback' : ''
+            ].filter(Boolean).map(escHtml).join(' \u00b7 ');
+            return `<div class="company-row">
+              <div><span class="company-name">${label}</span> <span class="conf-badge ${cls}">${conf}</span><br><small>${bits}</small></div>
+              <span class="company-score">${weighted}</span>
+            </div>`;
+          }).join('') + '</div>';
+        }
+
+        const directEdges = companyEdgesByComponent.get(nodeId) || [];
+        const l1Id = nodeData && nodeData.l1_component ? 'n_l1_' + nodeData.l1_component : null;
+        const l1Edges = l1Id ? (companyEdgesByComponent.get(l1Id) || []) : [];
+
+        const seen = new Set();
+        const merged = [];
+        for (const e of directEdges) { seen.add(e.target); merged.push(e); }
+        for (const e of l1Edges) { if (!seen.has(e.target)) { seen.add(e.target); merged.push(e); } }
+        if (merged.length === 0) return '<small>No company data linked.</small>';
+
+        merged.sort((a, b) => (b.composite_score ?? -1) - (a.composite_score ?? -1));
+
+        return '<div class="company-list">' + merged.slice(0, 8).map(e => {
+          const co    = companyNodeById.get(e.target);
+          const label = co ? escHtml(co.label) : escHtml(e.target);
+          const coType = co ? escHtml(co.company_type) : '';
+          const score = e.composite_score != null ? e.composite_score.toFixed(1) : 'n/a';
+          const conf  = (e.confidence || 'low').toLowerCase();
+          const cls   = conf === 'high' ? 'conf-high' : conf === 'medium' ? 'conf-medium' : 'conf-low';
+          const dep   = escHtml(e.dependency_type || '');
+          const pen   = e.confidence_penalty != null ? 'pen\u00a0' + e.confidence_penalty.toFixed(2) : '';
+          const bits  = [dep, pen, coType].filter(Boolean).join(' \u00b7 ');
+          return `<div class="company-row">
+            <div><span class="company-name">${label}</span> <span class="conf-badge ${cls}">${conf}</span><br><small>${bits}</small></div>
+            <span class="company-score">${score}</span>
+          </div>`;
+        }).join('') + '</div>';
+      }
+
+      function buildSourcesHtml(node) {
+        const target = node.data();
+        const sourceRows = Array.isArray(target.evidence_sources) ? target.evidence_sources : [];
+        const gapRows = Array.isArray(target.evidence_constraints) ? target.evidence_constraints : [];
+
+        const rows = sourceRows
+          .map(s => {
+            if (typeof s === 'string') {
+              return {
+                id: s,
+                label: s,
+                sourceId: '',
+                url: '',
+                relation: 'linked'
+              };
+            }
+            const sourceId = String(s.source_id || '');
+            const label = String(s.label || s.source_id || s.id || s.url || '');
+            const url = String(s.url || '');
+            const id = String(s.id || sourceId || label || url || '');
+            return ({
+              id,
+              label,
+              sourceId,
+              url,
+              relation: String(s.relation || 'linked')
+            });
+          })
+          .filter(r => r.id);
+
+        const gapList = gapRows
+          .map(g => ({
+            id: String(g.id || ''),
+            label: String(g.label || g.id || ''),
+            relation: String(g.relation || 'linked')
+          }))
+          .filter(g => g.id);
+
+        if (rows.length === 0 && gapList.length === 0) return '<small>No linked sources captured.</small>';
+        rows.sort((a, b) => a.label.localeCompare(b.label));
+        const sourceHtml = rows.length > 0
+          ? '<div class="company-list">' + rows.slice(0, 12).map(r => {
+          const label = escHtml(r.label);
+          const rel = escHtml(r.relation);
+          const sourceId = r.sourceId ? `<small>${escHtml(r.sourceId)}</small>` : '';
+          const link = r.url ? `<small><a href="${escHtml(r.url)}" target="_blank" rel="noopener noreferrer">${escHtml(r.url)}</a></small>` : '';
+          return `<div class="company-row">
+            <div><span class="company-name">${label}</span> <span class="conf-badge conf-medium">${rel}</span><br>${sourceId}${sourceId && link ? '<br>' : ''}${link}</div>
+            <span class="company-score">src</span>
+          </div>`;
+          }).join('') + '</div>'
+          : '<small>No linked sources captured.</small>';
+
+        const gapHtml = gapList.length > 0
+          ? `<div class="detail-note">Constraints: ${gapList
+            .slice(0, 6)
+            .map(g => `${escHtml(g.label)} (${escHtml(g.relation)})`)
+            .join(' \u00b7 ')}</div>`
+          : '';
+
+        return sourceHtml + gapHtml;
+      }
+
+      let metricPopoverEl = null;
+      function closeMetricPopover() {
+        if (metricPopoverEl && metricPopoverEl.parentNode) metricPopoverEl.parentNode.removeChild(metricPopoverEl);
+        metricPopoverEl = null;
+      }
+
+      function metricPopoverContent(metric, nodeData) {
+        const n = nodeData || {};
+        if (metric === 'pressure') {
+          return '<strong>Bottleneck Pressure</strong><br><small>0–100 score. Higher = tighter bottleneck and harder substitution.</small>';
+        }
+        if (metric === 'confidence') {
+          return `<strong>Confidence</strong><br><small>Evidence quality tier for this node: ${escHtml(String(n.confidence_tier || n.confidence || 'unknown'))}.</small>`;
+        }
+        if (metric === 'suppliers') {
+          const rows = Array.isArray(n.top_companies) ? n.top_companies.slice(0, 8) : [];
+          if (!rows.length) return '<strong>Supplier Companies</strong><br><small>No linked suppliers for this node yet.</small>';
+          return '<strong>Supplier Companies</strong><br>' + rows.map((r, i) => {
+            const name = escHtml(String(r.company_name || r.company_id || 'unknown'));
+            const score = Number.isFinite(Number(r.weighted_score ?? r.composite_score ?? r.score))
+              ? Number(r.weighted_score ?? r.composite_score ?? r.score).toFixed(2)
+              : 'n/a';
+            return `<small>${i + 1}. ${name} — ${score}</small>`;
+          }).join('<br>');
+        }
+        if (metric === 'sources') {
+          const rows = Array.isArray(n.evidence_sources) ? n.evidence_sources.slice(0, 8) : [];
+          if (!rows.length) return '<strong>Evidence Sources</strong><br><small>No linked sources for this node yet.</small>';
+          return '<strong>Evidence Sources</strong><br>' + rows.map((r, i) => {
+            const label = typeof r === 'string' ? r : (r.label || r.source_id || r.url || 'source');
+            return `<small>${i + 1}. ${escHtml(String(label))}</small>`;
+          }).join('<br>');
+        }
+        return '<small>No details.</small>';
+      }
+
+      function showMetricPopover(cardEl, metric, nodeData) {
+        closeMetricPopover();
+        const rect = cardEl.getBoundingClientRect();
+        const pop = document.createElement('div');
+        pop.className = 'metric-popover';
+        pop.innerHTML = metricPopoverContent(metric, nodeData);
+        document.body.appendChild(pop);
+        const width = Math.min(380, Math.max(260, pop.offsetWidth || 300));
+        pop.style.width = `${width}px`;
+        const left = Math.max(12, Math.min(window.innerWidth - width - 12, rect.left));
+        const top = Math.min(window.innerHeight - pop.offsetHeight - 12, rect.bottom + 8);
+        pop.style.left = `${left}px`;
+        pop.style.top = `${top}px`;
+        metricPopoverEl = pop;
+      }
+
+      document.addEventListener('click', (evt) => {
+        const card = evt.target.closest('.detail-metric-card[data-metric]');
+        if (card) {
+          const metric = card.getAttribute('data-metric') || '';
+          const host = card.closest('[data-node-id]');
+          const nid = host ? host.getAttribute('data-node-id') : '';
+          const nodeData = nid ? cy.getElementById(nid).data() : null;
+          showMetricPopover(card, metric, nodeData || {});
+          evt.stopPropagation();
+          return;
+        }
+        if (!evt.target.closest('.metric-popover')) closeMetricPopover();
+      });
+      window.addEventListener('scroll', closeMetricPopover, true);
+      window.addEventListener('resize', closeMetricPopover);
+
+      /* ═══════════════════════════════════════════════════
+         Component detail panel
+         ═══════════════════════════════════════════════════ */
+      function renderComponentDetail(node) {
+        const n   = node.data();
+
+        const neighbors = node.neighborhood('node');
+        const edgeCount = node.connectedEdges().length;
+        const topDown   = node.outgoers('node')
+          .filter(x => x.data('node_type') !== 'company')
+          .sort(compareBtiNodesDesc)
+          .slice(0, 3)
+          .map(x => escHtml(x.data('label')) + ' (' + getTightnessIndex(x) + ')')
+          .join(', ');
+        const nt = String(n.node_type || '').toLowerCase();
+        const blockerPrimary = String(n.key_blockers || '').trim();
+        const blockerFallback = nt.startsWith('l1')
+          ? (n.key_blockers_l1_display || n.key_blockers_fallback || n.key_blockers_synth || '')
+          : nt.startsWith('l2')
+            ? (n.key_blockers_l2_display || n.key_blockers_fallback || n.key_blockers_synth || '')
+            : (n.key_blockers_synth || n.key_blockers_fallback || '');
+        let blockerRaw = blockerPrimary || blockerFallback;
+        if (!blockerRaw && nt.startsWith('l1')) {
+          const rollupRec = companyRollupByL1NodeId.get(n.id);
+          blockerRaw = (rollupRec && rollupRec.l1_blocker_text) || '';
+        }
+        if (!blockerRaw && nt.startsWith('l2')) {
+          const rollupRec = companyRollupByL2NodeId.get(n.id);
+          blockerRaw = (rollupRec && rollupRec.l2_blocker_text) || '';
+        }
+        const blockerText = blockerRaw
+          ? escHtml(String(blockerRaw).slice(0, 500))
+          : 'No direct blocker text. Inspect downstream nodes.';
+        const blockerList = Array.isArray(n.blockers) ? n.blockers.map(x => String(x || '').trim()).filter(Boolean) : [];
+        const driverList = Array.isArray(n.bottleneck_drivers) ? n.bottleneck_drivers.map(x => String(x || '').trim()).filter(Boolean) : [];
+        const parentId = String(n.parent_id || '').trim() || 'root';
+        const parentNode = parentId && parentId !== 'root' ? cy.getElementById(parentId) : null;
+        const parentLabel = parentNode && !parentNode.empty() ? String(parentNode.data('label') || parentId) : (parentId === 'root' ? '—' : parentId);
+        const confidenceTier = String(n.confidence_tier || n.confidence || 'unknown');
+        const nodeTightnessIndex = Math.round(Number(n.bottleneck_tightness_index_v2 ?? n.bottleneck_tightness_index_v1 ?? n.bottleneck_score) || 0);
+        const cosHtml = buildTopCompaniesHtml(n.id);
+        const srcHtml = buildSourcesHtml(node);
+        const supplierCount = Array.isArray(n.top_companies) ? n.top_companies.length : 0;
+        const sourceCount = Array.isArray(n.evidence_sources) ? n.evidence_sources.length : 0;
+
+        details.innerHTML = `
+          <div data-node-id="${escHtml(n.id)}"><div class="detail-title">${escHtml(n.label)}</div>
+          <div class="detail-metrics-grid">
+            <button class="detail-metric-card" data-metric="pressure" type="button"><small>Bottleneck Pressure</small><strong>${nodeTightnessIndex}</strong></button>
+            <button class="detail-metric-card" data-metric="confidence" type="button"><small>Confidence</small><strong>${escHtml(confidenceTier)}</strong></button>
+            <button class="detail-metric-card" data-metric="suppliers" type="button"><small>Suppliers</small><strong>${supplierCount}</strong></button>
+            <button class="detail-metric-card" data-metric="sources" type="button"><small>Sources</small><strong>${sourceCount}</strong></button>
+          </div>
+          <div class="detail-grid">
+            <div class="detail-row"><span>Layer</span><span>${escHtml(String(n.layer || '?'))}</span></div>
+            <div class="detail-row"><span>Domain</span><span>${escHtml(String(n.l1_component || 'n/a'))}</span></div>
+            <div class="detail-row"><span>Parent</span><span>${escHtml(parentLabel)}</span></div>
+            <div class="detail-row"><span>Neighbors</span><span>${neighbors.length}</span></div>
+          </div>
+          ${topDown ? `<div class="detail-note">Downstream risk: ${topDown}</div>` : ''}
+          <div class="detail-note">Blockers: ${blockerText}</div>
+          ${driverList.length > 0 ? `<div class="detail-note">Drivers: ${escHtml(driverList.join(' · '))}</div>` : ''}
+          ${blockerList.length > 0 ? `<div class="detail-note">Blocker List: ${escHtml(blockerList.slice(0, 6).join(' · '))}</div>` : ''}
+          <div class="detail-subsection">
+            <div class="detail-subtitle">Metadata / Sources</div>
+            ${srcHtml}
+          </div>
+          <div class="detail-subsection">
+            <div class="detail-subtitle">Supplier Companies</div>
+            <small>Score = supplier relevance index (higher = more critical to this node).</small>
+            ${cosHtml}
+          </div></div>`;
+      }
+
+      /* ═══════════════════════════════════════════════════
+         Company detail panel
+         ═══════════════════════════════════════════════════ */
+      function renderCompanyDetail(node) {
+        const n    = node.data();
+        const conf = (n.confidence || 'low').toLowerCase();
+        const cls  = conf === 'high' ? 'conf-high' : conf === 'medium' ? 'conf-medium' : 'conf-low';
+
+        const linked = node.neighborhood('node')
+          .filter(x => x.data('node_type') !== 'company')
+          .map(x => escHtml(x.data('label')))
+          .slice(0, TOP_BOTTLENECK_LIMIT);
+
+        details.innerHTML = `
+          <div class="detail-title">${escHtml(n.label)} <span class="conf-badge ${cls}">${conf}</span></div>
+          <div class="detail-badges"><span class="badge unknown">company: ${escHtml(n.company_type || 'n/a')}</span></div>
+          <div class="detail-metrics-grid">
+            <div class="detail-metric-card"><small>Components</small><strong>${n.component_count ?? 'n/a'}</strong></div>
+            <div class="detail-metric-card"><small>Sources</small><strong>${n.source_count ?? 'n/a'}</strong></div>
+            <div class="detail-metric-card"><small>Avg Score</small><strong>${n.avg_composite_score ?? 'n/a'}</strong></div>
+            <div class="detail-metric-card"><small>Best Score</small><strong>${n.best_composite_score ?? 'n/a'}</strong></div>
+          </div>
+          <div class="detail-grid">
+            <div class="detail-row"><span>ID</span><span>${escHtml(n.id)}</span></div>
+            <div class="detail-row"><span>Confidence</span><span>${conf}</span></div>
+            <div class="detail-row"><span>Type</span><span>${escHtml(n.company_type || 'n/a')}</span></div>
+          </div>
+          ${linked.length > 0 ? `<div class="detail-note">Linked: ${linked.join(', ')}</div>` : ''}`;
+      }
+
+      /* ═══════════════════════════════════════════════════
+         Tap handlers
+         ═══════════════════════════════════════════════════ */
+      cy.on('tap', 'node', evt => {
+        clearFocusClasses();
+        const node = evt.target;
+        node.addClass('focus');
+        node.neighborhood('node').addClass('focus-context');
+        node.connectedEdges().addClass('focus-edge');
+        renderTopBottlenecksPanel(TOP_BOTTLENECK_LIMIT, node.id());
+        if (node.data('node_type') === 'company') renderCompanyDetail(node);
+        else renderComponentDetail(node);
+      });
+
+      cy.on('tap', 'edge', evt => {
+        clearFocusClasses();
+        evt.target.addClass('focus-edge');
+        evt.target.source().addClass('focus-context');
+        evt.target.target().addClass('focus-context');
+        renderTopBottlenecksPanel(TOP_BOTTLENECK_LIMIT);
+        const e = evt.target.data();
+        const depType = e.dependency_type || 'depends_on';
+        let extra = '';
+        if (e.composite_score != null) {
+          extra += `<small>composite: ${e.composite_score} \u00b7 penalty: ${e.confidence_penalty ?? 'n/a'}</small>`;
+        }
+        if (e.source_count != null) {
+          extra += `<small>sources: ${e.source_count}</small>`;
+        }
+        details.innerHTML = `
+          <div class="detail-title">Edge</div>
+          <div class="detail-note">${escHtml(e.source)} \u2192 ${escHtml(e.target)}</div>
+          <div class="detail-note">type: ${escHtml(depType)} \u00b7 confidence: ${e.confidence || 'n/a'}</div>
+          ${extra}`;
+      });
+
+      /* ═══════════════════════════════════════════════════
+         Hover: reveal labels on mouseover
+         ═══════════════════════════════════════════════════ */
+      cy.on('mouseover', 'node', evt => evt.target.addClass('hover'));
+      cy.on('mouseout',  'node', evt => evt.target.removeClass('hover'));
+
+      /* ── Init ── */
+      buildSpotlightButtons();
+      runLayout();
+      window.__cy = cy;
+      updateKPI();
+
+      window.__layoutDiagnostics = function () {
+        const nodes = cy.nodes(':visible');
+        const edges = cy.edges(':visible');
+        const canvasW = cy.width();
+        const canvasH = cy.height();
+        const canvasArea = Math.max(1, canvasW * canvasH);
+        const bbox = nodes.renderedBoundingBox({ includeLabels: false });
+        const occupiedArea = Math.max(1, bbox.w * bbox.h);
+        const occupiedPct = (occupiedArea / canvasArea) * 100;
+
+        const layerCounts = { L1: 0, L2: 0, L3: 0, L4: 0, OTHER: 0 };
+        nodes.forEach(n => {
+          const layer = String(n.data('layer') || '').toUpperCase();
+          if (layerCounts[layer] != null) layerCounts[layer] += 1;
+          else layerCounts.OTHER += 1;
+        });
+
+        const labelBoxes = [];
+        nodes.forEach(n => {
+          if (Number(n.style('text-opacity')) < 0.2 || Number(n.style('opacity')) < 0.18) return;
+          const p = n.renderedPosition();
+          const text = String(n.data('short_label') || '');
+          const w = Math.max(22, text.length * 6.2);
+          const h = 13;
+          const y = p.y + (n.renderedHeight() * 0.5) + 8;
+          labelBoxes.push({ x: p.x, y, w, h });
+        });
+
+        let labelCollisions = 0;
+        for (let i = 0; i < labelBoxes.length; i++) {
+          for (let j = i + 1; j < labelBoxes.length; j++) {
+            const a = labelBoxes[i];
+            const b = labelBoxes[j];
+            const overlapX = Math.abs(a.x - b.x) < (a.w + b.w) / 2;
+            const overlapY = Math.abs(a.y - b.y) < (a.h + b.h) / 2;
+            if (overlapX && overlapY) labelCollisions += 1;
+          }
+        }
+
+        const segs = [];
+        edges.forEach(e => {
+          const s = e.source();
+          const t = e.target();
+          if (s.id() === t.id()) return;
+          const sp = s.position();
+          const tp = t.position();
+          segs.push({ x1: sp.x, y1: sp.y, x2: tp.x, y2: tp.y, sid: s.id(), tid: t.id() });
+        });
+
+        let crossingsEstimate = 0;
+        for (let i = 0; i < segs.length; i++) {
+          for (let j = i + 1; j < segs.length; j++) {
+            const a = segs[i];
+            const b = segs[j];
+            if (a.sid === b.sid || a.sid === b.tid || a.tid === b.sid || a.tid === b.tid) continue;
+            const d1x = a.x2 - a.x1;
+            const d1y = a.y2 - a.y1;
+            const d2x = b.x2 - b.x1;
+            const d2y = b.y2 - b.y1;
+            const det = d1x * d2y - d1y * d2x;
+            if (Math.abs(det) < 0.001) continue;
+            const dx = b.x1 - a.x1;
+            const dy = b.y1 - a.y1;
+            const t = (dx * d2y - dy * d2x) / det;
+            const u = (dx * d1y - dy * d1x) / det;
+            if (t > 0.02 && t < 0.98 && u > 0.02 && u < 0.98) crossingsEstimate += 1;
+          }
+        }
+
+        return {
+          occupiedBboxPct: Number(occupiedPct.toFixed(2)),
+          nodeCountVisible: nodes.length,
+          edgeCountVisible: edges.length,
+          layerCountsVisible: layerCounts,
+          labelCollisions,
+          crossingsEstimate,
+          canvasW: Math.round(canvasW),
+          canvasH: Math.round(canvasH),
+          bboxW: Math.round(bbox.w),
+          bboxH: Math.round(bbox.h)
+        };
+      };
+    </script>
+  </body>
+</html>

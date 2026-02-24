@@ -1,0 +1,18 @@
+{
+  "occupiedBboxPct": 85.38,
+  "nodeCountVisible": 142,
+  "edgeCountVisible": 137,
+  "layerCountsVisible": {
+    "L1": 10,
+    "L2": 37,
+    "L3": 26,
+    "L4": 69,
+    "OTHER": 0
+  },
+  "labelCollisions": 65,
+  "crossingsEstimate": 303,
+  "canvasW": 1576,
+  "canvasH": 896,
+  "bboxW": 1472,
+  "bboxH": 819
+}

@@ -1,0 +1,4050 @@
+{
+  "overlay_id": "company_overlay_v2",
+  "created_at_utc": "2026-02-23T23:37:29.989643+00:00",
+  "description": "WS-4 company overlay v2 (component-linked and universe-only company nodes)",
+  "source_inputs": {
+    "component_company_map": "analysis/company/component_company_map_v3.jsonl",
+    "company_competitiveness": "analysis/company/company_competitiveness_v2.jsonl"
+  },
+  "counts": {
+    "company_nodes": 62,
+    "company_edges": 80,
+    "universe_only_company_nodes": 27,
+    "mapped_company_rows": 40,
+    "universe_only_rows": 27
+  },
+  "nodes": [
+    {
+      "data": {
+        "id": "n_company_airo",
+        "label": "AIRO",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "AIRO",
+        "universe_segment": "Military Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_apc_propellers",
+        "label": "APC Propellers",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 18.55,
+        "best_composite_score": 18.55,
+        "confidence": "low",
+        "source_count": 10,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_ark_electronics",
+        "label": "ARK Electronics",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 19.38,
+        "best_composite_score": 19.38,
+        "confidence": "low",
+        "source_count": 11,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_aerovironment",
+        "label": "AeroVironment",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "AVAV",
+        "universe_segment": "Military Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_ageagle",
+        "label": "AgEagle",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "UAVS",
+        "universe_segment": "Agriculture"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_airbus_adr",
+        "label": "Airbus ADR",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "EADSY",
+        "universe_segment": "Industrial Aerospace and Defense"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_amazon",
+        "label": "Amazon",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "AMZN",
+        "universe_segment": "Drone Delivery"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_analog_devices_inc",
+        "label": "Analog Devices, Inc.",
+        "node_type": "company",
+        "company_type": "chip vendor",
+        "component_count": 1,
+        "avg_composite_score": 13.29,
+        "best_composite_score": 13.29,
+        "confidence": "low",
+        "source_count": 9,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_archer",
+        "label": "Archer",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "ACHR",
+        "universe_segment": "eVTOL"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_asahi_kasei_corporation",
+        "label": "Asahi Kasei Corporation",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 12.47,
+        "best_composite_score": 12.47,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_auterion_government_solutions_inc",
+        "label": "Auterion Government Solutions Inc.",
+        "node_type": "company",
+        "company_type": "integrator",
+        "component_count": 1,
+        "avg_composite_score": 9.6,
+        "best_composite_score": 9.6,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_bae_systems_plc",
+        "label": "BAE Systems plc",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 16.42,
+        "best_composite_score": 16.42,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_boeing",
+        "label": "Boeing",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "BA",
+        "universe_segment": "Industrial Aerospace and Defense"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_boyd_corporation",
+        "label": "Boyd Corporation",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 10.51,
+        "best_composite_score": 10.51,
+        "confidence": "low",
+        "source_count": 6,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_celgard_llc",
+        "label": "Celgard LLC",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 12.47,
+        "best_composite_score": 12.47,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_collins_aerospace",
+        "label": "Collins Aerospace",
+        "node_type": "company",
+        "company_type": "integrator",
+        "component_count": 1,
+        "avg_composite_score": 16.4,
+        "best_composite_score": 16.4,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_doodle_labs",
+        "label": "Doodle Labs",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 2,
+        "avg_composite_score": 14.16,
+        "best_composite_score": 17.99,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_draganfly",
+        "label": "Draganfly",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "DPRO",
+        "universe_segment": "Commercial Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_droneshield",
+        "label": "DroneShield",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "DRSHF",
+        "universe_segment": "Military Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_ehang",
+        "label": "EHang",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "EH",
+        "universe_segment": "eVTOL"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_elbit_systems",
+        "label": "Elbit Systems",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "ESLT",
+        "universe_segment": "Military Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_farage_precision_llc",
+        "label": "FARAGE PRECISION, LLC",
+        "node_type": "company",
+        "company_type": "OEM",
+        "component_count": 1,
+        "avg_composite_score": 10.61,
+        "best_composite_score": 10.61,
+        "confidence": "low",
+        "source_count": 10,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_gps_source_inc",
+        "label": "GPS Source, Inc.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 18.11,
+        "best_composite_score": 18.11,
+        "confidence": "low",
+        "source_count": 7,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_henkel_ag_co_kgaa",
+        "label": "Henkel AG & Co. KGaA",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 9.82,
+        "best_composite_score": 9.82,
+        "confidence": "low",
+        "source_count": 6,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_honeywell_international_inc",
+        "label": "Honeywell International Inc.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 16.26,
+        "best_composite_score": 16.26,
+        "confidence": "low",
+        "source_count": 7,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_infineon_technologies_ag",
+        "label": "Infineon Technologies AG",
+        "node_type": "company",
+        "company_type": "chip vendor",
+        "component_count": 1,
+        "avg_composite_score": 9.82,
+        "best_composite_score": 9.82,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_joby",
+        "label": "Joby",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "JOBY",
+        "universe_segment": "eVTOL"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_kratos",
+        "label": "Kratos",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "KTOS",
+        "universe_segment": "Military Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_l3harris_technologies_inc",
+        "label": "L3Harris Technologies, Inc.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 2,
+        "avg_composite_score": 10.23,
+        "best_composite_score": 10.73,
+        "confidence": "low",
+        "source_count": 9,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_lg_energy_solution",
+        "label": "LG Energy Solution",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 17.02,
+        "best_composite_score": 17.02,
+        "confidence": "low",
+        "source_count": 6,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_leonardo",
+        "label": "Leonardo",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "LDO",
+        "universe_segment": "Industrial Aerospace and Defense"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_littelfuse_inc",
+        "label": "Littelfuse, Inc.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 11.25,
+        "best_composite_score": 11.25,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_lockheed_martin",
+        "label": "Lockheed Martin",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "LMT",
+        "universe_segment": "Industrial Aerospace and Defense"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_mp_materials_corp",
+        "label": "MP Materials Corp.",
+        "node_type": "company",
+        "company_type": "Tier2",
+        "component_count": 1,
+        "avg_composite_score": 12.6,
+        "best_composite_score": 12.6,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_microchip_technology_inc",
+        "label": "Microchip Technology Inc.",
+        "node_type": "company",
+        "company_type": "chip vendor",
+        "component_count": 3,
+        "avg_composite_score": 14.77,
+        "best_composite_score": 19.71,
+        "confidence": "low",
+        "source_count": 13,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_molicel",
+        "label": "Molicel",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 26.09,
+        "best_composite_score": 26.09,
+        "confidence": "low",
+        "source_count": 7,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_nsk_ltd",
+        "label": "NSK Ltd.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 9.82,
+        "best_composite_score": 9.82,
+        "confidence": "low",
+        "source_count": 6,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_nxp_semiconductors_n_v",
+        "label": "NXP Semiconductors N.V.",
+        "node_type": "company",
+        "company_type": "chip vendor",
+        "component_count": 1,
+        "avg_composite_score": 12.71,
+        "best_composite_score": 12.71,
+        "confidence": "low",
+        "source_count": 9,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_nidec_corporation",
+        "label": "Nidec Corporation",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 13.52,
+        "best_composite_score": 13.52,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_northrop_grumman_corporation",
+        "label": "Northrop Grumman Corporation",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 9.64,
+        "best_composite_score": 9.64,
+        "confidence": "low",
+        "source_count": 7,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_ondas",
+        "label": "Ondas",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "ONDS",
+        "universe_segment": "Drone Sensors"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_palladyne",
+        "label": "Palladyne",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "PDYN",
+        "universe_segment": "Drone Software"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_panasonic_energy_co_ltd",
+        "label": "Panasonic Energy Co., Ltd.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 2,
+        "avg_composite_score": 17.02,
+        "best_composite_score": 17.02,
+        "confidence": "low",
+        "source_count": 6,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_parazero",
+        "label": "ParaZero",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "PRZO",
+        "universe_segment": "Military Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_parrot",
+        "label": "Parrot",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "PAOTF",
+        "universe_segment": "Commercial Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_proterial_ltd",
+        "label": "Proterial, Ltd.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 13.29,
+        "best_composite_score": 13.29,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_raytheon_technologies_corp",
+        "label": "Raytheon Technologies Corp.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 9.75,
+        "best_composite_score": 9.75,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_red_cat",
+        "label": "Red Cat",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "RCAT",
+        "universe_segment": "Military Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_skf_group",
+        "label": "SKF Group",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 9.82,
+        "best_composite_score": 9.82,
+        "confidence": "low",
+        "source_count": 6,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_skydio_inc",
+        "label": "Skydio, Inc.",
+        "node_type": "company",
+        "company_type": "OEM",
+        "component_count": 1,
+        "avg_composite_score": 9.6,
+        "best_composite_score": 9.6,
+        "confidence": "low",
+        "source_count": 7,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_t_motor",
+        "label": "T-Motor",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 13.52,
+        "best_composite_score": 13.52,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_te_connectivity_ltd",
+        "label": "TE Connectivity Ltd.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 11.25,
+        "best_composite_score": 11.25,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_teledyne",
+        "label": "Teledyne",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "TDY",
+        "universe_segment": "Drone Sensors"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_texas_instruments_incorporated",
+        "label": "Texas Instruments Incorporated",
+        "node_type": "company",
+        "company_type": "chip vendor",
+        "component_count": 1,
+        "avg_composite_score": 20.57,
+        "best_composite_score": 20.57,
+        "confidence": "low",
+        "source_count": 10,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_textron",
+        "label": "Textron",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "TXT",
+        "universe_segment": "Industrial Aerospace and Defense"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_thales_group",
+        "label": "Thales Group",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 7.33,
+        "best_composite_score": 7.33,
+        "confidence": "low",
+        "source_count": 6,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_trimble",
+        "label": "Trimble",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "TRMB",
+        "universe_segment": "Agriculture"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_unusual_machines",
+        "label": "Unusual Machines",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "UMAC",
+        "universe_segment": "Commercial Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_vertical_aerospace",
+        "label": "Vertical Aerospace",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "EVTL",
+        "universe_segment": "eVTOL"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_volatus_aerospace",
+        "label": "Volatus Aerospace",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "FLT",
+        "universe_segment": "Commercial Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_zenatech",
+        "label": "ZenaTech",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "ZENA",
+        "universe_segment": "Drone Sensors"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_u_blox_ag",
+        "label": "u-blox AG",
+        "node_type": "company",
+        "company_type": "chip vendor",
+        "component_count": 1,
+        "avg_composite_score": 19.01,
+        "best_composite_score": 19.01,
+        "confidence": "low",
+        "source_count": 12,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    }
+  ],
+  "edges": [
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_power_stageintegrateston_company_microchip_technology_inc",
+        "source": "n_l3_propulsion_esc_power_stage",
+        "target": "n_company_microchip_technology_inc",
+        "dependency_type": "integrates",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_power_stagesupplied_byton_company_infineon_technologies_ag",
+        "source": "n_l3_propulsion_esc_power_stage",
+        "target": "n_company_infineon_technologies_ag",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_control_mcusupplied_byton_company_microchip_technology_inc",
+        "source": "n_l3_propulsion_esc_control_mcu",
+        "target": "n_company_microchip_technology_inc",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_control_mcusupplied_byton_company_nxp_semiconductors_n_v",
+        "source": "n_l3_propulsion_esc_control_mcu",
+        "target": "n_company_nxp_semiconductors_n_v",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_magnet_stacksupplied_byton_company_mp_materials_corp",
+        "source": "n_l3_propulsion_motor_magnet_stack",
+        "target": "n_company_mp_materials_corp",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_magnet_stacksupplied_byton_company_proterial_ltd",
+        "source": "n_l3_propulsion_motor_magnet_stack",
+        "target": "n_company_proterial_ltd",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_windingsupplied_byton_company_nidec_corporation",
+        "source": "n_l3_propulsion_motor_winding",
+        "target": "n_company_nidec_corporation",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_windingsupplied_byton_company_t_motor",
+        "source": "n_l3_propulsion_motor_winding",
+        "target": "n_company_t_motor",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_bearing_shaftsupplied_byton_company_skf_group",
+        "source": "n_l3_propulsion_bearing_shaft",
+        "target": "n_company_skf_group",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_bearing_shaftsupplied_byton_company_nsk_ltd",
+        "source": "n_l3_propulsion_bearing_shaft",
+        "target": "n_company_nsk_ltd",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_propeller_materialsupplied_byton_company_apc_propellers",
+        "source": "n_l3_propulsion_propeller_material",
+        "target": "n_company_apc_propellers",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_propeller_materialintegrateston_company_farage_precision_llc",
+        "source": "n_l3_propulsion_propeller_material",
+        "target": "n_company_farage_precision_llc",
+        "dependency_type": "integrates",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_lfpsupplied_byton_company_molicel",
+        "source": "n_l3_energy_cell_lfp",
+        "target": "n_company_molicel",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_lfpsupplied_byton_company_panasonic_energy_co_ltd",
+        "source": "n_l3_energy_cell_lfp",
+        "target": "n_company_panasonic_energy_co_ltd",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_nmcsupplied_byton_company_panasonic_energy_co_ltd",
+        "source": "n_l3_energy_cell_nmc",
+        "target": "n_company_panasonic_energy_co_ltd",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_nmcsupplied_byton_company_lg_energy_solution",
+        "source": "n_l3_energy_cell_nmc",
+        "target": "n_company_lg_energy_solution",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_busbar_fusesupplied_byton_company_littelfuse_inc",
+        "source": "n_l3_energy_pack_busbar_fuse",
+        "target": "n_company_littelfuse_inc",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_busbar_fusesupplied_byton_company_te_connectivity_ltd",
+        "source": "n_l3_energy_pack_busbar_fuse",
+        "target": "n_company_te_connectivity_ltd",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_bms_monitor_icintegrateston_company_texas_instruments_incorporated",
+        "source": "n_l3_energy_bms_monitor_ic",
+        "target": "n_company_texas_instruments_incorporated",
+        "dependency_type": "integrates",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_bms_monitor_icintegrateston_company_analog_devices_inc",
+        "source": "n_l3_energy_bms_monitor_ic",
+        "target": "n_company_analog_devices_inc",
+        "dependency_type": "integrates",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_thermalsupplied_byton_company_boyd_corporation",
+        "source": "n_l3_energy_pack_thermal",
+        "target": "n_company_boyd_corporation",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_thermalsupplied_byton_company_henkel_ag_co_kgaa",
+        "source": "n_l3_energy_pack_thermal",
+        "target": "n_company_henkel_ag_co_kgaa",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_separator_supplysupplied_byton_company_celgard_llc",
+        "source": "n_l3_energy_separator_supply",
+        "target": "n_company_celgard_llc",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_separator_supplysupplied_byton_company_asahi_kasei_corporation",
+        "source": "n_l3_energy_separator_supply",
+        "target": "n_company_asahi_kasei_corporation",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_rf_transceiversupplied_byton_company_doodle_labs",
+        "source": "n_l3_securecomms_rf_transceiver",
+        "target": "n_company_doodle_labs",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_rf_transceiversupplied_byton_company_l3harris_technologies_inc",
+        "source": "n_l3_securecomms_rf_transceiver",
+        "target": "n_company_l3harris_technologies_inc",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_crypto_key_storesupplied_byton_company_thales_group",
+        "source": "n_l3_securecomms_crypto_key_store",
+        "target": "n_company_thales_group",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_crypto_key_storesupplied_byton_company_microchip_technology_inc",
+        "source": "n_l3_securecomms_crypto_key_store",
+        "target": "n_company_microchip_technology_inc",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_antenna_rf_frontendsupplied_byton_company_gps_source_inc",
+        "source": "n_l3_securecomms_antenna_rf_frontend",
+        "target": "n_company_gps_source_inc",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_antenna_rf_frontendintegrateston_company_doodle_labs",
+        "source": "n_l3_securecomms_antenna_rf_frontend",
+        "target": "n_company_doodle_labs",
+        "dependency_type": "integrates",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_ground_terminalintegrateston_company_collins_aerospace",
+        "source": "n_l3_securecomms_ground_terminal",
+        "target": "n_company_collins_aerospace",
+        "dependency_type": "integrates",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_ground_terminalintegrateston_company_l3harris_technologies_inc",
+        "source": "n_l3_securecomms_ground_terminal",
+        "target": "n_company_l3harris_technologies_inc",
+        "dependency_type": "integrates",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_gnss_multibandsupplied_byton_company_ark_electronics",
+        "source": "n_l3_pnt_gnss_multiband",
+        "target": "n_company_ark_electronics",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_gnss_multibandintegrateston_company_u_blox_ag",
+        "source": "n_l3_pnt_gnss_multiband",
+        "target": "n_company_u_blox_ag",
+        "dependency_type": "integrates",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_antijam_modulesupplied_byton_company_bae_systems_plc",
+        "source": "n_l3_pnt_antijam_module",
+        "target": "n_company_bae_systems_plc",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_antijam_modulesupplied_byton_company_raytheon_technologies_corp",
+        "source": "n_l3_pnt_antijam_module",
+        "target": "n_company_raytheon_technologies_corp",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_imu_gradesupplied_byton_company_honeywell_international_inc",
+        "source": "n_l3_pnt_imu_grade",
+        "target": "n_company_honeywell_international_inc",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_imu_gradesupplied_byton_company_northrop_grumman_corporation",
+        "source": "n_l3_pnt_imu_grade",
+        "target": "n_company_northrop_grumman_corporation",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_vision_aided_navintegrateston_company_auterion_government_solutions_inc",
+        "source": "n_l3_pnt_vision_aided_nav",
+        "target": "n_company_auterion_government_solutions_inc",
+        "dependency_type": "integrates",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_vision_aided_navintegrateston_company_skydio_inc",
+        "source": "n_l3_pnt_vision_aided_nav",
+        "target": "n_company_skydio_inc",
+        "dependency_type": "integrates",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_power_stagedepends_on_companyton_company_microchip_technology_inc",
+        "source": "n_l3_propulsion_esc_power_stage",
+        "target": "n_company_microchip_technology_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 10,
+        "composite_score": 17.28,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_power_stagedepends_on_companyton_company_infineon_technologies_ag",
+        "source": "n_l3_propulsion_esc_power_stage",
+        "target": "n_company_infineon_technologies_ag",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 9.82,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_control_mcudepends_on_companyton_company_microchip_technology_inc",
+        "source": "n_l3_propulsion_esc_control_mcu",
+        "target": "n_company_microchip_technology_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 9,
+        "composite_score": 19.71,
+        "confidence_penalty": 0.57
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_control_mcudepends_on_companyton_company_nxp_semiconductors_n_v",
+        "source": "n_l3_propulsion_esc_control_mcu",
+        "target": "n_company_nxp_semiconductors_n_v",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 9,
+        "composite_score": 12.71,
+        "confidence_penalty": 0.71
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_magnet_stackdepends_on_companyton_company_mp_materials_corp",
+        "source": "n_l3_propulsion_motor_magnet_stack",
+        "target": "n_company_mp_materials_corp",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 12.6,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_magnet_stackdepends_on_companyton_company_proterial_ltd",
+        "source": "n_l3_propulsion_motor_magnet_stack",
+        "target": "n_company_proterial_ltd",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 13.29,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_windingdepends_on_companyton_company_nidec_corporation",
+        "source": "n_l3_propulsion_motor_winding",
+        "target": "n_company_nidec_corporation",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 13.52,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_windingdepends_on_companyton_company_t_motor",
+        "source": "n_l3_propulsion_motor_winding",
+        "target": "n_company_t_motor",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 13.52,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_bearing_shaftdepends_on_companyton_company_skf_group",
+        "source": "n_l3_propulsion_bearing_shaft",
+        "target": "n_company_skf_group",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 9.82,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_bearing_shaftdepends_on_companyton_company_nsk_ltd",
+        "source": "n_l3_propulsion_bearing_shaft",
+        "target": "n_company_nsk_ltd",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 9.82,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_propeller_materialdepends_on_companyton_company_apc_propellers",
+        "source": "n_l3_propulsion_propeller_material",
+        "target": "n_company_apc_propellers",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 10,
+        "composite_score": 18.55,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_propeller_materialdepends_on_companyton_company_farage_precision_llc",
+        "source": "n_l3_propulsion_propeller_material",
+        "target": "n_company_farage_precision_llc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 10,
+        "composite_score": 10.61,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_lfpdepends_on_companyton_company_molicel",
+        "source": "n_l3_energy_cell_lfp",
+        "target": "n_company_molicel",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 26.09,
+        "confidence_penalty": 0.57
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_lfpdepends_on_companyton_company_panasonic_energy_co_ltd",
+        "source": "n_l3_energy_cell_lfp",
+        "target": "n_company_panasonic_energy_co_ltd",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 17.02,
+        "confidence_penalty": 0.71
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_nmcdepends_on_companyton_company_panasonic_energy_co_ltd",
+        "source": "n_l3_energy_cell_nmc",
+        "target": "n_company_panasonic_energy_co_ltd",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 17.02,
+        "confidence_penalty": 0.71
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_nmcdepends_on_companyton_company_lg_energy_solution",
+        "source": "n_l3_energy_cell_nmc",
+        "target": "n_company_lg_energy_solution",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 17.02,
+        "confidence_penalty": 0.71
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_busbar_fusedepends_on_companyton_company_littelfuse_inc",
+        "source": "n_l3_energy_pack_busbar_fuse",
+        "target": "n_company_littelfuse_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 11.25,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_busbar_fusedepends_on_companyton_company_te_connectivity_ltd",
+        "source": "n_l3_energy_pack_busbar_fuse",
+        "target": "n_company_te_connectivity_ltd",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 11.25,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_bms_monitor_icdepends_on_companyton_company_texas_instruments_incorporated",
+        "source": "n_l3_energy_bms_monitor_ic",
+        "target": "n_company_texas_instruments_incorporated",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 10,
+        "composite_score": 20.57,
+        "confidence_penalty": 0.57
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_bms_monitor_icdepends_on_companyton_company_analog_devices_inc",
+        "source": "n_l3_energy_bms_monitor_ic",
+        "target": "n_company_analog_devices_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 9,
+        "composite_score": 13.29,
+        "confidence_penalty": 0.71
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_thermaldepends_on_companyton_company_boyd_corporation",
+        "source": "n_l3_energy_pack_thermal",
+        "target": "n_company_boyd_corporation",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 10.51,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_thermaldepends_on_companyton_company_henkel_ag_co_kgaa",
+        "source": "n_l3_energy_pack_thermal",
+        "target": "n_company_henkel_ag_co_kgaa",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 9.82,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_separator_supplydepends_on_companyton_company_celgard_llc",
+        "source": "n_l3_energy_separator_supply",
+        "target": "n_company_celgard_llc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 12.47,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_separator_supplydepends_on_companyton_company_asahi_kasei_corporation",
+        "source": "n_l3_energy_separator_supply",
+        "target": "n_company_asahi_kasei_corporation",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 12.47,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_rf_transceiverdepends_on_companyton_company_doodle_labs",
+        "source": "n_l3_securecomms_rf_transceiver",
+        "target": "n_company_doodle_labs",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 17.99,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_rf_transceiverdepends_on_companyton_company_l3harris_technologies_inc",
+        "source": "n_l3_securecomms_rf_transceiver",
+        "target": "n_company_l3harris_technologies_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 10.73,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_crypto_key_storedepends_on_companyton_company_thales_group",
+        "source": "n_l3_securecomms_crypto_key_store",
+        "target": "n_company_thales_group",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 7.33,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_crypto_key_storedepends_on_companyton_company_microchip_technology_inc",
+        "source": "n_l3_securecomms_crypto_key_store",
+        "target": "n_company_microchip_technology_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 7.33,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_antenna_rf_frontenddepends_on_companyton_company_gps_source_inc",
+        "source": "n_l3_securecomms_antenna_rf_frontend",
+        "target": "n_company_gps_source_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 18.11,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_antenna_rf_frontenddepends_on_companyton_company_doodle_labs",
+        "source": "n_l3_securecomms_antenna_rf_frontend",
+        "target": "n_company_doodle_labs",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 10.33,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_ground_terminaldepends_on_companyton_company_collins_aerospace",
+        "source": "n_l3_securecomms_ground_terminal",
+        "target": "n_company_collins_aerospace",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 16.4,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_ground_terminaldepends_on_companyton_company_l3harris_technologies_inc",
+        "source": "n_l3_securecomms_ground_terminal",
+        "target": "n_company_l3harris_technologies_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 9.74,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_gnss_multibanddepends_on_companyton_company_ark_electronics",
+        "source": "n_l3_pnt_gnss_multiband",
+        "target": "n_company_ark_electronics",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 11,
+        "composite_score": 19.38,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_gnss_multibanddepends_on_companyton_company_u_blox_ag",
+        "source": "n_l3_pnt_gnss_multiband",
+        "target": "n_company_u_blox_ag",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 12,
+        "composite_score": 19.01,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_antijam_moduledepends_on_companyton_company_bae_systems_plc",
+        "source": "n_l3_pnt_antijam_module",
+        "target": "n_company_bae_systems_plc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 16.42,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_antijam_moduledepends_on_companyton_company_raytheon_technologies_corp",
+        "source": "n_l3_pnt_antijam_module",
+        "target": "n_company_raytheon_technologies_corp",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 9.75,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_imu_gradedepends_on_companyton_company_honeywell_international_inc",
+        "source": "n_l3_pnt_imu_grade",
+        "target": "n_company_honeywell_international_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 16.26,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_imu_gradedepends_on_companyton_company_northrop_grumman_corporation",
+        "source": "n_l3_pnt_imu_grade",
+        "target": "n_company_northrop_grumman_corporation",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 9.64,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_vision_aided_navdepends_on_companyton_company_auterion_government_solutions_inc",
+        "source": "n_l3_pnt_vision_aided_nav",
+        "target": "n_company_auterion_government_solutions_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 9.6,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_vision_aided_navdepends_on_companyton_company_skydio_inc",
+        "source": "n_l3_pnt_vision_aided_nav",
+        "target": "n_company_skydio_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 9.6,
+        "confidence_penalty": 0.77
+      }
+    }
+  ],
+  "elements": [
+    {
+      "data": {
+        "id": "n_company_airo",
+        "label": "AIRO",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "AIRO",
+        "universe_segment": "Military Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_apc_propellers",
+        "label": "APC Propellers",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 18.55,
+        "best_composite_score": 18.55,
+        "confidence": "low",
+        "source_count": 10,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_ark_electronics",
+        "label": "ARK Electronics",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 19.38,
+        "best_composite_score": 19.38,
+        "confidence": "low",
+        "source_count": 11,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_aerovironment",
+        "label": "AeroVironment",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "AVAV",
+        "universe_segment": "Military Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_ageagle",
+        "label": "AgEagle",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "UAVS",
+        "universe_segment": "Agriculture"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_airbus_adr",
+        "label": "Airbus ADR",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "EADSY",
+        "universe_segment": "Industrial Aerospace and Defense"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_amazon",
+        "label": "Amazon",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "AMZN",
+        "universe_segment": "Drone Delivery"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_analog_devices_inc",
+        "label": "Analog Devices, Inc.",
+        "node_type": "company",
+        "company_type": "chip vendor",
+        "component_count": 1,
+        "avg_composite_score": 13.29,
+        "best_composite_score": 13.29,
+        "confidence": "low",
+        "source_count": 9,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_archer",
+        "label": "Archer",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "ACHR",
+        "universe_segment": "eVTOL"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_asahi_kasei_corporation",
+        "label": "Asahi Kasei Corporation",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 12.47,
+        "best_composite_score": 12.47,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_auterion_government_solutions_inc",
+        "label": "Auterion Government Solutions Inc.",
+        "node_type": "company",
+        "company_type": "integrator",
+        "component_count": 1,
+        "avg_composite_score": 9.6,
+        "best_composite_score": 9.6,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_bae_systems_plc",
+        "label": "BAE Systems plc",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 16.42,
+        "best_composite_score": 16.42,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_boeing",
+        "label": "Boeing",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "BA",
+        "universe_segment": "Industrial Aerospace and Defense"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_boyd_corporation",
+        "label": "Boyd Corporation",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 10.51,
+        "best_composite_score": 10.51,
+        "confidence": "low",
+        "source_count": 6,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_celgard_llc",
+        "label": "Celgard LLC",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 12.47,
+        "best_composite_score": 12.47,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_collins_aerospace",
+        "label": "Collins Aerospace",
+        "node_type": "company",
+        "company_type": "integrator",
+        "component_count": 1,
+        "avg_composite_score": 16.4,
+        "best_composite_score": 16.4,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_doodle_labs",
+        "label": "Doodle Labs",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 2,
+        "avg_composite_score": 14.16,
+        "best_composite_score": 17.99,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_draganfly",
+        "label": "Draganfly",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "DPRO",
+        "universe_segment": "Commercial Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_droneshield",
+        "label": "DroneShield",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "DRSHF",
+        "universe_segment": "Military Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_ehang",
+        "label": "EHang",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "EH",
+        "universe_segment": "eVTOL"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_elbit_systems",
+        "label": "Elbit Systems",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "ESLT",
+        "universe_segment": "Military Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_farage_precision_llc",
+        "label": "FARAGE PRECISION, LLC",
+        "node_type": "company",
+        "company_type": "OEM",
+        "component_count": 1,
+        "avg_composite_score": 10.61,
+        "best_composite_score": 10.61,
+        "confidence": "low",
+        "source_count": 10,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_gps_source_inc",
+        "label": "GPS Source, Inc.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 18.11,
+        "best_composite_score": 18.11,
+        "confidence": "low",
+        "source_count": 7,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_henkel_ag_co_kgaa",
+        "label": "Henkel AG & Co. KGaA",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 9.82,
+        "best_composite_score": 9.82,
+        "confidence": "low",
+        "source_count": 6,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_honeywell_international_inc",
+        "label": "Honeywell International Inc.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 16.26,
+        "best_composite_score": 16.26,
+        "confidence": "low",
+        "source_count": 7,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_infineon_technologies_ag",
+        "label": "Infineon Technologies AG",
+        "node_type": "company",
+        "company_type": "chip vendor",
+        "component_count": 1,
+        "avg_composite_score": 9.82,
+        "best_composite_score": 9.82,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_joby",
+        "label": "Joby",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "JOBY",
+        "universe_segment": "eVTOL"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_kratos",
+        "label": "Kratos",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "KTOS",
+        "universe_segment": "Military Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_l3harris_technologies_inc",
+        "label": "L3Harris Technologies, Inc.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 2,
+        "avg_composite_score": 10.23,
+        "best_composite_score": 10.73,
+        "confidence": "low",
+        "source_count": 9,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_lg_energy_solution",
+        "label": "LG Energy Solution",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 17.02,
+        "best_composite_score": 17.02,
+        "confidence": "low",
+        "source_count": 6,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_leonardo",
+        "label": "Leonardo",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "LDO",
+        "universe_segment": "Industrial Aerospace and Defense"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_littelfuse_inc",
+        "label": "Littelfuse, Inc.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 11.25,
+        "best_composite_score": 11.25,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_lockheed_martin",
+        "label": "Lockheed Martin",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "LMT",
+        "universe_segment": "Industrial Aerospace and Defense"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_mp_materials_corp",
+        "label": "MP Materials Corp.",
+        "node_type": "company",
+        "company_type": "Tier2",
+        "component_count": 1,
+        "avg_composite_score": 12.6,
+        "best_composite_score": 12.6,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_microchip_technology_inc",
+        "label": "Microchip Technology Inc.",
+        "node_type": "company",
+        "company_type": "chip vendor",
+        "component_count": 3,
+        "avg_composite_score": 14.77,
+        "best_composite_score": 19.71,
+        "confidence": "low",
+        "source_count": 13,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_molicel",
+        "label": "Molicel",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 26.09,
+        "best_composite_score": 26.09,
+        "confidence": "low",
+        "source_count": 7,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_nsk_ltd",
+        "label": "NSK Ltd.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 9.82,
+        "best_composite_score": 9.82,
+        "confidence": "low",
+        "source_count": 6,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_nxp_semiconductors_n_v",
+        "label": "NXP Semiconductors N.V.",
+        "node_type": "company",
+        "company_type": "chip vendor",
+        "component_count": 1,
+        "avg_composite_score": 12.71,
+        "best_composite_score": 12.71,
+        "confidence": "low",
+        "source_count": 9,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_nidec_corporation",
+        "label": "Nidec Corporation",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 13.52,
+        "best_composite_score": 13.52,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_northrop_grumman_corporation",
+        "label": "Northrop Grumman Corporation",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 9.64,
+        "best_composite_score": 9.64,
+        "confidence": "low",
+        "source_count": 7,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_ondas",
+        "label": "Ondas",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "ONDS",
+        "universe_segment": "Drone Sensors"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_palladyne",
+        "label": "Palladyne",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "PDYN",
+        "universe_segment": "Drone Software"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_panasonic_energy_co_ltd",
+        "label": "Panasonic Energy Co., Ltd.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 2,
+        "avg_composite_score": 17.02,
+        "best_composite_score": 17.02,
+        "confidence": "low",
+        "source_count": 6,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_parazero",
+        "label": "ParaZero",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "PRZO",
+        "universe_segment": "Military Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_parrot",
+        "label": "Parrot",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "PAOTF",
+        "universe_segment": "Commercial Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_proterial_ltd",
+        "label": "Proterial, Ltd.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 13.29,
+        "best_composite_score": 13.29,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_raytheon_technologies_corp",
+        "label": "Raytheon Technologies Corp.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 9.75,
+        "best_composite_score": 9.75,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_red_cat",
+        "label": "Red Cat",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "RCAT",
+        "universe_segment": "Military Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_skf_group",
+        "label": "SKF Group",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 9.82,
+        "best_composite_score": 9.82,
+        "confidence": "low",
+        "source_count": 6,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_skydio_inc",
+        "label": "Skydio, Inc.",
+        "node_type": "company",
+        "company_type": "OEM",
+        "component_count": 1,
+        "avg_composite_score": 9.6,
+        "best_composite_score": 9.6,
+        "confidence": "low",
+        "source_count": 7,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_t_motor",
+        "label": "T-Motor",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 13.52,
+        "best_composite_score": 13.52,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_te_connectivity_ltd",
+        "label": "TE Connectivity Ltd.",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 11.25,
+        "best_composite_score": 11.25,
+        "confidence": "low",
+        "source_count": 8,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_teledyne",
+        "label": "Teledyne",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "TDY",
+        "universe_segment": "Drone Sensors"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_texas_instruments_incorporated",
+        "label": "Texas Instruments Incorporated",
+        "node_type": "company",
+        "company_type": "chip vendor",
+        "component_count": 1,
+        "avg_composite_score": 20.57,
+        "best_composite_score": 20.57,
+        "confidence": "low",
+        "source_count": 10,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_textron",
+        "label": "Textron",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "TXT",
+        "universe_segment": "Industrial Aerospace and Defense"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_thales_group",
+        "label": "Thales Group",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": 7.33,
+        "best_composite_score": 7.33,
+        "confidence": "low",
+        "source_count": 6,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_trimble",
+        "label": "Trimble",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "TRMB",
+        "universe_segment": "Agriculture"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_unusual_machines",
+        "label": "Unusual Machines",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "UMAC",
+        "universe_segment": "Commercial Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_vertical_aerospace",
+        "label": "Vertical Aerospace",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "EVTL",
+        "universe_segment": "eVTOL"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_volatus_aerospace",
+        "label": "Volatus Aerospace",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "FLT",
+        "universe_segment": "Commercial Drones"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_zenatech",
+        "label": "ZenaTech",
+        "node_type": "company",
+        "company_type": "market_universe",
+        "component_count": 0,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": true,
+        "universe_only": true,
+        "universe_ticker": "ZENA",
+        "universe_segment": "Drone Sensors"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_u_blox_ag",
+        "label": "u-blox AG",
+        "node_type": "company",
+        "company_type": "chip vendor",
+        "component_count": 1,
+        "avg_composite_score": 19.01,
+        "best_composite_score": 19.01,
+        "confidence": "low",
+        "source_count": 12,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_power_stageintegrateston_company_microchip_technology_inc",
+        "source": "n_l3_propulsion_esc_power_stage",
+        "target": "n_company_microchip_technology_inc",
+        "dependency_type": "integrates",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_power_stagesupplied_byton_company_infineon_technologies_ag",
+        "source": "n_l3_propulsion_esc_power_stage",
+        "target": "n_company_infineon_technologies_ag",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_control_mcusupplied_byton_company_microchip_technology_inc",
+        "source": "n_l3_propulsion_esc_control_mcu",
+        "target": "n_company_microchip_technology_inc",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_control_mcusupplied_byton_company_nxp_semiconductors_n_v",
+        "source": "n_l3_propulsion_esc_control_mcu",
+        "target": "n_company_nxp_semiconductors_n_v",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_magnet_stacksupplied_byton_company_mp_materials_corp",
+        "source": "n_l3_propulsion_motor_magnet_stack",
+        "target": "n_company_mp_materials_corp",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_magnet_stacksupplied_byton_company_proterial_ltd",
+        "source": "n_l3_propulsion_motor_magnet_stack",
+        "target": "n_company_proterial_ltd",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_windingsupplied_byton_company_nidec_corporation",
+        "source": "n_l3_propulsion_motor_winding",
+        "target": "n_company_nidec_corporation",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_windingsupplied_byton_company_t_motor",
+        "source": "n_l3_propulsion_motor_winding",
+        "target": "n_company_t_motor",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_bearing_shaftsupplied_byton_company_skf_group",
+        "source": "n_l3_propulsion_bearing_shaft",
+        "target": "n_company_skf_group",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_bearing_shaftsupplied_byton_company_nsk_ltd",
+        "source": "n_l3_propulsion_bearing_shaft",
+        "target": "n_company_nsk_ltd",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_propeller_materialsupplied_byton_company_apc_propellers",
+        "source": "n_l3_propulsion_propeller_material",
+        "target": "n_company_apc_propellers",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_propeller_materialintegrateston_company_farage_precision_llc",
+        "source": "n_l3_propulsion_propeller_material",
+        "target": "n_company_farage_precision_llc",
+        "dependency_type": "integrates",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_lfpsupplied_byton_company_molicel",
+        "source": "n_l3_energy_cell_lfp",
+        "target": "n_company_molicel",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_lfpsupplied_byton_company_panasonic_energy_co_ltd",
+        "source": "n_l3_energy_cell_lfp",
+        "target": "n_company_panasonic_energy_co_ltd",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_nmcsupplied_byton_company_panasonic_energy_co_ltd",
+        "source": "n_l3_energy_cell_nmc",
+        "target": "n_company_panasonic_energy_co_ltd",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_nmcsupplied_byton_company_lg_energy_solution",
+        "source": "n_l3_energy_cell_nmc",
+        "target": "n_company_lg_energy_solution",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_busbar_fusesupplied_byton_company_littelfuse_inc",
+        "source": "n_l3_energy_pack_busbar_fuse",
+        "target": "n_company_littelfuse_inc",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_busbar_fusesupplied_byton_company_te_connectivity_ltd",
+        "source": "n_l3_energy_pack_busbar_fuse",
+        "target": "n_company_te_connectivity_ltd",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_bms_monitor_icintegrateston_company_texas_instruments_incorporated",
+        "source": "n_l3_energy_bms_monitor_ic",
+        "target": "n_company_texas_instruments_incorporated",
+        "dependency_type": "integrates",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_bms_monitor_icintegrateston_company_analog_devices_inc",
+        "source": "n_l3_energy_bms_monitor_ic",
+        "target": "n_company_analog_devices_inc",
+        "dependency_type": "integrates",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_thermalsupplied_byton_company_boyd_corporation",
+        "source": "n_l3_energy_pack_thermal",
+        "target": "n_company_boyd_corporation",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_thermalsupplied_byton_company_henkel_ag_co_kgaa",
+        "source": "n_l3_energy_pack_thermal",
+        "target": "n_company_henkel_ag_co_kgaa",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_separator_supplysupplied_byton_company_celgard_llc",
+        "source": "n_l3_energy_separator_supply",
+        "target": "n_company_celgard_llc",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_separator_supplysupplied_byton_company_asahi_kasei_corporation",
+        "source": "n_l3_energy_separator_supply",
+        "target": "n_company_asahi_kasei_corporation",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_rf_transceiversupplied_byton_company_doodle_labs",
+        "source": "n_l3_securecomms_rf_transceiver",
+        "target": "n_company_doodle_labs",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_rf_transceiversupplied_byton_company_l3harris_technologies_inc",
+        "source": "n_l3_securecomms_rf_transceiver",
+        "target": "n_company_l3harris_technologies_inc",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_crypto_key_storesupplied_byton_company_thales_group",
+        "source": "n_l3_securecomms_crypto_key_store",
+        "target": "n_company_thales_group",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_crypto_key_storesupplied_byton_company_microchip_technology_inc",
+        "source": "n_l3_securecomms_crypto_key_store",
+        "target": "n_company_microchip_technology_inc",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_antenna_rf_frontendsupplied_byton_company_gps_source_inc",
+        "source": "n_l3_securecomms_antenna_rf_frontend",
+        "target": "n_company_gps_source_inc",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_antenna_rf_frontendintegrateston_company_doodle_labs",
+        "source": "n_l3_securecomms_antenna_rf_frontend",
+        "target": "n_company_doodle_labs",
+        "dependency_type": "integrates",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_ground_terminalintegrateston_company_collins_aerospace",
+        "source": "n_l3_securecomms_ground_terminal",
+        "target": "n_company_collins_aerospace",
+        "dependency_type": "integrates",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_ground_terminalintegrateston_company_l3harris_technologies_inc",
+        "source": "n_l3_securecomms_ground_terminal",
+        "target": "n_company_l3harris_technologies_inc",
+        "dependency_type": "integrates",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_gnss_multibandsupplied_byton_company_ark_electronics",
+        "source": "n_l3_pnt_gnss_multiband",
+        "target": "n_company_ark_electronics",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_gnss_multibandintegrateston_company_u_blox_ag",
+        "source": "n_l3_pnt_gnss_multiband",
+        "target": "n_company_u_blox_ag",
+        "dependency_type": "integrates",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_antijam_modulesupplied_byton_company_bae_systems_plc",
+        "source": "n_l3_pnt_antijam_module",
+        "target": "n_company_bae_systems_plc",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_antijam_modulesupplied_byton_company_raytheon_technologies_corp",
+        "source": "n_l3_pnt_antijam_module",
+        "target": "n_company_raytheon_technologies_corp",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_imu_gradesupplied_byton_company_honeywell_international_inc",
+        "source": "n_l3_pnt_imu_grade",
+        "target": "n_company_honeywell_international_inc",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_imu_gradesupplied_byton_company_northrop_grumman_corporation",
+        "source": "n_l3_pnt_imu_grade",
+        "target": "n_company_northrop_grumman_corporation",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_vision_aided_navintegrateston_company_auterion_government_solutions_inc",
+        "source": "n_l3_pnt_vision_aided_nav",
+        "target": "n_company_auterion_government_solutions_inc",
+        "dependency_type": "integrates",
+        "confidence": "low",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_vision_aided_navintegrateston_company_skydio_inc",
+        "source": "n_l3_pnt_vision_aided_nav",
+        "target": "n_company_skydio_inc",
+        "dependency_type": "integrates",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_power_stagedepends_on_companyton_company_microchip_technology_inc",
+        "source": "n_l3_propulsion_esc_power_stage",
+        "target": "n_company_microchip_technology_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 10,
+        "composite_score": 17.28,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_power_stagedepends_on_companyton_company_infineon_technologies_ag",
+        "source": "n_l3_propulsion_esc_power_stage",
+        "target": "n_company_infineon_technologies_ag",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 9.82,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_control_mcudepends_on_companyton_company_microchip_technology_inc",
+        "source": "n_l3_propulsion_esc_control_mcu",
+        "target": "n_company_microchip_technology_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 9,
+        "composite_score": 19.71,
+        "confidence_penalty": 0.57
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_esc_control_mcudepends_on_companyton_company_nxp_semiconductors_n_v",
+        "source": "n_l3_propulsion_esc_control_mcu",
+        "target": "n_company_nxp_semiconductors_n_v",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 9,
+        "composite_score": 12.71,
+        "confidence_penalty": 0.71
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_magnet_stackdepends_on_companyton_company_mp_materials_corp",
+        "source": "n_l3_propulsion_motor_magnet_stack",
+        "target": "n_company_mp_materials_corp",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 12.6,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_magnet_stackdepends_on_companyton_company_proterial_ltd",
+        "source": "n_l3_propulsion_motor_magnet_stack",
+        "target": "n_company_proterial_ltd",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 13.29,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_windingdepends_on_companyton_company_nidec_corporation",
+        "source": "n_l3_propulsion_motor_winding",
+        "target": "n_company_nidec_corporation",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 13.52,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_motor_windingdepends_on_companyton_company_t_motor",
+        "source": "n_l3_propulsion_motor_winding",
+        "target": "n_company_t_motor",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 13.52,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_bearing_shaftdepends_on_companyton_company_skf_group",
+        "source": "n_l3_propulsion_bearing_shaft",
+        "target": "n_company_skf_group",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 9.82,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_bearing_shaftdepends_on_companyton_company_nsk_ltd",
+        "source": "n_l3_propulsion_bearing_shaft",
+        "target": "n_company_nsk_ltd",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 9.82,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_propeller_materialdepends_on_companyton_company_apc_propellers",
+        "source": "n_l3_propulsion_propeller_material",
+        "target": "n_company_apc_propellers",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 10,
+        "composite_score": 18.55,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_propeller_materialdepends_on_companyton_company_farage_precision_llc",
+        "source": "n_l3_propulsion_propeller_material",
+        "target": "n_company_farage_precision_llc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 10,
+        "composite_score": 10.61,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_lfpdepends_on_companyton_company_molicel",
+        "source": "n_l3_energy_cell_lfp",
+        "target": "n_company_molicel",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 26.09,
+        "confidence_penalty": 0.57
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_lfpdepends_on_companyton_company_panasonic_energy_co_ltd",
+        "source": "n_l3_energy_cell_lfp",
+        "target": "n_company_panasonic_energy_co_ltd",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 17.02,
+        "confidence_penalty": 0.71
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_nmcdepends_on_companyton_company_panasonic_energy_co_ltd",
+        "source": "n_l3_energy_cell_nmc",
+        "target": "n_company_panasonic_energy_co_ltd",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 17.02,
+        "confidence_penalty": 0.71
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_cell_nmcdepends_on_companyton_company_lg_energy_solution",
+        "source": "n_l3_energy_cell_nmc",
+        "target": "n_company_lg_energy_solution",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 17.02,
+        "confidence_penalty": 0.71
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_busbar_fusedepends_on_companyton_company_littelfuse_inc",
+        "source": "n_l3_energy_pack_busbar_fuse",
+        "target": "n_company_littelfuse_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 11.25,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_busbar_fusedepends_on_companyton_company_te_connectivity_ltd",
+        "source": "n_l3_energy_pack_busbar_fuse",
+        "target": "n_company_te_connectivity_ltd",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 11.25,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_bms_monitor_icdepends_on_companyton_company_texas_instruments_incorporated",
+        "source": "n_l3_energy_bms_monitor_ic",
+        "target": "n_company_texas_instruments_incorporated",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 10,
+        "composite_score": 20.57,
+        "confidence_penalty": 0.57
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_bms_monitor_icdepends_on_companyton_company_analog_devices_inc",
+        "source": "n_l3_energy_bms_monitor_ic",
+        "target": "n_company_analog_devices_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 9,
+        "composite_score": 13.29,
+        "confidence_penalty": 0.71
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_thermaldepends_on_companyton_company_boyd_corporation",
+        "source": "n_l3_energy_pack_thermal",
+        "target": "n_company_boyd_corporation",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 10.51,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_pack_thermaldepends_on_companyton_company_henkel_ag_co_kgaa",
+        "source": "n_l3_energy_pack_thermal",
+        "target": "n_company_henkel_ag_co_kgaa",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 9.82,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_separator_supplydepends_on_companyton_company_celgard_llc",
+        "source": "n_l3_energy_separator_supply",
+        "target": "n_company_celgard_llc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 12.47,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_energy_separator_supplydepends_on_companyton_company_asahi_kasei_corporation",
+        "source": "n_l3_energy_separator_supply",
+        "target": "n_company_asahi_kasei_corporation",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 12.47,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_rf_transceiverdepends_on_companyton_company_doodle_labs",
+        "source": "n_l3_securecomms_rf_transceiver",
+        "target": "n_company_doodle_labs",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 17.99,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_rf_transceiverdepends_on_companyton_company_l3harris_technologies_inc",
+        "source": "n_l3_securecomms_rf_transceiver",
+        "target": "n_company_l3harris_technologies_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 10.73,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_crypto_key_storedepends_on_companyton_company_thales_group",
+        "source": "n_l3_securecomms_crypto_key_store",
+        "target": "n_company_thales_group",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 6,
+        "composite_score": 7.33,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_crypto_key_storedepends_on_companyton_company_microchip_technology_inc",
+        "source": "n_l3_securecomms_crypto_key_store",
+        "target": "n_company_microchip_technology_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 7.33,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_antenna_rf_frontenddepends_on_companyton_company_gps_source_inc",
+        "source": "n_l3_securecomms_antenna_rf_frontend",
+        "target": "n_company_gps_source_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 18.11,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_antenna_rf_frontenddepends_on_companyton_company_doodle_labs",
+        "source": "n_l3_securecomms_antenna_rf_frontend",
+        "target": "n_company_doodle_labs",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 10.33,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_ground_terminaldepends_on_companyton_company_collins_aerospace",
+        "source": "n_l3_securecomms_ground_terminal",
+        "target": "n_company_collins_aerospace",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 16.4,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_securecomms_ground_terminaldepends_on_companyton_company_l3harris_technologies_inc",
+        "source": "n_l3_securecomms_ground_terminal",
+        "target": "n_company_l3harris_technologies_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 9.74,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_gnss_multibanddepends_on_companyton_company_ark_electronics",
+        "source": "n_l3_pnt_gnss_multiband",
+        "target": "n_company_ark_electronics",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 11,
+        "composite_score": 19.38,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_gnss_multibanddepends_on_companyton_company_u_blox_ag",
+        "source": "n_l3_pnt_gnss_multiband",
+        "target": "n_company_u_blox_ag",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 12,
+        "composite_score": 19.01,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_antijam_moduledepends_on_companyton_company_bae_systems_plc",
+        "source": "n_l3_pnt_antijam_module",
+        "target": "n_company_bae_systems_plc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 16.42,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_antijam_moduledepends_on_companyton_company_raytheon_technologies_corp",
+        "source": "n_l3_pnt_antijam_module",
+        "target": "n_company_raytheon_technologies_corp",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 9.75,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_imu_gradedepends_on_companyton_company_honeywell_international_inc",
+        "source": "n_l3_pnt_imu_grade",
+        "target": "n_company_honeywell_international_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 16.26,
+        "confidence_penalty": 0.63
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_imu_gradedepends_on_companyton_company_northrop_grumman_corporation",
+        "source": "n_l3_pnt_imu_grade",
+        "target": "n_company_northrop_grumman_corporation",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 9.64,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_vision_aided_navdepends_on_companyton_company_auterion_government_solutions_inc",
+        "source": "n_l3_pnt_vision_aided_nav",
+        "target": "n_company_auterion_government_solutions_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 8,
+        "composite_score": 9.6,
+        "confidence_penalty": 0.77
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_pnt_vision_aided_navdepends_on_companyton_company_skydio_inc",
+        "source": "n_l3_pnt_vision_aided_nav",
+        "target": "n_company_skydio_inc",
+        "dependency_type": "depends_on_company",
+        "confidence": "low",
+        "source_count": 7,
+        "composite_score": 9.6,
+        "confidence_penalty": 0.77
+      }
+    }
+  ]
+}

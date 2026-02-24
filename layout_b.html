@@ -1,0 +1,976 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>DDP Supply Chain Graph — Layout B (LR Narrative)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/cytoscape@3.30.2/dist/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+    <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+  </head>
+  <body>
+    <header class="top-header">
+      <div class="brand-lockup">
+        <div class="brand-title-row">
+          <strong>DDP Supply Chain Command Graph</strong>
+          <span class="header-version">Layout B</span>
+        </div>
+        <small class="brand-subtitle">Left-right narrative flow &middot; balanced domain lanes &middot; wireframe</small>
+      </div>
+      <small id="kpi" class="kpi">loading&hellip;</small>
+    </header>
+
+    <section class="control-bar">
+      <div class="control-cluster control-mode">
+        <span class="cluster-label">View</span>
+        <div class="mode-toggle" id="modeToggle">
+          <button class="mode-btn active" data-mode="executive">Executive</button>
+          <button class="mode-btn" data-mode="analyst">Analyst</button>
+        </div>
+      </div>
+      <div class="control-cluster control-search">
+        <span class="cluster-label">Search</span>
+        <input id="search" placeholder="Node, id, or company" />
+      </div>
+      <div class="control-cluster">
+        <span class="cluster-label">Gate</span>
+        <select id="gateFilter">
+          <option value="all">All</option>
+          <option value="true">Pass</option>
+          <option value="false">Fail</option>
+          <option value="unknown">Unknown</option>
+        </select>
+      </div>
+      <div class="control-cluster">
+        <span class="cluster-label">Confidence</span>
+        <select id="confFilter">
+          <option value="all">All</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+      <div class="control-cluster">
+        <span class="cluster-label">Scenario</span>
+        <select id="scenarioMode">
+          <option value="base">Base</option>
+          <option value="bull">Bull</option>
+          <option value="bear">Bear</option>
+        </select>
+      </div>
+      <div class="control-cluster control-toggle">
+        <label class="toggle-switch">
+          <input type="checkbox" id="companyToggle" />
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label" id="companyToggleLabel">Company overlay (0)</span>
+      </div>
+      <div class="control-cluster control-actions">
+        <button id="showTop10">Top Bottlenecks</button>
+        <button id="reset">Reset</button>
+      </div>
+    </section>
+
+    <section class="idea-strip-wrap">
+      <div class="idea-strip-title">Candidate Paths</div>
+      <div id="spotlightButtons" class="spotlight-group"></div>
+    </section>
+
+    <main>
+      <div class="graph-wrap">
+        <div id="cy"></div>
+      </div>
+      <aside id="panel">
+        <div class="card detail-card">
+          <div class="card-header">Details</div>
+          <div id="details"><small>Select a node to inspect risk profile, dependencies, and linked companies.</small></div>
+        </div>
+        <div class="card legend-card">
+          <details>
+            <summary>Legend</summary>
+            <div class="legend">
+              <div class="legend-item"><span class="legend-swatch roundrect" style="background:#efefef;border:1px solid #a3a3a3"></span> L1 anchor</div>
+              <div class="legend-item"><span class="legend-swatch circle" style="background:#cfcfcf;border:1px solid #9a9a9a"></span> Component</div>
+              <div class="legend-item"><span class="legend-swatch diamond" style="background:#888888"></span> Company</div>
+            </div>
+            <div class="legend-section">Gate status (fill)</div>
+            <div class="legend">
+              <div class="legend-item"><span class="legend-swatch circle" style="background:#bdbdbd"></span> Pass</div>
+              <div class="legend-item"><span class="legend-swatch circle" style="background:#8a8a8a"></span> Fail</div>
+              <div class="legend-item"><span class="legend-swatch circle" style="background:#d3d3d3"></span> Unknown</div>
+            </div>
+            <div class="legend-section">Confidence (opacity)</div>
+            <div class="legend">
+              <div class="legend-item"><span class="legend-swatch circle" style="background:#7a7a7a;opacity:1.0"></span> High</div>
+              <div class="legend-item"><span class="legend-swatch circle" style="background:#7a7a7a;opacity:0.7"></span> Med</div>
+              <div class="legend-item"><span class="legend-swatch circle" style="background:#7a7a7a;opacity:0.45"></span> Low</div>
+            </div>
+            <div class="legend-section">Size = 4 discrete risk tiers</div>
+          </details>
+        </div>
+      </aside>
+    </main>
+
+    <script type="module">
+      import { loadElements, loadCompanyOverlay, SPOTLIGHT_PATHS } from './graph_data.js';
+
+      /* ── DOM refs ── */
+      const details             = document.getElementById('details');
+      const searchEl            = document.getElementById('search');
+      const gateEl              = document.getElementById('gateFilter');
+      const confEl              = document.getElementById('confFilter');
+      const scenarioEl          = document.getElementById('scenarioMode');
+      const kpiEl               = document.getElementById('kpi');
+      const companyToggleEl     = document.getElementById('companyToggle');
+      const companyToggleLabelEl = document.getElementById('companyToggleLabel');
+
+      let currentMode          = 'executive';
+      let activeSpotlight      = null;
+      let companyOverlayActive = false;
+      let allNodes  = [];
+      let allEdges  = [];
+      let companyOverlay = { nodes: [], edges: [] };
+
+      /* ── Utility ── */
+      function gateClass(v) {
+        if (v === true  || v === 'true')  return 'pass';
+        if (v === false || v === 'false') return 'fail';
+        return 'unknown';
+      }
+      function escHtml(s) {
+        const d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+      }
+      function fmtScenario(s) {
+        if (!s || typeof s !== 'object') return String(s || 'n/a');
+        const parts = [];
+        if (s.tariff_penalty_pct != null) parts.push('tariff ' + s.tariff_penalty_pct + '%');
+        if (s.regulatory_delay_weeks != null) parts.push('delay ' + s.regulatory_delay_weeks + 'w');
+        if (s.narrative) parts.push(s.narrative.slice(0, 100));
+        return parts.join(' \u00b7 ') || 'n/a';
+      }
+
+      /* ── Load data ── */
+      try {
+        const elements = await loadElements();
+        allNodes = elements.filter(el => !el.data.source);
+        allEdges = elements.filter(el => el.data.source);
+      } catch (err) {
+        const hint = location.protocol === 'file:'
+          ? 'Opened via file://. Use a local server so fetch() can load data files.'
+          : 'Failed to load graph data. Serve project root and open /presentation/cytoscape/layout_b.html.';
+        document.getElementById('cy').innerHTML =
+          `<div style="padding:20px;color:#f97066">Graph load failed.<br><small>${hint}</small><br><small>${String(err.message||err)}</small></div>`;
+        throw err;
+      }
+
+      try {
+        companyOverlay = await loadCompanyOverlay();
+        companyToggleLabelEl.textContent = `Company overlay (${companyOverlay.nodes.length})`;
+      } catch (err) {
+        console.warn('Company overlay load failed:', err);
+        companyToggleEl.disabled = true;
+        companyToggleLabelEl.textContent = 'Company overlay unavailable';
+      }
+
+      /* ── Company indexes for detail panel ── */
+      const companyEdgesByComponent = new Map();
+      const companyNodeById = new Map();
+      for (const cn of companyOverlay.nodes) companyNodeById.set(cn.data.id, cn.data);
+      for (const ce of companyOverlay.edges) {
+        const src = ce.data.source;
+        if (!companyEdgesByComponent.has(src)) companyEdgesByComponent.set(src, []);
+        companyEdgesByComponent.get(src).push(ce.data);
+      }
+
+      /* ── Visible elements for current mode ── */
+      function getVisibleElements() {
+        const nodes = currentMode === 'executive'
+          ? allNodes.filter(n => n.data.visibility === 'executive')
+          : allNodes;
+        nodes.sort((a, b) => String(a.data.id || '').localeCompare(String(b.data.id || '')));
+        const nodeIds = new Set(nodes.map(n => n.data.id));
+        const edges = allEdges.filter(
+          e => nodeIds.has(e.data.source) && nodeIds.has(e.data.target)
+        );
+        edges.sort((a, b) => String(a.data.id || '').localeCompare(String(b.data.id || '')));
+        return [...nodes, ...edges];
+      }
+
+      /* ─────────────────────────────────────────────────────
+         Layout Recovery B — LR narrative, balanced domain lanes
+         Composition-first: strong left-to-right reading order,
+         no center collapse, even lane spacing by domain.
+         ───────────────────────────────────────────────────── */
+
+      /* Confidence — narrower range for light background readability */
+      function confOpacity(ele) {
+        const c = (ele.data('confidence') || '').toLowerCase();
+        if (c.includes('high'))   return 1.0;
+        if (c.includes('medium')) return 0.7;
+        return 0.45;
+      }
+
+      /* Label visibility — L1 always, tier-3 semi, rest on hover */
+      function labelOpacity(ele) {
+        const nt = (ele.data('node_type') || '').toLowerCase();
+        if (nt.includes('l1')) return 1;
+        if ((Number(ele.data('bottleneck_tier')) || 0) >= 3) return 0.85;
+        return 0;
+      }
+
+      /* Fill — light base, semantic accent only on gate status */
+      function nodeFill(ele) {
+        const nt = (ele.data('node_type') || '').toLowerCase();
+        if (nt === 'company')                 return '#8a8a8a';
+        if (nt.includes('l1'))                return '#efefef';
+        if (nt === 'source' || nt === 'gap')  return '#dddddd';
+        const p = ele.data('gate_pass');
+        if (p === true  || p === 'true')      return '#bcbcbc';
+        if (p === false || p === 'false')     return '#8b8b8b';
+        return '#cfcfcf';
+      }
+
+      /* Border — clean, solid, matches fill semantic */
+      function nodeBorder(ele) {
+        const nt = (ele.data('node_type') || '').toLowerCase();
+        if (nt === 'company')                 return '#676767';
+        if (nt.includes('l1'))                return '#a3a3a3';
+        if (nt === 'source' || nt === 'gap')  return '#bdbdbd';
+        const p = ele.data('gate_pass');
+        if (p === true  || p === 'true')      return '#7a7a7a';
+        if (p === false || p === 'false')     return '#5f5f5f';
+        return '#8f8f8f';
+      }
+
+      const cyStyles = [
+        /* ── Base node ── */
+        {
+          selector: 'node',
+          style: {
+            'label':              'data(short_label)',
+            'text-wrap':          'none',
+            'font-size':          10.5,
+            'font-family':        '"Inter", system-ui, -apple-system, sans-serif',
+            'font-weight':        600,
+            'color':              '#222222',
+            'text-outline-color': '#f5f5f5',
+            'text-outline-width': 2,
+            'text-valign':        'bottom',
+            'text-margin-y':      7,
+            'text-opacity':       labelOpacity,
+            'background-color':   nodeFill,
+            'border-width':       ele => {
+              const nt = (ele.data('node_type') || '').toLowerCase();
+              if (nt === 'source' || nt === 'gap') return 0.5;
+              if (nt.includes('l1')) return 1.5;
+              return 1.0;
+            },
+            'border-color':       nodeBorder,
+            'width':              'data(node_w)',
+            'height':             'data(node_h)',
+            'shape':              ele => {
+              const nt = (ele.data('node_type') || '').toLowerCase();
+              if (nt === 'company')  return 'diamond';
+              if (nt.includes('l1')) return 'round-rectangle';
+              return 'ellipse';
+            },
+            'opacity':            confOpacity,
+            'overlay-padding':    3,
+            'overlay-opacity':    0
+          }
+        },
+
+        /* ── L1 capsule anchors — centered label, heavier type ── */
+        {
+          selector: 'node[node_type = "l1_domain"], node[node_type = "l1_component"]',
+          style: {
+            'font-family':        '"Manrope", "Inter", system-ui, sans-serif',
+            'font-size':          11,
+            'font-weight':        800,
+            'color':              '#303030',
+            'text-outline-width': 2.2,
+            'text-valign':        'center',
+            'text-margin-y':      0
+          }
+        },
+
+        /* ── Source / gap — subtle dots ── */
+        {
+          selector: 'node[node_type = "source"], node[node_type = "gap"]',
+          style: {
+            'font-size': 0,
+            'opacity':   ele => Math.min(confOpacity(ele), 0.30)
+          }
+        },
+
+        /* ── Company — small, quiet ── */
+        {
+          selector: 'node[node_type = "company"]',
+          style: {
+            'font-size':  8,
+            'font-weight': 500,
+            'color':      '#4d4d4d'
+          }
+        },
+
+        /* ── Tier-3 bottleneck accent — warm ring ── */
+        {
+          selector: 'node[bottleneck_tier = 3]',
+          style: {
+            'border-width': 2.0,
+            'border-color': '#4f4f4f'
+          }
+        },
+
+        /* ── Edges — light, precise ── */
+        {
+          selector: 'edge',
+          style: {
+            'curve-style':        'bezier',
+            'target-arrow-shape': 'triangle',
+            'arrow-scale':        0.7,
+            'line-color':         '#a8a8a8',
+            'target-arrow-color': '#a8a8a8',
+            'width':              1.0,
+            'opacity':            0.5,
+            'line-style':         'solid'
+          }
+        },
+        {
+          selector: 'edge[dependency_type = "depends_on_company"], edge[dependency_type = "supplied_by"]',
+          style: {
+            'line-color':         '#9e9e9e',
+            'target-arrow-color': '#9e9e9e',
+            'line-style':         'dashed',
+            'opacity':            0.4
+          }
+        },
+
+        /* ── Hover — label reveal ── */
+        {
+          selector: '.hover',
+          style: {
+            'text-opacity':    1,
+            'font-weight':     600,
+            'overlay-opacity': 0
+          }
+        },
+
+        /* ── State classes (order = priority) ── */
+        { selector: '.dim', style: {
+          'opacity': 0.08, 'text-opacity': 0
+        }},
+        { selector: '.top10', style: {
+          'opacity': 1, 'text-opacity': 1,
+          'border-width': 2.2, 'border-color': '#3f3f3f',
+          'overlay-opacity': 0
+        }},
+        { selector: '.spotlight', style: {
+          'opacity': 1, 'text-opacity': 1,
+          'border-width': 2.2, 'overlay-opacity': 0
+        }},
+        { selector: '.spotlight-1', style: { 'border-color': '#4a4a4a' } },
+        { selector: '.spotlight-2', style: { 'border-color': '#5a5a5a' } },
+        { selector: '.spotlight-3', style: { 'border-color': '#666666' } },
+        { selector: '.spotlight-edge', style: {
+          'opacity': 0.85, 'width': 2.0,
+          'line-color': '#5a5a5a', 'target-arrow-color': '#5a5a5a'
+        }},
+        /* Focus — clean border + slight scale */
+        { selector: '.focus', style: {
+          'opacity': 1, 'text-opacity': 1,
+          'width': 'data(node_w_focus)', 'height': 'data(node_h_focus)',
+          'border-width': 2.6, 'border-color': '#2f2f2f',
+          'overlay-opacity': 0
+        }},
+        { selector: '.focus-context', style: {
+          'opacity': 0.88, 'text-opacity': 1,
+          'border-width': 1.6, 'border-color': '#6a6a6a',
+          'overlay-opacity': 0
+        }},
+        { selector: '.focus-edge', style: {
+          'opacity': 0.9, 'width': 1.8,
+          'line-color': '#4f4f4f', 'target-arrow-color': '#4f4f4f'
+        }}
+      ];
+
+      /* ── Cytoscape init ── */
+      const cy = cytoscape({
+        container: document.getElementById('cy'),
+        elements: getVisibleElements(),
+        layout: { name: 'preset' },
+        style: cyStyles
+      });
+
+      /* ══════════════════════════════════════════════════════
+         Layout B — LR narrative with balanced domain lanes
+         ══════════════════════════════════════════════════════ */
+
+      function laneKeyForNode(node) {
+        const direct = (node.data('l1_component') || '').trim();
+        if (direct) return direct;
+        const id = String(node.id() || '');
+        if (id.startsWith('n_l1_')) return id.slice('n_l1_'.length);
+        return 'other';
+      }
+
+      /**
+       * Post-dagre pass: redistribute nodes into balanced horizontal
+       * lanes per L1 domain. Keeps dagre X ordering (narrative flow)
+       * but overrides Y so every domain occupies its own band with
+       * uniform vertical spacing — eliminates center collapse.
+       */
+      function applyLRLaneLayout() {
+        if (currentMode !== 'executive') return;
+
+        /* Gather L1 anchors, sorted alphabetically for stable lane order */
+        const anchors = cy.nodes()
+          .filter(n => String(n.data('node_type') || '').toLowerCase().includes('l1'))
+          .sort((a, b) => (a.data('label') || '').localeCompare(b.data('label') || ''));
+        if (!anchors.length) return;
+
+        /* Build domain → lane index mapping */
+        const domainKeys = [];
+        anchors.forEach(a => domainKeys.push(laneKeyForNode(a)));
+        const laneMap = new Map(domainKeys.map((k, i) => [k, i]));
+        const numLanes = domainKeys.length;
+
+        /* Group non-L1 nodes by domain */
+        const childrenByDomain = new Map();
+        domainKeys.forEach(k => childrenByDomain.set(k, []));
+
+        cy.nodes().forEach(n => {
+          const nt = String(n.data('node_type') || '').toLowerCase();
+          if (nt.includes('l1')) return;
+          const key = laneKeyForNode(n);
+          if (childrenByDomain.has(key)) {
+            childrenByDomain.get(key).push(n);
+          }
+        });
+
+        /* Canvas geometry */
+        const graphW = cy.width();
+        const graphH = cy.height();
+        const topPad = 55;
+        const bottomPad = 55;
+        const availH = graphH - topPad - bottomPad;
+        const laneStep = numLanes > 1 ? availH / (numLanes - 1) : 0;
+
+        /* X geometry: left margin for L1 anchors, rest for children */
+        const anchorX = graphW * 0.06;
+        const childStartX = graphW * 0.18;
+        const childEndX = graphW * 0.94;
+
+        cy.startBatch();
+
+        /* Position L1 anchors along left edge, evenly spaced vertically */
+        domainKeys.forEach((key, laneIdx) => {
+          const anchor = anchors.toArray()[laneIdx];
+          const laneY = topPad + laneIdx * laneStep;
+          anchor.position({ x: anchorX, y: laneY });
+        });
+
+        /* Position L3 children within each lane, flowing rightward */
+        domainKeys.forEach((key, laneIdx) => {
+          const children = childrenByDomain.get(key);
+          const laneY = topPad + laneIdx * laneStep;
+
+          if (children.length === 0) return;
+
+          /* Sort children by dagre X (preserves left-right narrative order) */
+          children.sort((a, b) => a.position('x') - b.position('x'));
+
+          const spanX = childEndX - childStartX;
+          const step = children.length > 1
+            ? Math.min(spanX / (children.length - 1), 220)
+            : 0;
+
+          /* Center the group if step was clamped */
+          const groupWidth = step * (children.length - 1);
+          const offsetX = (spanX - groupWidth) / 2;
+
+          children.forEach((child, i) => {
+            /* Slight vertical stagger prevents label overlap within a lane */
+            const stagger = children.length > 1
+              ? ((i % 3) - 1) * Math.min(laneStep * 0.12, 16)
+              : 0;
+            child.position({
+              x: childStartX + offsetX + i * step,
+              y: laneY + stagger
+            });
+          });
+        });
+
+        cy.endBatch();
+      }
+
+      function runLayout() {
+        const isExec = currentMode === 'executive';
+        const opts = {
+          name:    'dagre',
+          rankDir: 'LR',
+          ranker:  'network-simplex',
+          nodeSep: isExec ? 80  : 50,
+          rankSep: isExec ? 240 : 145,
+          edgeSep: isExec ? 28  : 24,
+          sort: (a, b) => String(a.id() || '').localeCompare(String(b.id() || '')),
+          animate: false,
+          fit:     true,
+          padding: isExec ? 48 : 28
+        };
+        try {
+          cy.layout(opts).run();
+          applyLRLaneLayout();
+          cy.fit(undefined, isExec ? 52 : 28);
+        } catch (e) {
+          console.warn('dagre layout failed, falling back to cose:', e);
+          cy.layout({ name: 'cose', animate: false, fit: true, padding: 24 }).run();
+        }
+      }
+
+      /* ── Rebuild graph (mode switch / company toggle) ── */
+      function rebuildGraph() {
+        cy.elements().remove();
+        cy.add(getVisibleElements());
+        if (companyOverlayActive) {
+          cy.add([...companyOverlay.nodes, ...companyOverlay.edges]);
+        }
+        runLayout();
+        applyFilters();
+        updateKPI();
+      }
+
+      /* ═══════════════════════════════════════════════════
+         Mode toggle
+         ═══════════════════════════════════════════════════ */
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const mode = btn.dataset.mode;
+          if (mode === currentMode) return;
+          currentMode = mode;
+          document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          clearSpotlight();
+          rebuildGraph();
+        });
+      });
+
+      /* ═══════════════════════════════════════════════════
+         Spotlight paths (3 candidate ideas)
+         ═══════════════════════════════════════════════════ */
+      function buildSpotlightButtons() {
+        const container = document.getElementById('spotlightButtons');
+        for (const [key, path] of Object.entries(SPOTLIGHT_PATHS)) {
+          const btn = document.createElement('button');
+          btn.className = 'spotlight-btn';
+          btn.dataset.idea = key;
+          btn.innerHTML = `
+            <span class="spotlight-color" style="background:${escHtml(path.color)}"></span>
+            <div>
+              <div class="spotlight-name">${escHtml(path.label)}</div>
+              <div class="spotlight-desc">${escHtml(path.description)}</div>
+            </div>`;
+          btn.addEventListener('click', () => toggleSpotlight(key));
+          container.appendChild(btn);
+        }
+      }
+
+      function toggleSpotlight(ideaKey) {
+        if (activeSpotlight === ideaKey) { clearSpotlight(); return; }
+        clearSpotlight();
+        activeSpotlight = ideaKey;
+        const path     = SPOTLIGHT_PATHS[ideaKey];
+        const classNum = ideaKey.replace('idea_', '');
+
+        const matchNodes = cy.nodes().filter(n => n.data('thesis_tag') === ideaKey);
+
+        const l1Ids = new Set();
+        matchNodes.forEach(n => {
+          const l1 = n.data('l1_component');
+          if (l1) l1Ids.add('n_l1_' + l1);
+        });
+        const l1Nodes = cy.nodes().filter(n => l1Ids.has(n.id()));
+
+        const spotlightNodes = matchNodes.union(l1Nodes);
+        const spotlightEdges = spotlightNodes.edgesWith(spotlightNodes);
+
+        cy.elements().addClass('dim');
+        spotlightNodes.removeClass('dim').addClass('spotlight spotlight-' + classNum);
+        spotlightEdges.removeClass('dim').addClass('spotlight-edge');
+
+        document.querySelectorAll('.spotlight-btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.idea === ideaKey);
+        });
+
+        const nodeList = matchNodes
+          .sort((a, b) => (b.data('bottleneck_score') || 0) - (a.data('bottleneck_score') || 0))
+          .map(n => escHtml(n.data('label')) + ' (' + (n.data('bottleneck_score') ?? '?') + ')')
+          .join(', ');
+        details.innerHTML = `
+          <div class="detail-title">${escHtml(path.label)}</div>
+          <div class="detail-note">${escHtml(path.description)}</div>
+          <div class="detail-metric-row">
+            <span>${spotlightNodes.length} nodes</span>
+            <span>${spotlightEdges.length} edges</span>
+          </div>
+          <div class="detail-note">${nodeList || 'No matching nodes in current view.'}</div>
+          <div class="detail-note">Click a highlighted node for full details.</div>`;
+      }
+
+      function clearSpotlight() {
+        activeSpotlight = null;
+        cy.elements().removeClass('dim spotlight spotlight-1 spotlight-2 spotlight-3 spotlight-edge');
+        document.querySelectorAll('.spotlight-btn').forEach(b => b.classList.remove('active'));
+      }
+
+      function clearFocusClasses() {
+        cy.elements().removeClass('focus focus-context focus-edge');
+      }
+
+      /* ═══════════════════════════════════════════════════
+         Filters (search, gate, confidence)
+         ═══════════════════════════════════════════════════ */
+      function applyFilters() {
+        const q    = (searchEl.value || '').trim().toLowerCase();
+        const gate = gateEl.value;
+        const conf = confEl.value;
+
+        if (activeSpotlight) return;
+
+        cy.elements().removeClass('dim');
+
+        cy.nodes().forEach(n => {
+          const label = (n.data('label') || '').toLowerCase();
+          const id    = (n.data('id') || '').toLowerCase();
+          const isCompany = n.data('node_type') === 'company';
+
+          if (isCompany) {
+            let ok = true;
+            if (q && !(label.includes(q) || id.includes(q))) ok = false;
+            if (conf !== 'all') {
+              const ct = String(n.data('confidence') || '').toLowerCase();
+              if (!ct.includes(conf)) ok = false;
+            }
+            if (!ok) n.addClass('dim');
+            return;
+          }
+
+          const passVal  = n.data('gate_pass');
+          const passText = passVal === true ? 'true' : passVal === false ? 'false' : String(passVal || 'unknown');
+          const confText = String(n.data('confidence') || '').toLowerCase();
+
+          let ok = true;
+          if (q && !(label.includes(q) || id.includes(q))) ok = false;
+          if (gate !== 'all' && passText !== gate)          ok = false;
+          if (conf !== 'all' && !confText.includes(conf))  ok = false;
+          if (!ok) n.addClass('dim');
+        });
+
+        cy.edges().forEach(e => {
+          if (e.source().hasClass('dim') || e.target().hasClass('dim')) e.addClass('dim');
+        });
+      }
+
+      /* ═══════════════════════════════════════════════════
+         KPI bar
+         ═══════════════════════════════════════════════════ */
+      function updateKPI() {
+        const componentNodes = cy.nodes().filter(n => n.data('node_type') !== 'company');
+        const total = componentNodes.length;
+        const pass  = componentNodes.filter(n => n.data('gate_pass') === true  || n.data('gate_pass') === 'true').length;
+        const fail  = componentNodes.filter(n => n.data('gate_pass') === false || n.data('gate_pass') === 'false').length;
+        const coCount = cy.nodes().filter(n => n.data('node_type') === 'company').length;
+        const modeLabel = currentMode === 'executive' ? 'Exec' : 'Full';
+        let text = `${modeLabel} \u00b7 ${total} nodes \u00b7 ${pass} pass \u00b7 ${fail} fail`;
+        if (coCount > 0) text += ` \u00b7 ${coCount} cos`;
+        kpiEl.textContent = text;
+      }
+
+      /* ═══════════════════════════════════════════════════
+         Event listeners
+         ═══════════════════════════════════════════════════ */
+      searchEl.addEventListener('input', applyFilters);
+      gateEl.addEventListener('change', applyFilters);
+      confEl.addEventListener('change', applyFilters);
+
+      scenarioEl.addEventListener('change', () => {
+        const mode = scenarioEl.value;
+        cy.nodes().forEach(n => {
+          if (n.data('node_type') === 'company') return;
+          const s = mode === 'bull' ? n.data('scenario_bull')
+            : mode === 'bear' ? n.data('scenario_bear')
+            : n.data('scenario_base');
+          n.data('scenario_active', s || 'n/a');
+        });
+      });
+
+      companyToggleEl.addEventListener('change', () => {
+        companyOverlayActive = companyToggleEl.checked;
+        rebuildGraph();
+      });
+
+      document.getElementById('showTop10').addEventListener('click', () => {
+        clearSpotlight();
+        cy.nodes().removeClass('top10');
+        const topNodes = cy.nodes()
+          .filter(n => n.data('node_type') !== 'company')
+          .sort((a, b) => (b.data('bottleneck_score') || 0) - (a.data('bottleneck_score') || 0))
+          .slice(0, 10);
+        topNodes.forEach(n => n.addClass('top10'));
+      });
+
+      document.getElementById('reset').addEventListener('click', () => {
+        searchEl.value = '';
+        gateEl.value   = 'all';
+        confEl.value   = 'all';
+        clearSpotlight();
+        clearFocusClasses();
+        cy.elements().removeClass('dim top10 hover');
+        cy.fit(undefined, 24);
+      });
+
+      /* ═══════════════════════════════════════════════════
+         Company HTML builder (for detail panel)
+         ═══════════════════════════════════════════════════ */
+      function buildTopCompaniesHtml(nodeId) {
+        const directEdges = companyEdgesByComponent.get(nodeId) || [];
+        const nodeData = cy.getElementById(nodeId).data();
+        const l1Id = nodeData && nodeData.l1_component ? 'n_l1_' + nodeData.l1_component : null;
+        const l1Edges = l1Id ? (companyEdgesByComponent.get(l1Id) || []) : [];
+
+        const seen = new Set();
+        const merged = [];
+        for (const e of directEdges) { seen.add(e.target); merged.push(e); }
+        for (const e of l1Edges) { if (!seen.has(e.target)) { seen.add(e.target); merged.push(e); } }
+        if (merged.length === 0) return '<small>No company data linked.</small>';
+
+        merged.sort((a, b) => (b.composite_score ?? -1) - (a.composite_score ?? -1));
+
+        return '<div class="company-list">' + merged.slice(0, 8).map(e => {
+          const co    = companyNodeById.get(e.target);
+          const label = co ? escHtml(co.label) : escHtml(e.target);
+          const coType = co ? escHtml(co.company_type) : '';
+          const score = e.composite_score != null ? e.composite_score.toFixed(1) : 'n/a';
+          const conf  = (e.confidence || 'low').toLowerCase();
+          const cls   = conf === 'high' ? 'conf-high' : conf === 'medium' ? 'conf-medium' : 'conf-low';
+          const dep   = escHtml(e.dependency_type || '');
+          const pen   = e.confidence_penalty != null ? 'pen\u00a0' + e.confidence_penalty.toFixed(2) : '';
+          const bits  = [dep, pen, coType].filter(Boolean).join(' \u00b7 ');
+          return `<div class="company-row">
+            <div><span class="company-name">${label}</span> <span class="conf-badge ${cls}">${conf}</span><br><small>${bits}</small></div>
+            <span class="company-score">${score}</span>
+          </div>`;
+        }).join('') + '</div>';
+      }
+
+      /* ═══════════════════════════════════════════════════
+         Component detail panel
+         ═══════════════════════════════════════════════════ */
+      function renderComponentDetail(node) {
+        const n   = node.data();
+        const cls = gateClass(n.gate_pass);
+
+        const neighbors = node.neighborhood('node');
+        const edgeCount = node.connectedEdges().length;
+        const topDown   = node.outgoers('node')
+          .filter(x => x.data('node_type') !== 'company')
+          .sort((a, b) => (b.data('bottleneck_score') || 0) - (a.data('bottleneck_score') || 0))
+          .slice(0, 3)
+          .map(x => escHtml(x.data('label')) + ' (' + (x.data('bottleneck_score') ?? '?') + ')')
+          .join(', ');
+
+        const gateDisplay = (n.gate_pass === 'unknown' && String(n.node_type || '').startsWith('l1'))
+          ? 'structural (aggregated)'
+          : n.gate_pass;
+
+        const blockerText = n.key_blockers
+          ? escHtml(n.key_blockers.slice(0, 500))
+          : 'No direct blocker text. Inspect downstream nodes.';
+
+        const scenario = n.scenario_active || n.scenario_base;
+        const scenarioText = fmtScenario(scenario);
+
+        const cosHtml = buildTopCompaniesHtml(n.id);
+
+        details.innerHTML = `
+          <div class="detail-title">${escHtml(n.label)}</div>
+          <div class="detail-badges"><span class="badge ${cls}">gate: ${gateDisplay}</span></div>
+          <div class="detail-grid">
+            <div class="detail-row"><span>ID</span><span>${escHtml(n.id)}</span></div>
+            <div class="detail-row"><span>Type</span><span>${n.node_type || '?'}</span></div>
+            <div class="detail-row"><span>Domain</span><span>${n.l1_component || 'n/a'}</span></div>
+            <div class="detail-row"><span>Neighbors</span><span>${neighbors.length}</span></div>
+            <div class="detail-row"><span>Edges</span><span>${edgeCount}</span></div>
+            <div class="detail-row"><span>Confidence</span><span>${n.confidence || 'n/a'}</span></div>
+            <div class="detail-row"><span>Bottleneck</span><span>${n.bottleneck_score ?? 'n/a'}</span></div>
+            <div class="detail-row"><span>Thesis</span><span>${n.thesis_tag || 'other'}</span></div>
+            <div class="detail-row"><span>Scenario</span><span>${scenarioText}</span></div>
+            <div class="detail-row"><span>Capacity</span><span>${n.capacity_effective ?? 'n/a'}</span></div>
+            <div class="detail-row"><span>Lead Time</span><span>${n.lead_time ?? 'n/a'}</span></div>
+            <div class="detail-row"><span>Cost Uplift</span><span>${n.landed_cost_uplift_pct ?? 'n/a'}%</span></div>
+            <div class="detail-row"><span>Tariff</span><span>${n.tariff_penalty_pct ?? 'n/a'}%</span></div>
+          </div>
+          ${topDown ? `<div class="detail-note">Downstream risk: ${topDown}</div>` : ''}
+          <div class="detail-note">Blockers: ${blockerText}</div>
+          <div class="detail-subsection">
+            <div class="detail-subtitle">Top companies</div>
+            ${cosHtml}
+          </div>`;
+      }
+
+      /* ═══════════════════════════════════════════════════
+         Company detail panel
+         ═══════════════════════════════════════════════════ */
+      function renderCompanyDetail(node) {
+        const n    = node.data();
+        const conf = (n.confidence || 'low').toLowerCase();
+        const cls  = conf === 'high' ? 'conf-high' : conf === 'medium' ? 'conf-medium' : 'conf-low';
+
+        const linked = node.neighborhood('node')
+          .filter(x => x.data('node_type') !== 'company')
+          .map(x => escHtml(x.data('label')))
+          .slice(0, 10);
+
+        details.innerHTML = `
+          <div class="detail-title">${escHtml(n.label)} <span class="conf-badge ${cls}">${conf}</span></div>
+          <div class="detail-badges"><span class="badge unknown">company: ${escHtml(n.company_type || 'n/a')}</span></div>
+          <div class="detail-grid">
+            <div class="detail-row"><span>ID</span><span>${escHtml(n.id)}</span></div>
+            <div class="detail-row"><span>Components</span><span>${n.component_count ?? 'n/a'}</span></div>
+            <div class="detail-row"><span>Sources</span><span>${n.source_count ?? 'n/a'}</span></div>
+            <div class="detail-row"><span>Avg Score</span><span>${n.avg_composite_score ?? 'n/a'}</span></div>
+            <div class="detail-row"><span>Best Score</span><span>${n.best_composite_score ?? 'n/a'}</span></div>
+          </div>
+          ${linked.length > 0 ? `<div class="detail-note">Linked: ${linked.join(', ')}</div>` : ''}`;
+      }
+
+      /* ═══════════════════════════════════════════════════
+         Tap handlers
+         ═══════════════════════════════════════════════════ */
+      cy.on('tap', 'node', evt => {
+        clearFocusClasses();
+        const node = evt.target;
+        node.addClass('focus');
+        node.neighborhood('node').addClass('focus-context');
+        node.connectedEdges().addClass('focus-edge');
+        if (node.data('node_type') === 'company') renderCompanyDetail(node);
+        else renderComponentDetail(node);
+      });
+
+      cy.on('tap', 'edge', evt => {
+        clearFocusClasses();
+        evt.target.addClass('focus-edge');
+        evt.target.source().addClass('focus-context');
+        evt.target.target().addClass('focus-context');
+        const e = evt.target.data();
+        const depType = e.dependency_type || 'depends_on';
+        let extra = '';
+        if (e.composite_score != null) {
+          extra += `<small>composite: ${e.composite_score} \u00b7 penalty: ${e.confidence_penalty ?? 'n/a'}</small>`;
+        }
+        if (e.source_count != null) {
+          extra += `<small>sources: ${e.source_count}</small>`;
+        }
+        details.innerHTML = `
+          <div class="detail-title">Edge</div>
+          <div class="detail-note">${escHtml(e.source)} \u2192 ${escHtml(e.target)}</div>
+          <div class="detail-note">type: ${escHtml(depType)} \u00b7 confidence: ${e.confidence || 'n/a'}</div>
+          ${extra}`;
+      });
+
+      /* ═══════════════════════════════════════════════════
+         Hover: reveal labels on mouseover
+         ═══════════════════════════════════════════════════ */
+      cy.on('mouseover', 'node', evt => evt.target.addClass('hover'));
+      cy.on('mouseout',  'node', evt => evt.target.removeClass('hover'));
+
+      /* ── Init ── */
+      buildSpotlightButtons();
+      runLayout();
+      window.__cy = cy;
+      updateKPI();
+
+      /* ── Expose layout diagnostics for screenshot script ── */
+      window.__layoutDiagnostics = function () {
+        const nodes = cy.nodes();
+        const bb = cy.extent();
+        const canvasW = bb.w;
+        const canvasH = bb.h;
+        const canvasArea = canvasW * canvasH;
+
+        /* Bounding box of all nodes */
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        nodes.forEach(n => {
+          const p = n.position();
+          const w = n.width() / 2;
+          const h = n.height() / 2;
+          if (p.x - w < minX) minX = p.x - w;
+          if (p.x + w > maxX) maxX = p.x + w;
+          if (p.y - h < minY) minY = p.y - h;
+          if (p.y + h > maxY) maxY = p.y + h;
+        });
+        const usedArea = (maxX - minX) * (maxY - minY);
+        const unusedPct = canvasArea > 0 ? Math.round((1 - usedArea / canvasArea) * 100) : 0;
+
+        /* Label collision estimate */
+        const labels = [];
+        nodes.forEach(n => {
+          if (n.style('text-opacity') > 0 && n.style('opacity') > 0.1) {
+            const p = n.position();
+            const labelLen = (n.data('short_label') || '').length * 5.5;
+            labels.push({ x: p.x, y: p.y + n.height() / 2 + 7, w: labelLen, h: 12 });
+          }
+        });
+        let collisions = 0;
+        for (let i = 0; i < labels.length; i++) {
+          for (let j = i + 1; j < labels.length; j++) {
+            const a = labels[i], b = labels[j];
+            if (Math.abs(a.x - b.x) < (a.w + b.w) / 2 && Math.abs(a.y - b.y) < (a.h + b.h) / 2) {
+              collisions++;
+            }
+          }
+        }
+
+        /* Edge crossing estimate (sweep-line approximation) */
+        const edges = cy.edges();
+        let crossings = 0;
+        const edgeSegs = [];
+        edges.forEach(e => {
+          const sp = e.source().position();
+          const tp = e.target().position();
+          edgeSegs.push({ x1: sp.x, y1: sp.y, x2: tp.x, y2: tp.y });
+        });
+        for (let i = 0; i < edgeSegs.length; i++) {
+          for (let j = i + 1; j < edgeSegs.length; j++) {
+            const a = edgeSegs[i], b = edgeSegs[j];
+            /* Fast intersection test */
+            const d1x = a.x2 - a.x1, d1y = a.y2 - a.y1;
+            const d2x = b.x2 - b.x1, d2y = b.y2 - b.y1;
+            const det = d1x * d2y - d1y * d2x;
+            if (Math.abs(det) < 0.001) continue;
+            const dx = b.x1 - a.x1, dy = b.y1 - a.y1;
+            const t = (dx * d2y - dy * d2x) / det;
+            const u = (dx * d1y - dy * d1x) / det;
+            if (t > 0.01 && t < 0.99 && u > 0.01 && u < 0.99) crossings++;
+          }
+        }
+
+        return {
+          nodeCount: nodes.length,
+          edgeCount: edges.length,
+          labelCollisions: collisions,
+          unusedCanvasPct: unusedPct,
+          crossingsEstimate: crossings,
+          canvasW: Math.round(canvasW),
+          canvasH: Math.round(canvasH)
+        };
+      };
+    </script>
+  </body>
+</html>

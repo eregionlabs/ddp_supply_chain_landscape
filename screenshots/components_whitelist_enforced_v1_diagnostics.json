@@ -1,0 +1,11 @@
+{
+  "total": 43,
+  "byLayer": {
+    "L1": 8,
+    "L2": 9,
+    "L3": 26,
+    "OTHER": 0
+  },
+  "nonCoreCount": 0,
+  "nonCoreIds": []
+}

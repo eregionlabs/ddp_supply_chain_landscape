@@ -1,0 +1,1867 @@
+{
+  "version": "component_hierarchy_v2_physical",
+  "description": "Physical-only component hierarchy (L1/L2/L3)",
+  "nodes": [
+    {
+      "node_id": "n_l1_airframe_structures",
+      "node_name": "Airframe Structures",
+      "layer": "L1",
+      "parent_id": "",
+      "node_type": "l1_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l1_energy_storage",
+      "node_name": "Energy Storage",
+      "layer": "L1",
+      "parent_id": "",
+      "node_type": "l1_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l1_flight_control_guidance",
+      "node_name": "Flight Control Guidance",
+      "layer": "L1",
+      "parent_id": "",
+      "node_type": "l1_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l1_manufacturing_system",
+      "node_name": "Manufacturing System",
+      "layer": "L1",
+      "parent_id": "",
+      "node_type": "l1_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l1_pnt",
+      "node_name": "Pnt",
+      "layer": "L1",
+      "parent_id": "",
+      "node_type": "l1_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l1_propulsion",
+      "node_name": "Propulsion",
+      "layer": "L1",
+      "parent_id": "",
+      "node_type": "l1_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l1_secure_comms",
+      "node_name": "Secure Comms",
+      "layer": "L1",
+      "parent_id": "",
+      "node_type": "l1_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l2_flight_control_guidance_air_data_sensor_suite",
+      "node_name": "Air data sensor suite",
+      "layer": "L2",
+      "parent_id": "n_l1_flight_control_guidance",
+      "node_type": "l2_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l2_secure_comms_antenna_feed_network",
+      "node_name": "Antenna feed network",
+      "layer": "L2",
+      "parent_id": "n_l1_secure_comms",
+      "node_type": "l2_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l2_pnt_anti_jam_antenna_array",
+      "node_name": "Anti-jam antenna array",
+      "layer": "L2",
+      "parent_id": "n_l1_pnt",
+      "node_type": "l2_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l2_propulsion_bldc_motor_assembly",
+      "node_name": "BLDC motor assembly",
+      "layer": "L2",
+      "parent_id": "n_l1_propulsion",
+      "node_type": "l2_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l2_energy_storage_bms_pcb_assembly",
+      "node_name": "BMS PCB assembly",
+      "layer": "L2",
+      "parent_id": "n_l1_energy_storage",
+      "node_type": "l2_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l2_pnt_barometric_altimeter_module",
+      "node_name": "Barometric altimeter module",
+      "layer": "L2",
+      "parent_id": "n_l1_pnt",
+      "node_type": "l2_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l2_energy_storage_battery_module_enclosure",
+      "node_name": "Battery module enclosure",
+      "layer": "L2",
+      "parent_id": "n_l1_energy_storage",
+      "node_type": "l2_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l2_flight_control_guidance_compute_carrier_board",
+      "node_name": "Compute carrier board",
+      "layer": "L2",
+      "parent_id": "n_l1_flight_control_guidance",
+      "node_type": "l2_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l2_secure_comms_crypto_processor_module",
+      "node_name": "Crypto processor module",
+      "layer": "L2",
+      "parent_id": "n_l1_secure_comms",
+      "node_type": "l2_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l2_propulsion_esc_power_unit",
+      "node_name": "ESC power unit",
+      "layer": "L2",
+      "parent_id": "n_l1_propulsion",
+      "node_type": "l2_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l2_manufacturing_system_final_assembly_test_rack",
+      "node_name": "Final assembly test rack",
+      "layer": "L2",
+      "parent_id": "n_l1_manufacturing_system",
+      "node_type": "l2_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l2_flight_control_guidance_flight_controller_pcb_assembly",
+      "node_name": "Flight controller PCB assembly",
+      "layer": "L2",
+      "parent_id": "n_l1_flight_control_guidance",
+      "node_type": "l2_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l2_airframe_structures_fuselage_shell_assembly",
+      "node_name": "Fuselage shell assembly",
+      "layer": "L2",
+      "parent_id": "n_l1_airframe_structures",
+      "node_type": "l2_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l2_pnt_gnss_receiver_module",
+      "node_name": "GNSS receiver module",
+      "layer": "L2",
+      "parent_id": "n_l1_pnt",
+      "node_type": "l2_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l2_pnt_inertial_measurement_module",
+      "node_name": "Inertial measurement module",
+      "layer": "L2",
+      "parent_id": "n_l1_pnt",
+      "node_type": "l2_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l2_flight_control_guidance_inertial_sensor_module",
+      "node_name": "Inertial sensor module",
+      "layer": "L2",
+      "parent_id": "n_l1_flight_control_guidance",
+      "node_type": "l2_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l2_airframe_structures_landing_skid_assembly",
+      "node_name": "Landing skid assembly",
+      "layer": "L2",
+      "parent_id": "n_l1_airframe_structures",
+      "node_type": "l2_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l2_energy_storage_li_ion_cell_block",
+      "node_name": "Li-ion cell block",
+      "layer": "L2",
+      "parent_id": "n_l1_energy_storage",
+      "node_type": "l2_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l2_manufacturing_system_motor_winding_station",
+      "node_name": "Motor winding station",
+      "layer": "L2",
+      "parent_id": "n_l1_manufacturing_system",
+      "node_type": "l2_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l2_energy_storage_pack_thermal_interface_stack",
+      "node_name": "Pack thermal interface stack",
+      "layer": "L2",
+      "parent_id": "n_l1_energy_storage",
+      "node_type": "l2_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l2_secure_comms_power_amplifier_module",
+      "node_name": "Power amplifier module",
+      "layer": "L2",
+      "parent_id": "n_l1_secure_comms",
+      "node_type": "l2_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l2_propulsion_power_distribution_board",
+      "node_name": "Power distribution board",
+      "layer": "L2",
+      "parent_id": "n_l1_propulsion",
+      "node_type": "l2_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l2_propulsion_propeller_rotor_set",
+      "node_name": "Propeller rotor set",
+      "layer": "L2",
+      "parent_id": "n_l1_propulsion",
+      "node_type": "l2_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l2_secure_comms_rf_transceiver_module",
+      "node_name": "RF transceiver module",
+      "layer": "L2",
+      "parent_id": "n_l1_secure_comms",
+      "node_type": "l2_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l2_manufacturing_system_reflow_oven_line",
+      "node_name": "Reflow oven line",
+      "layer": "L2",
+      "parent_id": "n_l1_manufacturing_system",
+      "node_type": "l2_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l2_manufacturing_system_smt_placement_line",
+      "node_name": "SMT placement line",
+      "layer": "L2",
+      "parent_id": "n_l1_manufacturing_system",
+      "node_type": "l2_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l2_airframe_structures_tail_control_surface_set",
+      "node_name": "Tail control surface set",
+      "layer": "L2",
+      "parent_id": "n_l1_airframe_structures",
+      "node_type": "l2_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l2_airframe_structures_wing_panel_assembly",
+      "node_name": "Wing panel assembly",
+      "layer": "L2",
+      "parent_id": "n_l1_airframe_structures",
+      "node_type": "l2_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l3_energy_aluminum_module_tray",
+      "node_name": "Aluminum module tray",
+      "layer": "L3",
+      "parent_id": "n_l2_energy_storage_battery_module_enclosure",
+      "node_type": "l3_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l3_pnt_antenna_radome",
+      "node_name": "Antenna radome",
+      "layer": "L3",
+      "parent_id": "n_l2_pnt_anti_jam_antenna_array",
+      "node_type": "l3_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l3_energy_balance_resistor_array",
+      "node_name": "Balance resistor array",
+      "layer": "L3",
+      "parent_id": "n_l2_energy_storage_bms_pcb_assembly",
+      "node_type": "l3_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l3_pnt_beamforming_ic",
+      "node_name": "Beamforming IC",
+      "layer": "L3",
+      "parent_id": "n_l2_pnt_anti_jam_antenna_array",
+      "node_type": "l3_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l3_fcg_board_to_board_connector",
+      "node_name": "Board-to-board connector",
+      "layer": "L3",
+      "parent_id": "n_l2_flight_control_guidance_compute_carrier_board",
+      "node_type": "l3_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l3_airframe_bulkhead_frame_ring",
+      "node_name": "Bulkhead frame ring",
+      "layer": "L3",
+      "parent_id": "n_l2_airframe_structures_fuselage_shell_assembly",
+      "node_type": "l3_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l3_pnt_crpa_patch_element",
+      "node_name": "CRPA patch element",
+      "layer": "L3",
+      "parent_id": "n_l2_pnt_anti_jam_antenna_array",
+      "node_type": "l3_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l3_energy_cathode_coated_foil",
+      "node_name": "Cathode coated foil",
+      "layer": "L3",
+      "parent_id": "n_l2_energy_storage_li_ion_cell_block",
+      "node_type": "l3_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l3_energy_cell_monitor_asic",
+      "node_name": "Cell monitor ASIC",
+      "layer": "L3",
+      "parent_id": "n_l2_energy_storage_bms_pcb_assembly",
+      "node_type": "l3_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l3_airframe_center_tub_section",
+      "node_name": "Center tub section",
+      "layer": "L3",
+      "parent_id": "n_l2_airframe_structures_fuselage_shell_assembly",
+      "node_type": "l3_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l3_fcg_ceramic_imu_package",
+      "node_name": "Ceramic IMU package",
+      "layer": "L3",
+      "parent_id": "n_l2_flight_control_guidance_inertial_sensor_module",
+      "node_type": "l3_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l3_securecomms_circulator",
+      "node_name": "Circulator",
+      "layer": "L3",
+      "parent_id": "n_l2_secure_comms_power_amplifier_module",
+      "node_type": "l3_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l3_securecomms_coaxial_feedline",
+      "node_name": "Coaxial feedline",
+      "layer": "L3",
+      "parent_id": "n_l2_secure_comms_antenna_feed_network",
+      "node_type": "l3_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l3_energy_compression_tie_rod",
+      "node_name": "Compression tie rod",
+      "layer": "L3",
+      "parent_id": "n_l2_energy_storage_battery_module_enclosure",
+      "node_type": "l3_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l3_fcg_conformal_coated_pcb",
+      "node_name": "Conformal coated PCB",
+      "layer": "L3",
+      "parent_id": "n_l2_flight_control_guidance_flight_controller_pcb_assembly",
+      "node_type": "l3_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l3_mfg_conveyor_mesh_belt",
+      "node_name": "Conveyor mesh belt",
+      "layer": "L3",
+      "parent_id": "n_l2_manufacturing_system_reflow_oven_line",
+      "node_type": "l3_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l3_energy_coolant_microchannel_plate",
+      "node_name": "Coolant microchannel plate",
+      "layer": "L3",
+      "parent_id": "n_l2_energy_storage_pack_thermal_interface_stack",
+      "node_type": "l3_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l3_propulsion_copper_bus_plane",
+      "node_name": "Copper bus plane",
+      "layer": "L3",
+      "parent_id": "n_l2_propulsion_power_distribution_board",
+      "node_type": "l3_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l3_airframe_cross_brace",
+      "node_name": "Cross brace",
+      "layer": "L3",
+      "parent_id": "n_l2_airframe_structures_landing_skid_assembly",
+      "node_type": "l3_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l3_propulsion_current_sensor_ic",
+      "node_name": "Current sensor IC",
+      "layer": "L3",
+      "parent_id": "n_l2_propulsion_power_distribution_board",
+      "node_type": "l3_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l3_propulsion_dc_link_capacitor_bank",
+      "node_name": "DC-link capacitor bank",
+      "layer": "L3",
+      "parent_id": "n_l2_propulsion_esc_power_unit",
+      "node_type": "l3_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l3_mfg_data_acquisition_chassis",
+      "node_name": "Data acquisition chassis",
+      "layer": "L3",
+      "parent_id": "n_l2_manufacturing_system_final_assembly_test_rack",
+      "node_type": "l3_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l3_fcg_differential_pressure_sensor",
+      "node_name": "Differential pressure sensor",
+      "layer": "L3",
+      "parent_id": "n_l2_flight_control_guidance_air_data_sensor_suite",
+      "node_type": "l3_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l3_securecomms_duplexer_filter",
+      "node_name": "Duplexer filter",
+      "layer": "L3",
+      "parent_id": "n_l2_secure_comms_antenna_feed_network",
+      "node_type": "l3_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l3_airframe_elevator_skin",
+      "node_name": "Elevator skin",
+      "layer": "L3",
+      "parent_id": "n_l2_airframe_structures_tail_control_surface_set",
+      "node_type": "l3_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l3_energy_end_plate_pair",
+      "node_name": "End plate pair",
+      "layer": "L3",
+      "parent_id": "n_l2_energy_storage_battery_module_enclosure",
+      "node_type": "l3_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l3_pnt_fog_rate_sensor",
+      "node_name": "FOG rate sensor",
+      "layer": "L3",
+      "parent_id": "n_l2_pnt_inertial_measurement_module",
+      "node_type": "l3_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l3_mfg_feeder_bank",
+      "node_name": "Feeder bank",
+      "layer": "L3",
+      "parent_id": "n_l2_manufacturing_system_smt_placement_line",
+      "node_type": "l3_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l3_mfg_fixture_plate",
+      "node_name": "Fixture plate",
+      "layer": "L3",
+      "parent_id": "n_l2_manufacturing_system_final_assembly_test_rack",
+      "node_type": "l3_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l3_securecomms_frequency_synthesizer",
+      "node_name": "Frequency synthesizer",
+      "layer": "L3",
+      "parent_id": "n_l2_secure_comms_rf_transceiver_module",
+      "node_type": "l3_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l3_securecomms_gan_pa_die",
+      "node_name": "GaN PA die",
+      "layer": "L3",
+      "parent_id": "n_l2_secure_comms_power_amplifier_module",
+      "node_type": "l3_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l3_propulsion_gate_driver_ic",
+      "node_name": "Gate driver IC",
+      "layer": "L3",
+      "parent_id": "n_l2_propulsion_esc_power_unit",
+      "node_type": "l3_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l3_energy_graphite_heat_spreader",
+      "node_name": "Graphite heat spreader",
+      "layer": "L3",
+      "parent_id": "n_l2_energy_storage_pack_thermal_interface_stack",
+      "node_type": "l3_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l3_mfg_heater_zone_module",
+      "node_name": "Heater zone module",
+      "layer": "L3",
+      "parent_id": "n_l2_manufacturing_system_reflow_oven_line",
+      "node_type": "l3_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l3_airframe_hinge_bracket",
+      "node_name": "Hinge bracket",
+      "layer": "L3",
+      "parent_id": "n_l2_airframe_structures_tail_control_surface_set",
+      "node_type": "l3_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l3_securecomms_iq_transceiver_ic",
+      "node_name": "I/Q transceiver IC",
+      "layer": "L3",
+      "parent_id": "n_l2_secure_comms_rf_transceiver_module",
+      "node_type": "l3_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l3_pnt_imu_control_asic",
+      "node_name": "IMU control ASIC",
+      "layer": "L3",
+      "parent_id": "n_l2_pnt_inertial_measurement_module",
+      "node_type": "l3_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l3_securecomms_key_storage_flash",
+      "node_name": "Key storage flash",
+      "layer": "L3",
+      "parent_id": "n_l2_secure_comms_crypto_processor_module",
+      "node_type": "l3_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l3_fcg_lpddr_memory_package",
+      "node_name": "LPDDR memory package",
+      "layer": "L3",
+      "parent_id": "n_l2_flight_control_guidance_compute_carrier_board",
+      "node_type": "l3_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l3_mfg_load_bank_module",
+      "node_name": "Load bank module",
+      "layer": "L3",
+      "parent_id": "n_l2_manufacturing_system_final_assembly_test_rack",
+      "node_type": "l3_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l3_propulsion_mosfet_half_bridge",
+      "node_name": "MOSFET half-bridge",
+      "layer": "L3",
+      "parent_id": "n_l2_propulsion_esc_power_unit",
+      "node_type": "l3_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l3_fcg_main_mcu",
+      "node_name": "Main MCU",
+      "layer": "L3",
+      "parent_id": "n_l2_flight_control_guidance_flight_controller_pcb_assembly",
+      "node_type": "l3_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l3_pnt_micro_valve_cap",
+      "node_name": "Micro-valve cap",
+      "layer": "L3",
+      "parent_id": "n_l2_pnt_barometric_altimeter_module",
+      "node_type": "l3_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l3_propulsion_motor_shaft",
+      "node_name": "Motor shaft",
+      "layer": "L3",
+      "parent_id": "n_l2_propulsion_bldc_motor_assembly",
+      "node_type": "l3_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l3_airframe_mounting_lug",
+      "node_name": "Mounting lug",
+      "layer": "L3",
+      "parent_id": "n_l2_airframe_structures_landing_skid_assembly",
+      "node_type": "l3_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l3_mfg_nitrogen_inlet_manifold",
+      "node_name": "Nitrogen inlet manifold",
+      "layer": "L3",
+      "parent_id": "n_l2_manufacturing_system_reflow_oven_line",
+      "node_type": "l3_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l3_airframe_nose_shell_panel",
+      "node_name": "Nose shell panel",
+      "layer": "L3",
+      "parent_id": "n_l2_airframe_structures_fuselage_shell_assembly",
+      "node_type": "l3_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l3_securecomms_output_match_network",
+      "node_name": "Output match network",
+      "layer": "L3",
+      "parent_id": "n_l2_secure_comms_power_amplifier_module",
+      "node_type": "l3_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l3_energy_pack_current_shunt",
+      "node_name": "Pack current shunt",
+      "layer": "L3",
+      "parent_id": "n_l2_energy_storage_bms_pcb_assembly",
+      "node_type": "l3_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l3_securecomms_patch_antenna_element",
+      "node_name": "Patch antenna element",
+      "layer": "L3",
+      "parent_id": "n_l2_secure_comms_antenna_feed_network",
+      "node_type": "l3_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l3_mfg_pick_and_place_head",
+      "node_name": "Pick-and-place head",
+      "layer": "L3",
+      "parent_id": "n_l2_manufacturing_system_smt_placement_line",
+      "node_type": "l3_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l3_fcg_pitot_tube",
+      "node_name": "Pitot tube",
+      "layer": "L3",
+      "parent_id": "n_l2_flight_control_guidance_air_data_sensor_suite",
+      "node_type": "l3_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l3_fcg_power_regulator_ic",
+      "node_name": "Power regulator IC",
+      "layer": "L3",
+      "parent_id": "n_l2_flight_control_guidance_flight_controller_pcb_assembly",
+      "node_type": "l3_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l3_pnt_pressure_sensor_die",
+      "node_name": "Pressure sensor die",
+      "layer": "L3",
+      "parent_id": "n_l2_pnt_barometric_altimeter_module",
+      "node_type": "l3_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l3_energy_prismatic_cell_can",
+      "node_name": "Prismatic cell can",
+      "layer": "L3",
+      "parent_id": "n_l2_energy_storage_li_ion_cell_block",
+      "node_type": "l3_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l3_propulsion_propeller_adapter_collet",
+      "node_name": "Propeller adapter collet",
+      "layer": "L3",
+      "parent_id": "n_l2_propulsion_propeller_rotor_set",
+      "node_type": "l3_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l3_propulsion_propeller_blade",
+      "node_name": "Propeller blade",
+      "layer": "L3",
+      "parent_id": "n_l2_propulsion_propeller_rotor_set",
+      "node_type": "l3_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l3_propulsion_propeller_hub",
+      "node_name": "Propeller hub",
+      "layer": "L3",
+      "parent_id": "n_l2_propulsion_propeller_rotor_set",
+      "node_type": "l3_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l3_pnt_quartz_accelerometer",
+      "node_name": "Quartz accelerometer",
+      "layer": "L3",
+      "parent_id": "n_l2_pnt_inertial_measurement_module",
+      "node_type": "l3_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l3_pnt_rf_front_end_ic",
+      "node_name": "RF front-end IC",
+      "layer": "L3",
+      "parent_id": "n_l2_pnt_gnss_receiver_module",
+      "node_type": "l3_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l3_securecomms_rf_shield_can",
+      "node_name": "RF shield can",
+      "layer": "L3",
+      "parent_id": "n_l2_secure_comms_rf_transceiver_module",
+      "node_type": "l3_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l3_airframe_rib_web_plate",
+      "node_name": "Rib web plate",
+      "layer": "L3",
+      "parent_id": "n_l2_airframe_structures_wing_panel_assembly",
+      "node_type": "l3_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l3_propulsion_rotor_magnet_ring",
+      "node_name": "Rotor magnet ring",
+      "layer": "L3",
+      "parent_id": "n_l2_propulsion_bldc_motor_assembly",
+      "node_type": "l3_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l3_pnt_saw_filter",
+      "node_name": "SAW filter",
+      "layer": "L3",
+      "parent_id": "n_l2_pnt_gnss_receiver_module",
+      "node_type": "l3_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l3_securecomms_secure_element_ic",
+      "node_name": "Secure element IC",
+      "layer": "L3",
+      "parent_id": "n_l2_secure_comms_crypto_processor_module",
+      "node_type": "l3_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l3_energy_separator_film_roll",
+      "node_name": "Separator film roll",
+      "layer": "L3",
+      "parent_id": "n_l2_energy_storage_li_ion_cell_block",
+      "node_type": "l3_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l3_energy_silicone_gap_pad",
+      "node_name": "Silicone gap pad",
+      "layer": "L3",
+      "parent_id": "n_l2_energy_storage_pack_thermal_interface_stack",
+      "node_type": "l3_component",
+      "l1_component": "energy_storage"
+    },
+    {
+      "node_id": "n_l3_airframe_skid_tube",
+      "node_name": "Skid tube",
+      "layer": "L3",
+      "parent_id": "n_l2_airframe_structures_landing_skid_assembly",
+      "node_type": "l3_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l3_fcg_soc_module",
+      "node_name": "SoC module",
+      "layer": "L3",
+      "parent_id": "n_l2_flight_control_guidance_compute_carrier_board",
+      "node_type": "l3_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l3_airframe_spar_cap_strip",
+      "node_name": "Spar cap strip",
+      "layer": "L3",
+      "parent_id": "n_l2_airframe_structures_wing_panel_assembly",
+      "node_type": "l3_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l3_fcg_static_port_fitting",
+      "node_name": "Static port fitting",
+      "layer": "L3",
+      "parent_id": "n_l2_flight_control_guidance_air_data_sensor_suite",
+      "node_type": "l3_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l3_propulsion_stator_lamination_stack",
+      "node_name": "Stator lamination stack",
+      "layer": "L3",
+      "parent_id": "n_l2_propulsion_bldc_motor_assembly",
+      "node_type": "l3_component",
+      "l1_component": "propulsion"
+    },
+    {
+      "node_id": "n_l3_pnt_tcxo_oscillator",
+      "node_name": "TCXO oscillator",
+      "layer": "L3",
+      "parent_id": "n_l2_pnt_gnss_receiver_module",
+      "node_type": "l3_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l3_securecomms_trng_block",
+      "node_name": "TRNG block",
+      "layer": "L3",
+      "parent_id": "n_l2_secure_comms_crypto_processor_module",
+      "node_type": "l3_component",
+      "l1_component": "secure_comms"
+    },
+    {
+      "node_id": "n_l3_pnt_temp_compensation_eeprom",
+      "node_name": "Temperature compensation EEPROM",
+      "layer": "L3",
+      "parent_id": "n_l2_pnt_barometric_altimeter_module",
+      "node_type": "l3_component",
+      "l1_component": "pnt"
+    },
+    {
+      "node_id": "n_l3_mfg_tensioner_roller",
+      "node_name": "Tensioner roller",
+      "layer": "L3",
+      "parent_id": "n_l2_manufacturing_system_motor_winding_station",
+      "node_type": "l3_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l3_fcg_three_axis_accelerometer_die",
+      "node_name": "Three-axis accelerometer die",
+      "layer": "L3",
+      "parent_id": "n_l2_flight_control_guidance_inertial_sensor_module",
+      "node_type": "l3_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l3_fcg_three_axis_gyro_die",
+      "node_name": "Three-axis gyro die",
+      "layer": "L3",
+      "parent_id": "n_l2_flight_control_guidance_inertial_sensor_module",
+      "node_type": "l3_component",
+      "l1_component": "flight_control_guidance"
+    },
+    {
+      "node_id": "n_l3_airframe_upper_skin_panel",
+      "node_name": "Upper skin panel",
+      "layer": "L3",
+      "parent_id": "n_l2_airframe_structures_wing_panel_assembly",
+      "node_type": "l3_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l3_airframe_vertical_fin_panel",
+      "node_name": "Vertical fin panel",
+      "layer": "L3",
+      "parent_id": "n_l2_airframe_structures_tail_control_surface_set",
+      "node_type": "l3_component",
+      "l1_component": "airframe_structures"
+    },
+    {
+      "node_id": "n_l3_mfg_vision_alignment_camera",
+      "node_name": "Vision alignment camera",
+      "layer": "L3",
+      "parent_id": "n_l2_manufacturing_system_smt_placement_line",
+      "node_type": "l3_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l3_mfg_winding_spindle",
+      "node_name": "Winding spindle",
+      "layer": "L3",
+      "parent_id": "n_l2_manufacturing_system_motor_winding_station",
+      "node_type": "l3_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l3_mfg_wire_guide_nozzle",
+      "node_name": "Wire guide nozzle",
+      "layer": "L3",
+      "parent_id": "n_l2_manufacturing_system_motor_winding_station",
+      "node_type": "l3_component",
+      "l1_component": "manufacturing_system"
+    },
+    {
+      "node_id": "n_l3_propulsion_xt90_power_connector",
+      "node_name": "XT90 power connector",
+      "layer": "L3",
+      "parent_id": "n_l2_propulsion_power_distribution_board",
+      "node_type": "l3_component",
+      "l1_component": "propulsion"
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "e_n_l1_airframe_structures__n_l2_airframe_structures_fuselage_shell_assembly",
+      "source": "n_l1_airframe_structures",
+      "target": "n_l2_airframe_structures_fuselage_shell_assembly",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_airframe_structures__n_l2_airframe_structures_wing_panel_assembly",
+      "source": "n_l1_airframe_structures",
+      "target": "n_l2_airframe_structures_wing_panel_assembly",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_airframe_structures__n_l2_airframe_structures_tail_control_surface_set",
+      "source": "n_l1_airframe_structures",
+      "target": "n_l2_airframe_structures_tail_control_surface_set",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_airframe_structures__n_l2_airframe_structures_landing_skid_assembly",
+      "source": "n_l1_airframe_structures",
+      "target": "n_l2_airframe_structures_landing_skid_assembly",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_energy_storage__n_l2_energy_storage_li_ion_cell_block",
+      "source": "n_l1_energy_storage",
+      "target": "n_l2_energy_storage_li_ion_cell_block",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_energy_storage__n_l2_energy_storage_battery_module_enclosure",
+      "source": "n_l1_energy_storage",
+      "target": "n_l2_energy_storage_battery_module_enclosure",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_energy_storage__n_l2_energy_storage_bms_pcb_assembly",
+      "source": "n_l1_energy_storage",
+      "target": "n_l2_energy_storage_bms_pcb_assembly",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_energy_storage__n_l2_energy_storage_pack_thermal_interface_stack",
+      "source": "n_l1_energy_storage",
+      "target": "n_l2_energy_storage_pack_thermal_interface_stack",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_flight_control_guidance__n_l2_flight_control_guidance_flight_controller_pcb_assembly",
+      "source": "n_l1_flight_control_guidance",
+      "target": "n_l2_flight_control_guidance_flight_controller_pcb_assembly",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_flight_control_guidance__n_l2_flight_control_guidance_inertial_sensor_module",
+      "source": "n_l1_flight_control_guidance",
+      "target": "n_l2_flight_control_guidance_inertial_sensor_module",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_flight_control_guidance__n_l2_flight_control_guidance_air_data_sensor_suite",
+      "source": "n_l1_flight_control_guidance",
+      "target": "n_l2_flight_control_guidance_air_data_sensor_suite",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_flight_control_guidance__n_l2_flight_control_guidance_compute_carrier_board",
+      "source": "n_l1_flight_control_guidance",
+      "target": "n_l2_flight_control_guidance_compute_carrier_board",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_manufacturing_system__n_l2_manufacturing_system_smt_placement_line",
+      "source": "n_l1_manufacturing_system",
+      "target": "n_l2_manufacturing_system_smt_placement_line",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_manufacturing_system__n_l2_manufacturing_system_reflow_oven_line",
+      "source": "n_l1_manufacturing_system",
+      "target": "n_l2_manufacturing_system_reflow_oven_line",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_manufacturing_system__n_l2_manufacturing_system_motor_winding_station",
+      "source": "n_l1_manufacturing_system",
+      "target": "n_l2_manufacturing_system_motor_winding_station",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_manufacturing_system__n_l2_manufacturing_system_final_assembly_test_rack",
+      "source": "n_l1_manufacturing_system",
+      "target": "n_l2_manufacturing_system_final_assembly_test_rack",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_pnt__n_l2_pnt_gnss_receiver_module",
+      "source": "n_l1_pnt",
+      "target": "n_l2_pnt_gnss_receiver_module",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_pnt__n_l2_pnt_anti_jam_antenna_array",
+      "source": "n_l1_pnt",
+      "target": "n_l2_pnt_anti_jam_antenna_array",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_pnt__n_l2_pnt_inertial_measurement_module",
+      "source": "n_l1_pnt",
+      "target": "n_l2_pnt_inertial_measurement_module",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_pnt__n_l2_pnt_barometric_altimeter_module",
+      "source": "n_l1_pnt",
+      "target": "n_l2_pnt_barometric_altimeter_module",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_propulsion__n_l2_propulsion_bldc_motor_assembly",
+      "source": "n_l1_propulsion",
+      "target": "n_l2_propulsion_bldc_motor_assembly",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_propulsion__n_l2_propulsion_esc_power_unit",
+      "source": "n_l1_propulsion",
+      "target": "n_l2_propulsion_esc_power_unit",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_propulsion__n_l2_propulsion_propeller_rotor_set",
+      "source": "n_l1_propulsion",
+      "target": "n_l2_propulsion_propeller_rotor_set",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_propulsion__n_l2_propulsion_power_distribution_board",
+      "source": "n_l1_propulsion",
+      "target": "n_l2_propulsion_power_distribution_board",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_secure_comms__n_l2_secure_comms_rf_transceiver_module",
+      "source": "n_l1_secure_comms",
+      "target": "n_l2_secure_comms_rf_transceiver_module",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_secure_comms__n_l2_secure_comms_power_amplifier_module",
+      "source": "n_l1_secure_comms",
+      "target": "n_l2_secure_comms_power_amplifier_module",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_secure_comms__n_l2_secure_comms_crypto_processor_module",
+      "source": "n_l1_secure_comms",
+      "target": "n_l2_secure_comms_crypto_processor_module",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l1_secure_comms__n_l2_secure_comms_antenna_feed_network",
+      "source": "n_l1_secure_comms",
+      "target": "n_l2_secure_comms_antenna_feed_network",
+      "edge_type": "decomposes_to",
+      "source_layer": "L1",
+      "target_layer": "L2"
+    },
+    {
+      "edge_id": "e_n_l2_airframe_structures_fuselage_shell_assembly__n_l3_airframe_nose_shell_panel",
+      "source": "n_l2_airframe_structures_fuselage_shell_assembly",
+      "target": "n_l3_airframe_nose_shell_panel",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_airframe_structures_fuselage_shell_assembly__n_l3_airframe_center_tub_section",
+      "source": "n_l2_airframe_structures_fuselage_shell_assembly",
+      "target": "n_l3_airframe_center_tub_section",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_airframe_structures_fuselage_shell_assembly__n_l3_airframe_bulkhead_frame_ring",
+      "source": "n_l2_airframe_structures_fuselage_shell_assembly",
+      "target": "n_l3_airframe_bulkhead_frame_ring",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_airframe_structures_wing_panel_assembly__n_l3_airframe_upper_skin_panel",
+      "source": "n_l2_airframe_structures_wing_panel_assembly",
+      "target": "n_l3_airframe_upper_skin_panel",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_airframe_structures_wing_panel_assembly__n_l3_airframe_spar_cap_strip",
+      "source": "n_l2_airframe_structures_wing_panel_assembly",
+      "target": "n_l3_airframe_spar_cap_strip",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_airframe_structures_wing_panel_assembly__n_l3_airframe_rib_web_plate",
+      "source": "n_l2_airframe_structures_wing_panel_assembly",
+      "target": "n_l3_airframe_rib_web_plate",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_airframe_structures_tail_control_surface_set__n_l3_airframe_vertical_fin_panel",
+      "source": "n_l2_airframe_structures_tail_control_surface_set",
+      "target": "n_l3_airframe_vertical_fin_panel",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_airframe_structures_tail_control_surface_set__n_l3_airframe_elevator_skin",
+      "source": "n_l2_airframe_structures_tail_control_surface_set",
+      "target": "n_l3_airframe_elevator_skin",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_airframe_structures_tail_control_surface_set__n_l3_airframe_hinge_bracket",
+      "source": "n_l2_airframe_structures_tail_control_surface_set",
+      "target": "n_l3_airframe_hinge_bracket",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_airframe_structures_landing_skid_assembly__n_l3_airframe_skid_tube",
+      "source": "n_l2_airframe_structures_landing_skid_assembly",
+      "target": "n_l3_airframe_skid_tube",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_airframe_structures_landing_skid_assembly__n_l3_airframe_cross_brace",
+      "source": "n_l2_airframe_structures_landing_skid_assembly",
+      "target": "n_l3_airframe_cross_brace",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_airframe_structures_landing_skid_assembly__n_l3_airframe_mounting_lug",
+      "source": "n_l2_airframe_structures_landing_skid_assembly",
+      "target": "n_l3_airframe_mounting_lug",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_energy_storage_li_ion_cell_block__n_l3_energy_prismatic_cell_can",
+      "source": "n_l2_energy_storage_li_ion_cell_block",
+      "target": "n_l3_energy_prismatic_cell_can",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_energy_storage_li_ion_cell_block__n_l3_energy_cathode_coated_foil",
+      "source": "n_l2_energy_storage_li_ion_cell_block",
+      "target": "n_l3_energy_cathode_coated_foil",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_energy_storage_li_ion_cell_block__n_l3_energy_separator_film_roll",
+      "source": "n_l2_energy_storage_li_ion_cell_block",
+      "target": "n_l3_energy_separator_film_roll",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_energy_storage_battery_module_enclosure__n_l3_energy_aluminum_module_tray",
+      "source": "n_l2_energy_storage_battery_module_enclosure",
+      "target": "n_l3_energy_aluminum_module_tray",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_energy_storage_battery_module_enclosure__n_l3_energy_end_plate_pair",
+      "source": "n_l2_energy_storage_battery_module_enclosure",
+      "target": "n_l3_energy_end_plate_pair",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_energy_storage_battery_module_enclosure__n_l3_energy_compression_tie_rod",
+      "source": "n_l2_energy_storage_battery_module_enclosure",
+      "target": "n_l3_energy_compression_tie_rod",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_energy_storage_bms_pcb_assembly__n_l3_energy_cell_monitor_asic",
+      "source": "n_l2_energy_storage_bms_pcb_assembly",
+      "target": "n_l3_energy_cell_monitor_asic",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_energy_storage_bms_pcb_assembly__n_l3_energy_balance_resistor_array",
+      "source": "n_l2_energy_storage_bms_pcb_assembly",
+      "target": "n_l3_energy_balance_resistor_array",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_energy_storage_bms_pcb_assembly__n_l3_energy_pack_current_shunt",
+      "source": "n_l2_energy_storage_bms_pcb_assembly",
+      "target": "n_l3_energy_pack_current_shunt",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_energy_storage_pack_thermal_interface_stack__n_l3_energy_graphite_heat_spreader",
+      "source": "n_l2_energy_storage_pack_thermal_interface_stack",
+      "target": "n_l3_energy_graphite_heat_spreader",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_energy_storage_pack_thermal_interface_stack__n_l3_energy_silicone_gap_pad",
+      "source": "n_l2_energy_storage_pack_thermal_interface_stack",
+      "target": "n_l3_energy_silicone_gap_pad",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_energy_storage_pack_thermal_interface_stack__n_l3_energy_coolant_microchannel_plate",
+      "source": "n_l2_energy_storage_pack_thermal_interface_stack",
+      "target": "n_l3_energy_coolant_microchannel_plate",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_flight_control_guidance_flight_controller_pcb_assembly__n_l3_fcg_main_mcu",
+      "source": "n_l2_flight_control_guidance_flight_controller_pcb_assembly",
+      "target": "n_l3_fcg_main_mcu",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_flight_control_guidance_flight_controller_pcb_assembly__n_l3_fcg_power_regulator_ic",
+      "source": "n_l2_flight_control_guidance_flight_controller_pcb_assembly",
+      "target": "n_l3_fcg_power_regulator_ic",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_flight_control_guidance_flight_controller_pcb_assembly__n_l3_fcg_conformal_coated_pcb",
+      "source": "n_l2_flight_control_guidance_flight_controller_pcb_assembly",
+      "target": "n_l3_fcg_conformal_coated_pcb",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_flight_control_guidance_inertial_sensor_module__n_l3_fcg_three_axis_gyro_die",
+      "source": "n_l2_flight_control_guidance_inertial_sensor_module",
+      "target": "n_l3_fcg_three_axis_gyro_die",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_flight_control_guidance_inertial_sensor_module__n_l3_fcg_three_axis_accelerometer_die",
+      "source": "n_l2_flight_control_guidance_inertial_sensor_module",
+      "target": "n_l3_fcg_three_axis_accelerometer_die",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_flight_control_guidance_inertial_sensor_module__n_l3_fcg_ceramic_imu_package",
+      "source": "n_l2_flight_control_guidance_inertial_sensor_module",
+      "target": "n_l3_fcg_ceramic_imu_package",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_flight_control_guidance_air_data_sensor_suite__n_l3_fcg_pitot_tube",
+      "source": "n_l2_flight_control_guidance_air_data_sensor_suite",
+      "target": "n_l3_fcg_pitot_tube",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_flight_control_guidance_air_data_sensor_suite__n_l3_fcg_static_port_fitting",
+      "source": "n_l2_flight_control_guidance_air_data_sensor_suite",
+      "target": "n_l3_fcg_static_port_fitting",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_flight_control_guidance_air_data_sensor_suite__n_l3_fcg_differential_pressure_sensor",
+      "source": "n_l2_flight_control_guidance_air_data_sensor_suite",
+      "target": "n_l3_fcg_differential_pressure_sensor",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_flight_control_guidance_compute_carrier_board__n_l3_fcg_soc_module",
+      "source": "n_l2_flight_control_guidance_compute_carrier_board",
+      "target": "n_l3_fcg_soc_module",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_flight_control_guidance_compute_carrier_board__n_l3_fcg_lpddr_memory_package",
+      "source": "n_l2_flight_control_guidance_compute_carrier_board",
+      "target": "n_l3_fcg_lpddr_memory_package",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_flight_control_guidance_compute_carrier_board__n_l3_fcg_board_to_board_connector",
+      "source": "n_l2_flight_control_guidance_compute_carrier_board",
+      "target": "n_l3_fcg_board_to_board_connector",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_manufacturing_system_smt_placement_line__n_l3_mfg_pick_and_place_head",
+      "source": "n_l2_manufacturing_system_smt_placement_line",
+      "target": "n_l3_mfg_pick_and_place_head",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_manufacturing_system_smt_placement_line__n_l3_mfg_feeder_bank",
+      "source": "n_l2_manufacturing_system_smt_placement_line",
+      "target": "n_l3_mfg_feeder_bank",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_manufacturing_system_smt_placement_line__n_l3_mfg_vision_alignment_camera",
+      "source": "n_l2_manufacturing_system_smt_placement_line",
+      "target": "n_l3_mfg_vision_alignment_camera",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_manufacturing_system_reflow_oven_line__n_l3_mfg_conveyor_mesh_belt",
+      "source": "n_l2_manufacturing_system_reflow_oven_line",
+      "target": "n_l3_mfg_conveyor_mesh_belt",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_manufacturing_system_reflow_oven_line__n_l3_mfg_heater_zone_module",
+      "source": "n_l2_manufacturing_system_reflow_oven_line",
+      "target": "n_l3_mfg_heater_zone_module",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_manufacturing_system_reflow_oven_line__n_l3_mfg_nitrogen_inlet_manifold",
+      "source": "n_l2_manufacturing_system_reflow_oven_line",
+      "target": "n_l3_mfg_nitrogen_inlet_manifold",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_manufacturing_system_motor_winding_station__n_l3_mfg_winding_spindle",
+      "source": "n_l2_manufacturing_system_motor_winding_station",
+      "target": "n_l3_mfg_winding_spindle",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_manufacturing_system_motor_winding_station__n_l3_mfg_tensioner_roller",
+      "source": "n_l2_manufacturing_system_motor_winding_station",
+      "target": "n_l3_mfg_tensioner_roller",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_manufacturing_system_motor_winding_station__n_l3_mfg_wire_guide_nozzle",
+      "source": "n_l2_manufacturing_system_motor_winding_station",
+      "target": "n_l3_mfg_wire_guide_nozzle",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_manufacturing_system_final_assembly_test_rack__n_l3_mfg_fixture_plate",
+      "source": "n_l2_manufacturing_system_final_assembly_test_rack",
+      "target": "n_l3_mfg_fixture_plate",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_manufacturing_system_final_assembly_test_rack__n_l3_mfg_load_bank_module",
+      "source": "n_l2_manufacturing_system_final_assembly_test_rack",
+      "target": "n_l3_mfg_load_bank_module",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_manufacturing_system_final_assembly_test_rack__n_l3_mfg_data_acquisition_chassis",
+      "source": "n_l2_manufacturing_system_final_assembly_test_rack",
+      "target": "n_l3_mfg_data_acquisition_chassis",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_pnt_gnss_receiver_module__n_l3_pnt_rf_front_end_ic",
+      "source": "n_l2_pnt_gnss_receiver_module",
+      "target": "n_l3_pnt_rf_front_end_ic",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_pnt_gnss_receiver_module__n_l3_pnt_tcxo_oscillator",
+      "source": "n_l2_pnt_gnss_receiver_module",
+      "target": "n_l3_pnt_tcxo_oscillator",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_pnt_gnss_receiver_module__n_l3_pnt_saw_filter",
+      "source": "n_l2_pnt_gnss_receiver_module",
+      "target": "n_l3_pnt_saw_filter",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_pnt_anti_jam_antenna_array__n_l3_pnt_crpa_patch_element",
+      "source": "n_l2_pnt_anti_jam_antenna_array",
+      "target": "n_l3_pnt_crpa_patch_element",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_pnt_anti_jam_antenna_array__n_l3_pnt_beamforming_ic",
+      "source": "n_l2_pnt_anti_jam_antenna_array",
+      "target": "n_l3_pnt_beamforming_ic",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_pnt_anti_jam_antenna_array__n_l3_pnt_antenna_radome",
+      "source": "n_l2_pnt_anti_jam_antenna_array",
+      "target": "n_l3_pnt_antenna_radome",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_pnt_inertial_measurement_module__n_l3_pnt_fog_rate_sensor",
+      "source": "n_l2_pnt_inertial_measurement_module",
+      "target": "n_l3_pnt_fog_rate_sensor",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_pnt_inertial_measurement_module__n_l3_pnt_quartz_accelerometer",
+      "source": "n_l2_pnt_inertial_measurement_module",
+      "target": "n_l3_pnt_quartz_accelerometer",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_pnt_inertial_measurement_module__n_l3_pnt_imu_control_asic",
+      "source": "n_l2_pnt_inertial_measurement_module",
+      "target": "n_l3_pnt_imu_control_asic",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_pnt_barometric_altimeter_module__n_l3_pnt_pressure_sensor_die",
+      "source": "n_l2_pnt_barometric_altimeter_module",
+      "target": "n_l3_pnt_pressure_sensor_die",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_pnt_barometric_altimeter_module__n_l3_pnt_micro_valve_cap",
+      "source": "n_l2_pnt_barometric_altimeter_module",
+      "target": "n_l3_pnt_micro_valve_cap",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_pnt_barometric_altimeter_module__n_l3_pnt_temp_compensation_eeprom",
+      "source": "n_l2_pnt_barometric_altimeter_module",
+      "target": "n_l3_pnt_temp_compensation_eeprom",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_propulsion_bldc_motor_assembly__n_l3_propulsion_stator_lamination_stack",
+      "source": "n_l2_propulsion_bldc_motor_assembly",
+      "target": "n_l3_propulsion_stator_lamination_stack",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_propulsion_bldc_motor_assembly__n_l3_propulsion_rotor_magnet_ring",
+      "source": "n_l2_propulsion_bldc_motor_assembly",
+      "target": "n_l3_propulsion_rotor_magnet_ring",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_propulsion_bldc_motor_assembly__n_l3_propulsion_motor_shaft",
+      "source": "n_l2_propulsion_bldc_motor_assembly",
+      "target": "n_l3_propulsion_motor_shaft",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_propulsion_esc_power_unit__n_l3_propulsion_mosfet_half_bridge",
+      "source": "n_l2_propulsion_esc_power_unit",
+      "target": "n_l3_propulsion_mosfet_half_bridge",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_propulsion_esc_power_unit__n_l3_propulsion_gate_driver_ic",
+      "source": "n_l2_propulsion_esc_power_unit",
+      "target": "n_l3_propulsion_gate_driver_ic",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_propulsion_esc_power_unit__n_l3_propulsion_dc_link_capacitor_bank",
+      "source": "n_l2_propulsion_esc_power_unit",
+      "target": "n_l3_propulsion_dc_link_capacitor_bank",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_propulsion_propeller_rotor_set__n_l3_propulsion_propeller_blade",
+      "source": "n_l2_propulsion_propeller_rotor_set",
+      "target": "n_l3_propulsion_propeller_blade",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_propulsion_propeller_rotor_set__n_l3_propulsion_propeller_hub",
+      "source": "n_l2_propulsion_propeller_rotor_set",
+      "target": "n_l3_propulsion_propeller_hub",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_propulsion_propeller_rotor_set__n_l3_propulsion_propeller_adapter_collet",
+      "source": "n_l2_propulsion_propeller_rotor_set",
+      "target": "n_l3_propulsion_propeller_adapter_collet",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_propulsion_power_distribution_board__n_l3_propulsion_copper_bus_plane",
+      "source": "n_l2_propulsion_power_distribution_board",
+      "target": "n_l3_propulsion_copper_bus_plane",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_propulsion_power_distribution_board__n_l3_propulsion_current_sensor_ic",
+      "source": "n_l2_propulsion_power_distribution_board",
+      "target": "n_l3_propulsion_current_sensor_ic",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_propulsion_power_distribution_board__n_l3_propulsion_xt90_power_connector",
+      "source": "n_l2_propulsion_power_distribution_board",
+      "target": "n_l3_propulsion_xt90_power_connector",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_secure_comms_rf_transceiver_module__n_l3_securecomms_iq_transceiver_ic",
+      "source": "n_l2_secure_comms_rf_transceiver_module",
+      "target": "n_l3_securecomms_iq_transceiver_ic",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_secure_comms_rf_transceiver_module__n_l3_securecomms_frequency_synthesizer",
+      "source": "n_l2_secure_comms_rf_transceiver_module",
+      "target": "n_l3_securecomms_frequency_synthesizer",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_secure_comms_rf_transceiver_module__n_l3_securecomms_rf_shield_can",
+      "source": "n_l2_secure_comms_rf_transceiver_module",
+      "target": "n_l3_securecomms_rf_shield_can",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_secure_comms_power_amplifier_module__n_l3_securecomms_gan_pa_die",
+      "source": "n_l2_secure_comms_power_amplifier_module",
+      "target": "n_l3_securecomms_gan_pa_die",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_secure_comms_power_amplifier_module__n_l3_securecomms_output_match_network",
+      "source": "n_l2_secure_comms_power_amplifier_module",
+      "target": "n_l3_securecomms_output_match_network",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_secure_comms_power_amplifier_module__n_l3_securecomms_circulator",
+      "source": "n_l2_secure_comms_power_amplifier_module",
+      "target": "n_l3_securecomms_circulator",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_secure_comms_crypto_processor_module__n_l3_securecomms_secure_element_ic",
+      "source": "n_l2_secure_comms_crypto_processor_module",
+      "target": "n_l3_securecomms_secure_element_ic",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_secure_comms_crypto_processor_module__n_l3_securecomms_trng_block",
+      "source": "n_l2_secure_comms_crypto_processor_module",
+      "target": "n_l3_securecomms_trng_block",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_secure_comms_crypto_processor_module__n_l3_securecomms_key_storage_flash",
+      "source": "n_l2_secure_comms_crypto_processor_module",
+      "target": "n_l3_securecomms_key_storage_flash",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_secure_comms_antenna_feed_network__n_l3_securecomms_patch_antenna_element",
+      "source": "n_l2_secure_comms_antenna_feed_network",
+      "target": "n_l3_securecomms_patch_antenna_element",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_secure_comms_antenna_feed_network__n_l3_securecomms_duplexer_filter",
+      "source": "n_l2_secure_comms_antenna_feed_network",
+      "target": "n_l3_securecomms_duplexer_filter",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    },
+    {
+      "edge_id": "e_n_l2_secure_comms_antenna_feed_network__n_l3_securecomms_coaxial_feedline",
+      "source": "n_l2_secure_comms_antenna_feed_network",
+      "target": "n_l3_securecomms_coaxial_feedline",
+      "edge_type": "decomposes_to",
+      "source_layer": "L2",
+      "target_layer": "L3"
+    }
+  ],
+  "counts": {
+    "nodes": 119,
+    "edges": 112,
+    "l1": 7,
+    "l2": 28,
+    "l3": 84
+  },
+  "source_inputs": {
+    "l1_l2": "analysis/components/l1_l2_hierarchy_v2_physical.json",
+    "l2_l3": "analysis/components/l2_l3_hierarchy_v2_physical.json"
+  }
+}
