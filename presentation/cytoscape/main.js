@@ -145,6 +145,18 @@ for (const ce of companyOverlay.edges) {
   companyEdgesByComponent.get(src).push(ce.data);
 }
 
+/* ── Company name → component node IDs (for search) ── */
+const companyNameToComponents = new Map();
+for (const ce of companyOverlay.edges) {
+  const compId = ce.data.target;
+  const compNode = companyNodeById.get(compId);
+  if (!compNode) continue;
+  const name = String(compNode.label || '').toLowerCase();
+  if (!companyNameToComponents.has(name)) companyNameToComponents.set(name, new Set());
+  companyNameToComponents.get(name).add(ce.data.source);
+}
+filterEls.companyNameToComponents = companyNameToComponents;
+
 /* ── Shared context for dependency injection ── */
 const ctx = {
   get cy() { return cy; },
