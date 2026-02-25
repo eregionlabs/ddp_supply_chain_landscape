@@ -317,22 +317,29 @@ export const cyStyles = [
     'border-width': 2.8, 'border-color': '#EF4444',
     'overlay-opacity': 0
   }},
-  /* Focus — accent border */
+  /* Focus — selected node on top with accent border */
   { selector: '.focus', style: {
     'opacity': 1, 'text-opacity': 1,
     'width': 'data(node_w_focus)', 'height': 'data(node_h_focus)',
     'border-width': 2.8, 'border-color': '#38BDF8',
-    'overlay-opacity': 0
+    'overlay-opacity': 0,
+    'z-index': 9999
   }},
   { selector: '.focus-context', style: {
-    'opacity': 0.88, 'text-opacity': 1,
+    'opacity': 1, 'text-opacity': 1,
     'border-width': 1.5, 'border-color': 'rgba(56, 189, 248, 0.35)',
-    'overlay-opacity': 0
+    'overlay-opacity': 0,
+    'z-index': 9998
   }},
   { selector: '.focus-edge', style: {
     'opacity': 1,
     'line-color': 'rgba(56, 189, 248, 0.45)', 'target-arrow-color': 'rgba(56, 189, 248, 0.45)',
-    'width': 1.6
+    'width': 1.6,
+    'z-index': 9997
+  }},
+  /* Dim everything not connected to the focused node */
+  { selector: '.focus-dim', style: {
+    'opacity': 0.08, 'text-opacity': 0.03
   }},
 
   /* ── Chain highlight ── */

@@ -125,7 +125,7 @@ export function applyFilters(cy, { searchEl, domainEl, confEl, pressureEl }) {
 }
 
 export function clearFocusClasses(cy) {
-  cy.elements().removeClass('focus focus-context focus-edge');
+  cy.elements().removeClass('focus focus-context focus-edge focus-dim');
 }
 
 /* ── Top Bottlenecks panel ── */

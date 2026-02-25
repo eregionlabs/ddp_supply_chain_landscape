@@ -202,9 +202,10 @@ topBottlenecksPanelEl.addEventListener('click', async (evt) => {
   if (!node || node.empty()) return;
   clearChainHighlight();
   clearFocusClasses(cy);
-  node.addClass('focus');
-  node.neighborhood('node').addClass('focus-context');
-  node.connectedEdges().addClass('focus-edge');
+  cy.elements().addClass('focus-dim');
+  node.removeClass('focus-dim').addClass('focus');
+  node.neighborhood('node').removeClass('focus-dim').addClass('focus-context');
+  node.connectedEdges().removeClass('focus-dim').addClass('focus-edge');
   renderTopBottlenecksPanel(cy, topBottlenecksPanelEl, { limit: TOP_BOTTLENECK_LIMIT, selectedId: node.id() });
   await ensureRollupsLoaded();
   if (node.data('node_type') === 'company') renderCompanyDetail(node, ctx);
@@ -399,9 +400,11 @@ cy.on('tap', 'node', async (evt) => {
 
   /* ── Normal tap: detail panel ── */
   clearFocusClasses(cy);
-  node.addClass('focus');
-  node.neighborhood('node').addClass('focus-context');
-  node.connectedEdges().addClass('focus-edge');
+  /* Dim everything first, then highlight selected + connected */
+  cy.elements().addClass('focus-dim');
+  node.removeClass('focus-dim').addClass('focus');
+  node.neighborhood('node').removeClass('focus-dim').addClass('focus-context');
+  node.connectedEdges().removeClass('focus-dim').addClass('focus-edge');
   renderTopBottlenecksPanel(cy, topBottlenecksPanelEl, { limit: TOP_BOTTLENECK_LIMIT, selectedId: node.id() });
   await ensureRollupsLoaded();
   if (node.data('node_type') === 'company') renderCompanyDetail(node, ctx);
