@@ -1351,6 +1351,14 @@ small { color: var(--text-primary); font-size: 10.5px; }
   #panel.panel-open {
     transform: translateY(0);
   }
+
+  /* Header: stack KPI below brand on tablets */
+  .header-right {
+    gap: 10px;
+  }
+  .brand-wordmark {
+    display: none;
+  }
 }
 
 
@@ -1360,54 +1368,101 @@ small { color: var(--text-primary); font-size: 10.5px; }
 
 @media (max-width: 600px) {
 
-  /* ── a) Header simplification ── */
+  /* ── a) Header — compact single row ── */
   .top-header {
-    padding: 10px 14px;
-    min-height: 48px;
+    padding: 8px 12px;
+    min-height: 44px;
+    gap: 8px;
+  }
+  .brand-lockup {
+    gap: 10px;
+    min-width: 0;
   }
   .brand-logo {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
   }
   .brand-title-row strong {
-    font-size: 14px;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .header-version {
+    font-size: 8px;
+    padding: 2px 6px;
   }
   .brand-subtitle {
     display: none;
   }
-  .brand-wordmark {
-    display: none;
-  }
-  .kpi {
+  .header-right {
     display: none;
   }
 
-  /* ── b) Control bar: scroll-friendly, compact ── */
+  /* ── b) Control bar: wrap into grid rows ── */
   .control-bar {
-    padding: 5px 8px;
-    gap: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    padding: 8px 10px;
   }
   .control-cluster {
-    padding: 2px 6px;
+    padding: 0;
+    border-right: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
   }
   .cluster-label {
-    display: none;
+    display: block;
+    font-size: 8px;
+    color: #64748B;
+    margin-bottom: 0;
   }
   .control-bar input,
   .control-bar select {
-    min-width: 60px;
-    height: 32px;
-    font-size: 11px;
-    min-height: 36px;
+    width: 100%;
+    min-width: 0;
+    height: 38px;
+    font-size: 13px;
+    min-height: 38px;
+  }
+  .control-search {
+    grid-column: 1 / -1;
   }
   .control-search input {
-    min-width: 140px;
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* Toggle — inline row */
+  .control-toggle {
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    grid-column: 1 / -1;
+  }
+  .toggle-label {
+    font-size: 11px;
+  }
+  .toggle-switch {
+    width: 36px;
+    height: 18px;
+  }
+
+  /* Action buttons — full width row */
+  .control-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 6px;
   }
   .control-actions button {
-    height: 32px;
-    padding: 4px 10px;
-    font-size: 10px;
-    min-height: 36px;
+    flex: 1;
+    height: 40px;
+    padding: 6px 10px;
+    font-size: 13px;
+    min-height: 40px;
   }
 
   /* ── c) Graph fills viewport ── */
@@ -1416,8 +1471,12 @@ small { color: var(--text-primary); font-size: 10.5px; }
     border-radius: 0;
     border: none;
   }
+  /* Remove vignette on mobile for clarity */
+  .graph-wrap::after {
+    display: none;
+  }
 
-  /* ── d) Detail panel adjustments ── */
+  /* ── d) Detail panel — full-screen sheet ── */
   .detail-metrics-grid {
     grid-template-columns: 1fr;
   }
@@ -1426,10 +1485,11 @@ small { color: var(--text-primary); font-size: 10.5px; }
   }
   #panel {
     padding: 10px;
-    top: 15vh;
+    top: 10vh;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
   }
 
-  /* ── e) Top bottleneck list: hide bar, simplify grid ── */
+  /* ── e) Top bottleneck list: simplified grid ── */
   .top-bottleneck-header {
     grid-template-columns: 28px 1fr 40px;
   }
@@ -1443,10 +1503,6 @@ small { color: var(--text-primary); font-size: 10.5px; }
   }
 
   /* ── f) Touch-friendly sizing ── */
-  .toggle-switch {
-    width: 36px;
-    height: 18px;
-  }
   .panel-toggle-btn {
     padding: 12px 22px;
     font-size: 14px;
@@ -1455,13 +1511,33 @@ small { color: var(--text-primary); font-size: 10.5px; }
     min-height: 44px;
   }
 
-  /* ── Company rows: compact for mobile ── */
+  /* ── g) Company rows: compact for mobile ── */
   .company-row {
     padding: 6px 8px 6px 10px;
     min-height: 44px;
   }
 
-  /* ── Disable hover transforms on touch (performance) ── */
+  /* ── h) Footer: compact single line ── */
+  .site-footer {
+    padding: 5px 12px;
+    gap: 6px;
+  }
+  .footer-name {
+    font-size: 9px;
+    letter-spacing: 0.06em;
+  }
+  .footer-logo {
+    width: 14px;
+    height: 14px;
+  }
+  .footer-contact {
+    font-size: 9px;
+  }
+  .footer-sep {
+    font-size: 10px;
+  }
+
+  /* ── i) Disable hover transforms on touch ── */
   .card:hover,
   .panel-metric:hover,
   .top-bottleneck-row:hover,

@@ -3,6 +3,9 @@
 import { DOMAIN_TINTS, DOMAIN_LABELS, DOMAIN_ORDER } from './graph_data.js';
 import { isDomainExpanded } from './filters.js';
 
+/* ── Fixed model-space dimensions — cy.fit() scales to any viewport ── */
+const _MODEL_W = 1200, _MODEL_H = 800;
+
 /* ── Module-level state for domain cell bounds (used by backdrop renderer) ── */
 let domainBounds = new Map(); // key → { x, y, w, h, label, tint }
 let _domainChildCounts = new Map(); // key → { l2: n, l3: n }
@@ -82,13 +85,14 @@ function clamp(n, lo, hi) {
    Row 1:      [PNT]    [Manufacturing]   [Airframe]
 */
 function applyDomainClusterLayout(cy) {
-  const graphW = cy.width();
-  const graphH = cy.height();
+  /* Use a fixed model-space coordinate system.
+     cy.fit() will scale this to any viewport size. */
+  const MODEL_W = _MODEL_W, MODEL_H = _MODEL_H;
 
   const mx = 40, my = 36;
   const gapX = 32, gapY = 40;
-  const usableW = Math.max(600, graphW - 2 * mx);
-  const usableH = Math.max(400, graphH - 2 * my);
+  const usableW = MODEL_W - 2 * mx;
+  const usableH = MODEL_H - 2 * my;
   const cellW = (usableW - 3 * gapX) / 4;
   const cellH = (usableH - gapY) / 2;
 
@@ -590,16 +594,6 @@ export function drawDomainBackgrounds(cy) {
     } else {
       ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.45)`;
       ctx.fillText('\u25BE', indicatorX, labelY);
-
-      /* Child count badge for collapsed domains */
-      const counts = _domainChildCounts.get(dk);
-      if (counts) {
-        const badgeFontSize = Math.max(7, Math.min(10, 9 * zoom));
-        ctx.font = `500 ${badgeFontSize}px "Inter", system-ui, sans-serif`;
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
-        const badgeText = `${counts.l2} subsystems \u00b7 ${counts.l3} components`;
-        ctx.fillText(badgeText, labelX, labelY + fontSize + 4 * zoom);
-      }
     }
   }
 }
@@ -744,7 +738,16 @@ function occupancyPct(cy) {
 }
 
 function tuneViewportForDensity(cy) {
+  const isMobile = cy.width() < 600;
+
+  if (isMobile) {
+    /* On mobile, simply fit all nodes with enough padding for labels */
+    cy.fit(undefined, 6);
+    return;
+  }
+
   cy.fit(undefined, 28);
+
   const occ = occupancyPct(cy);
   const zoom = cy.zoom();
   if (occ < 58) {
