@@ -14,6 +14,65 @@ import {
 
 const LS_PREFIX = 'ddp.cy.';
 
+/* ── Intro overlay ── */
+const introOverlay  = document.getElementById('introOverlay');
+const introCloseBtn = document.getElementById('introClose');
+const introDontShow = document.getElementById('introDontShow');
+const introReopen   = document.getElementById('introReopen');
+
+function dismissIntro() {
+  if (!introOverlay) return;
+  introOverlay.classList.add('intro-hidden');
+  setTimeout(() => { introOverlay.style.display = 'none'; }, 350);
+  if (introDontShow && introDontShow.checked) {
+    try { localStorage.setItem(LS_PREFIX + 'introSeen', '1'); } catch {}
+  }
+}
+
+/* Hide on first load if user already dismissed permanently */
+try {
+  if (localStorage.getItem(LS_PREFIX + 'introSeen') && introOverlay) {
+    introOverlay.style.display = 'none';
+    introOverlay.classList.add('intro-hidden');
+  }
+} catch {}
+
+if (introCloseBtn) introCloseBtn.addEventListener('click', dismissIntro);
+if (introOverlay) introOverlay.addEventListener('click', (e) => {
+  if (e.target === introOverlay) dismissIntro();
+});
+if (introReopen && introOverlay) {
+  introReopen.addEventListener('click', () => {
+    introOverlay.style.display = '';
+    introOverlay.classList.remove('intro-hidden');
+  });
+}
+
+/* ── BTI Methodology overlay ── */
+const btiMethodOverlay = document.getElementById('btiMethodOverlay');
+const btiMethodCloseBtn = document.getElementById('btiMethodClose');
+const btiMethodOpenBtn = document.getElementById('btiMethodOpen');
+
+function dismissBtiMethod() {
+  if (!btiMethodOverlay) return;
+  btiMethodOverlay.classList.add('intro-hidden');
+  setTimeout(() => { btiMethodOverlay.style.display = 'none'; }, 350);
+}
+function openBtiMethod() {
+  if (!btiMethodOverlay) return;
+  btiMethodOverlay.style.display = '';
+  btiMethodOverlay.classList.remove('intro-hidden');
+}
+
+if (btiMethodCloseBtn) btiMethodCloseBtn.addEventListener('click', dismissBtiMethod);
+if (btiMethodOverlay) btiMethodOverlay.addEventListener('click', (e) => {
+  if (e.target === btiMethodOverlay) dismissBtiMethod();
+});
+if (btiMethodOpenBtn) btiMethodOpenBtn.addEventListener('click', openBtiMethod);
+
+/* expose for detail-panel link */
+window.__openBtiMethod = openBtiMethod;
+
 /* ── DOM refs ── */
 const details              = document.getElementById('details');
 const searchEl             = document.getElementById('search');
@@ -111,6 +170,18 @@ for (const ce of companyOverlay.edges) {
   companyEdgesByComponent.get(src).push(ce.data);
 }
 
+/* ── Company name → component node IDs (for search) ── */
+const companyNameToComponents = new Map();
+for (const ce of companyOverlay.edges) {
+  const compId = ce.data.target;
+  const compNode = companyNodeById.get(compId);
+  if (!compNode) continue;
+  const name = String(compNode.label || '').toLowerCase();
+  if (!companyNameToComponents.has(name)) companyNameToComponents.set(name, new Set());
+  companyNameToComponents.get(name).add(ce.data.source);
+}
+filterEls.companyNameToComponents = companyNameToComponents;
+
 /* ── Shared context for dependency injection ── */
 const ctx = {
   get cy() { return cy; },
@@ -172,7 +243,63 @@ function syncFilterHighlights() {
 }
 
 /* ── Filter listeners ── */
-searchEl.addEventListener('input', () => { applyFilters(cy, filterEls); syncFilterHighlights(); });
+const searchExpandedDomains = new Set();   /* domains auto-expanded by search */
+
+searchEl.addEventListener('input', () => {
+  const q = (searchEl.value || '').trim().toLowerCase();
+
+  /* Find component IDs matched via company-name index */
+  const matchedIds = new Set();
+  if (q && companyNameToComponents) {
+    for (const [coName, compIds] of companyNameToComponents) {
+      if (coName.includes(q)) {
+        for (const id of compIds) matchedIds.add(id);
+      }
+    }
+  }
+  /* Also include direct label/id matches from allNodes */
+  if (q) {
+    for (const n of allNodes) {
+      const label = String(n.data.label || '').toLowerCase();
+      const id = String(n.data.id || '').toLowerCase();
+      if (label.includes(q) || id.includes(q)) matchedIds.add(n.data.id);
+    }
+  }
+
+  /* Determine which domains need expanding for these matches */
+  const neededDomains = new Set();
+  for (const nid of matchedIds) {
+    const node = allNodes.find(n => n.data.id === nid);
+    if (node) {
+      const dk = (node.data.l1_component || '').trim();
+      if (dk) neededDomains.add(dk);
+    }
+  }
+
+  /* Collapse any domains that were auto-expanded by a PREVIOUS search
+     but are no longer needed, then expand newly needed ones */
+  let needsRebuild = false;
+  for (const dk of searchExpandedDomains) {
+    if (!neededDomains.has(dk)) {
+      if (isDomainExpanded(dk)) { toggleDomainExpansion(dk); needsRebuild = true; }
+      searchExpandedDomains.delete(dk);
+    }
+  }
+  for (const dk of neededDomains) {
+    if (!isDomainExpanded(dk)) {
+      toggleDomainExpansion(dk);
+      searchExpandedDomains.add(dk);
+      needsRebuild = true;
+    }
+  }
+
+  if (needsRebuild) {
+    rebuildGraph();          /* includes applyFilters */
+  } else {
+    applyFilters(cy, filterEls);
+  }
+  syncFilterHighlights();
+});
 domainEl.addEventListener('change', () => { applyFilters(cy, filterEls); syncFilterHighlights(); });
 confEl.addEventListener('change', () => { applyFilters(cy, filterEls); syncFilterHighlights(); });
 pressureEl.addEventListener('change', () => { applyFilters(cy, filterEls); syncFilterHighlights(); });

@@ -20,6 +20,7 @@ export function clearExpandedDomains()         { expandedDomains.clear(); }
 export function getCompanyOverlayActive() { return companyOverlayActive; }
 export function setCompanyOverlayActive(v){ companyOverlayActive = v; }
 
+
 /* ── Helper: domain key from raw node data (mirrors layout.js laneKeyForNode) ── */
 function domainKeyFromData(d) {
   const direct = (d.l1_component || '').trim();
@@ -31,7 +32,7 @@ function domainKeyFromData(d) {
 
 /* ── Helper: BTI from raw node data (pre-cy) ── */
 function rawBti(d) {
-  return Number(d.bottleneck_tightness_index_v2 ?? d.bottleneck_tightness_index_v1 ?? d.bottleneck_score) || 0;
+  return Number(d.bottleneck_tightness_index_v3 ?? d.bottleneck_tightness_index_v2 ?? d.bottleneck_tightness_index_v1 ?? d.bottleneck_score) || 0;
 }
 
 /* ── Visible elements (executive view with progressive disclosure) ── */
@@ -85,21 +86,32 @@ export function getVisibleElements(allNodes, allEdges) {
 }
 
 /* ── Filters (search, domain, confidence, pressure) ── */
-export function applyFilters(cy, { searchEl, domainEl, confEl, pressureEl }) {
+export function applyFilters(cy, { searchEl, domainEl, confEl, pressureEl, companyNameToComponents }) {
   const q = (searchEl.value || '').trim().toLowerCase();
   const domain = domainEl.value;
   const conf = confEl.value;
   const pressure = pressureEl.value;
 
-  cy.elements().removeClass('dim');
+  /* Collect component node IDs linked to companies matching the query */
+  const companyMatchedComponents = new Set();
+  if (q && companyNameToComponents) {
+    for (const [coName, compIds] of companyNameToComponents) {
+      if (coName.includes(q)) {
+        for (const id of compIds) companyMatchedComponents.add(id);
+      }
+    }
+  }
+
+  cy.elements().removeClass('dim search-match');
 
   cy.nodes().forEach(n => {
     const label = String(n.data('label') || '').toLowerCase();
     const id = String(n.data('id') || '').toLowerCase();
     const isCompany = n.data('node_type') === 'company';
+    const isCompanyMatch = companyMatchedComponents.has(n.id());
 
     let ok = true;
-    if (q && !(label.includes(q) || id.includes(q))) ok = false;
+    if (q && !(label.includes(q) || id.includes(q) || isCompanyMatch)) ok = false;
 
     if (!isCompany) {
       if (domain !== 'all' && String(n.data('l1_component') || '').toLowerCase() !== domain) ok = false;
@@ -116,12 +128,55 @@ export function applyFilters(cy, { searchEl, domainEl, confEl, pressureEl }) {
       if (!ct.includes(conf)) ok = false;
     }
 
-    if (!ok) n.addClass('dim');
+    if (!ok) {
+      n.addClass('dim');
+    } else if (q && (isCompanyMatch || label.includes(q) || id.includes(q))) {
+      n.addClass('search-match');
+    }
   });
 
+  /* Also un-dim company nodes connected to matched components (overlay edges) */
+  if (q) {
+    cy.nodes('[node_type = "company"]').forEach(cn => {
+      if (!cn.hasClass('dim')) {
+        cn.connectedEdges().forEach(e => {
+          const other = e.source().id() === cn.id() ? e.target() : e.source();
+          other.removeClass('dim');
+          other.addClass('search-match');
+        });
+      } else {
+        const hasMatch = cn.connectedEdges().some(e => {
+          const other = e.source().id() === cn.id() ? e.target() : e.source();
+          return !other.hasClass('dim');
+        });
+        if (hasMatch) { cn.removeClass('dim'); cn.addClass('search-match'); }
+      }
+    });
+  }
+
+  /* Highlight edges between search-matched nodes; dim the rest */
   cy.edges().forEach(e => {
-    if (e.source().hasClass('dim') || e.target().hasClass('dim')) e.addClass('dim');
+    const srcMatch = e.source().hasClass('search-match');
+    const tgtMatch = e.target().hasClass('search-match');
+    if (srcMatch && tgtMatch) {
+      e.addClass('search-match');
+    } else if (e.source().hasClass('dim') || e.target().hasClass('dim')) {
+      e.addClass('dim');
+    }
   });
+
+  /* Also highlight hierarchy edges from matched L3 up to their L2/L1 parents */
+  if (q) {
+    cy.nodes('.search-match').forEach(n => {
+      n.connectedEdges().forEach(e => {
+        const other = e.source().id() === n.id() ? e.target() : e.source();
+        if (!other.hasClass('dim')) {
+          e.removeClass('dim');
+          e.addClass('search-match');
+        }
+      });
+    });
+  }
 }
 
 export function clearFocusClasses(cy) {

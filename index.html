@@ -23,6 +23,105 @@
   <body>
     <a href="#cy" class="skip-nav">Skip to graph</a>
 
+    <!-- ── BTI Methodology overlay ── -->
+    <div id="btiMethodOverlay" class="intro-overlay" style="display:none" role="dialog" aria-modal="true" aria-label="BTI Methodology">
+      <div class="intro-card">
+        <div class="intro-header">
+          <img src="assets/logo.jpg" alt="" class="intro-logo" />
+          <div>
+            <h1 class="intro-title">Bottleneck Tightness Index</h1>
+            <p class="intro-pub">Methodology &middot; v3</p>
+          </div>
+        </div>
+
+        <p class="intro-lede">BTI is a <strong>0&ndash;100 composite score</strong> measuring how constrained a component is across supply, lead-time, substitutability, and regulatory dimensions. Higher scores indicate tighter bottlenecks.</p>
+
+        <div class="intro-section">
+          <div class="intro-subtitle">Four dimensions</div>
+          <p>Each L3 component is scored <strong>1&ndash;5</strong> on four dimensions by reviewing supplier data, lead-time records, qualification requirements, and trade/export controls.</p>
+          <table class="bti-rubric-table">
+            <thead><tr><th>Dim</th><th>1 (low risk)</th><th>3 (moderate)</th><th>5 (critical)</th></tr></thead>
+            <tbody>
+              <tr><td><strong>SC</strong><br><small>Supply Concentration (30%)</small></td><td>5+ suppliers, multi-geo commodity</td><td>2&ndash;3 suppliers, some concentration</td><td>Sole source or adversary monopoly</td></tr>
+              <tr><td><strong>LT</strong><br><small>Lead Time Stress (25%)</small></td><td>Stock, &lt;4 weeks</td><td>12&ndash;26 weeks</td><td>&gt;52 weeks, custom fab</td></tr>
+              <tr><td><strong>SF</strong><br><small>Substitution Friction (25%)</small></td><td>Drop-in commodity</td><td>Board/firmware redesign</td><td>No alternative at spec</td></tr>
+              <tr><td><strong>CE</strong><br><small>Compliance Exposure (20%)</small></td><td>EAR99, domestic</td><td>Moderate tariff / DFARS</td><td>ITAR / 10 USC 4872</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="intro-section">
+          <div class="intro-subtitle">Scoring formula</div>
+          <p>Ordinal scores (1&ndash;5) are mapped to a 0&ndash;100 scale, then weighted:</p>
+          <div class="bti-formula-block">
+            <div class="bti-formula">BTI = 0.30&times;SC + 0.25&times;LT + 0.25&times;SF + 0.20&times;CE</div>
+            <small>Ordinal mapping: 1&rarr;10 &middot; 2&rarr;30 &middot; 3&rarr;50 &middot; 4&rarr;70 &middot; 5&rarr;90</small>
+          </div>
+        </div>
+
+        <div class="intro-section">
+          <div class="intro-subtitle">Hierarchy rollup</div>
+          <p><strong>84 L3 components</strong> are scored individually from supplier-level research. L2 modules and L1 domains are computed as the <strong>average of their children's scores</strong> (28 L2 from L3, 7 L1 from L2).</p>
+        </div>
+
+        <div class="intro-section">
+          <div class="intro-subtitle">Confidence &amp; limitations</div>
+          <p>Each node carries a confidence tier (high / medium / low) reflecting evidence quality. Confidence is <strong>metadata only</strong>&mdash;it does not modify the BTI score. Scores reflect a point-in-time assessment (Feb 2025) based on public sources, trade data, and procurement records.</p>
+        </div>
+
+        <div class="intro-section">
+          <div class="intro-subtitle">Version history</div>
+          <p><strong>v1&ndash;v2</strong> derived BTI from proxy signals (capacity utilization, lead-time estimates, substitution heuristics) with confidence penalties. <strong>v3</strong> replaces proxies with <strong>direct ordinal assessment</strong> per dimension, scored from per-component research files with supplier-level justifications.</p>
+        </div>
+
+        <div class="intro-actions">
+          <button id="btiMethodClose" class="intro-btn">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Intro overlay (first visit) ── -->
+    <div id="introOverlay" class="intro-overlay" role="dialog" aria-modal="true" aria-label="About this visualization">
+      <div class="intro-card">
+        <div class="intro-header">
+          <img src="assets/logo.jpg" alt="" class="intro-logo" />
+          <div>
+            <h1 class="intro-title">Defense Industrial Base Constraint Map</h1>
+            <p class="intro-pub">Eregion Research</p>
+          </div>
+        </div>
+
+        <p class="intro-lede">An interactive map of the <strong>U.S. defense supply chain</strong>, showing which components face the tightest bottlenecks&mdash;and why.</p>
+
+        <div class="intro-section">
+          <div class="intro-subtitle">What you're looking at</div>
+          <p>Each bubble is a component in the defense industrial base (engines, sensors, batteries, etc.). They're grouped into <strong>7 domains</strong> like Propulsion, Energy Storage, and Secure Comms.</p>
+          <ul class="intro-legend">
+            <li><span class="intro-sw intro-sw-big"></span> <strong>Bigger + redder</strong> = higher bottleneck pressure (supply-chain risk)</li>
+            <li><span class="intro-sw intro-sw-small"></span> <strong>Smaller + muted</strong> = lower pressure, less constrained</li>
+            <li><span class="intro-sw intro-sw-diamond"></span> <strong>Diamonds</strong> = supplier companies (toggle on with the switch)</li>
+          </ul>
+        </div>
+
+        <div class="intro-section">
+          <div class="intro-subtitle">How to explore</div>
+          <ol class="intro-steps">
+            <li><strong>Click a domain label</strong> (like "Propulsion") to expand it and see all its components</li>
+            <li><strong>Click any node</strong> to see its risk profile, key blockers, and linked suppliers</li>
+            <li><strong>Use the filters</strong> at the top to narrow by domain, confidence, or pressure level</li>
+            <li><strong>Try "Top Bottlenecks"</strong> to instantly see the 10 most constrained components</li>
+          </ol>
+        </div>
+
+        <div class="intro-actions">
+          <button id="introClose" class="intro-btn">Start exploring</button>
+          <label class="intro-dismiss-label">
+            <input type="checkbox" id="introDontShow" checked /> Don't show again
+          </label>
+        </div>
+      </div>
+    </div>
+
     <div id="topPanel">
     <header class="top-header">
       <div class="brand-lockup">
@@ -43,6 +142,8 @@
           <span class="theme-toggle-label theme-label-light">Light</span>
           <span class="theme-toggle-label theme-label-dark">Dark</span>
         </button>
+        <button id="btiMethodOpen" class="intro-reopen-btn" aria-label="BTI Methodology" title="BTI Methodology" style="font-size:10px;letter-spacing:.3px">BTI</button>
+        <button id="introReopen" class="intro-reopen-btn" aria-label="About this map" title="About this map">?</button>
         <div class="brand-wordmark">Eregion Research</div>
       </div>
     </header>

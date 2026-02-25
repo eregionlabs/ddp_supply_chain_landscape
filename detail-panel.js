@@ -44,8 +44,17 @@ function renderCompanyRow(r, config = {}) {
 
   return `<div class="company-row">
     <div><span class="company-name">${label}</span>${confHtml}<br><small>${metaHtml}</small></div>
-    <span class="company-score">${score}</span>
+    <span class="company-score ${scoreRiskClass(score)}">${score}</span>
   </div>`;
+}
+
+function scoreRiskClass(score) {
+  const n = Number(score);
+  if (!Number.isFinite(n)) return 'score-med';
+  /* Scores are 0-10 scale (composite/weighted), not 0-100 */
+  if (n >= 7) return 'score-high';
+  if (n >= 4) return 'score-med';
+  return 'score-low';
 }
 
 const ROLLUP_CONFIG = { scoreField: 'weighted_score_sum', showConfidence: true, showMetadata: true };
@@ -106,7 +115,7 @@ export function buildTopCompaniesHtml(nodeId, ctx) {
     const bits  = [dep, pen, coType].filter(Boolean).join(' \u00b7 ');
     return `<div class="company-row">
       <div><span class="company-name">${label}</span> <span class="conf-badge ${cls}">${conf}</span><br><small>${bits}</small></div>
-      <span class="company-score">${score}</span>
+      <span class="company-score ${scoreRiskClass(score)}">${score}</span>
     </div>`;
   }).join('') + '</div>';
 }
@@ -256,32 +265,77 @@ export function renderComponentDetail(node, ctx) {
   const supplierCount = Array.isArray(n.top_companies) ? n.top_companies.length : 0;
   const sourceCount = Array.isArray(n.evidence_sources) ? n.evidence_sources.length : 0;
 
+  const pressurePct = Math.max(0, Math.min(100, nodeTightnessIndex));
+  const pressureColor = pressurePct >= 70 ? 'var(--red)' : pressurePct >= 40 ? 'var(--amber)' : 'var(--green)';
+
+  const blockerCount = blockerList.length + driverList.length + (blockerRaw ? 1 : 0);
+
+  /* BTI v3 dimension breakdown */
+  const btiDims = n.bti_dimensions || null;
+  const btiDimScores = n.bti_dimension_scores || null;
+  const researchDate = n.research_date || '';
+  const dimLabels = { supply_concentration: 'Supply Concentration', lead_time_stress: 'Lead Time Stress', substitution_friction: 'Substitution Friction', compliance_exposure: 'Compliance Exposure' };
+  const dimShort = { supply_concentration: 'SC', lead_time_stress: 'LT', substitution_friction: 'SF', compliance_exposure: 'CE' };
+  const dimWeights = { supply_concentration: 0.30, lead_time_stress: 0.25, substitution_friction: 0.25, compliance_exposure: 0.20 };
+  let dimensionHtml = '';
+  if (btiDimScores && typeof btiDimScores === 'object') {
+    const dimEntries = Object.entries(dimShort).map(([key, short]) => {
+      const score = Number(btiDimScores[key]) || 0;
+      const ordinal = btiDims ? (Number(btiDims[key]) || 0) : 0;
+      const pct = Math.max(0, Math.min(100, score));
+      const color = pct >= 70 ? 'var(--red)' : pct >= 40 ? 'var(--amber)' : 'var(--green)';
+      const weight = Math.round((dimWeights[key] || 0) * 100);
+      return `<div class="bti-dim-row">
+        <span class="bti-dim-label" title="${escHtml(dimLabels[key])}">${short} <small>(${weight}%)</small></span>
+        <div class="bti-dim-bar-track"><div class="bti-dim-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+        <span class="bti-dim-value">${score}</span>
+      </div>`;
+    });
+    dimensionHtml = `<div class="bti-dimensions">${dimEntries.join('')}</div>`;
+    dimensionHtml += `<div class="bti-research-date">`;
+    if (researchDate) {
+      dimensionHtml += `<small>Research: ${escHtml(researchDate)}</small> &middot; `;
+    }
+    dimensionHtml += `<a href="#" class="bti-method-link" onclick="event.preventDefault();window.__openBtiMethod&&window.__openBtiMethod()">How is this scored?</a>`;
+    dimensionHtml += `</div>`;
+  }
+
   detailsEl.innerHTML = `
     <div data-node-id="${escHtml(n.id)}"><div class="detail-title">${escHtml(n.label)}</div>
     <div class="detail-metrics-grid">
-      <button class="detail-metric-card" data-metric="pressure" type="button"><small>Bottleneck Pressure</small><strong>${nodeTightnessIndex}</strong></button>
+      <button class="detail-metric-card hero-pressure" data-metric="pressure" type="button" style="--pressure-pct:${pressurePct}%;--pressure-color:${pressureColor}"><small>Bottleneck Pressure</small><strong>${nodeTightnessIndex}</strong></button>
       <button class="detail-metric-card" data-metric="confidence" type="button"><small>Confidence</small><strong>${escHtml(confidenceTier)}</strong></button>
       <button class="detail-metric-card" data-metric="suppliers" type="button"><small>Suppliers</small><strong>${supplierCount}</strong></button>
       <button class="detail-metric-card" data-metric="sources" type="button"><small>Sources</small><strong>${sourceCount}</strong></button>
     </div>
+    ${dimensionHtml}
     <div class="detail-grid">
       <div class="detail-row"><span>Layer</span><span>${escHtml(String(n.layer || '?'))}</span></div>
       <div class="detail-row"><span>Domain</span><span>${escHtml(String(n.l1_component || 'n/a'))}</span></div>
       <div class="detail-row"><span>Parent</span><span>${escHtml(parentLabel)}</span></div>
       <div class="detail-row"><span>Neighbors</span><span>${neighbors.length}</span></div>
     </div>
-    ${topDown ? `<div class="detail-note">Downstream risk: ${topDown}</div>` : ''}
-    <div class="detail-note">Blockers: ${blockerText}</div>
-    ${driverList.length > 0 ? `<div class="detail-note">Drivers: ${escHtml(driverList.join(' \u00b7 '))}</div>` : ''}
-    ${blockerList.length > 0 ? `<div class="detail-note">Blocker List: ${escHtml(blockerList.slice(0, 6).join(' \u00b7 '))}</div>` : ''}
     <div class="detail-subsection">
-      <div class="detail-subtitle">Metadata / Sources</div>
-      ${srcHtml}
+      <details open>
+        <summary>Blockers <span class="section-count">${blockerCount}</span></summary>
+        ${topDown ? `<div class="detail-note">Downstream risk: ${topDown}</div>` : ''}
+        <div class="detail-note">Blockers: ${blockerText}</div>
+        ${driverList.length > 0 ? `<div class="detail-note">Drivers: ${escHtml(driverList.join(' \u00b7 '))}</div>` : ''}
+        ${blockerList.length > 0 ? `<div class="detail-note">Blocker List: ${escHtml(blockerList.slice(0, 6).join(' \u00b7 '))}</div>` : ''}
+      </details>
     </div>
     <div class="detail-subsection">
-      <div class="detail-subtitle">Supplier Companies</div>
-      <small>Score = supplier relevance index (higher = more critical to this node).</small>
-      ${cosHtml}
+      <details>
+        <summary>Sources <span class="section-count">${sourceCount}</span></summary>
+        ${srcHtml}
+      </details>
+    </div>
+    <div class="detail-subsection">
+      <details>
+        <summary>Supplier Companies <span class="section-count">${supplierCount}</span></summary>
+        <small>Score = supplier relevance index (higher = more critical to this node).</small>
+        ${cosHtml}
+      </details>
     </div></div>`;
 }
 

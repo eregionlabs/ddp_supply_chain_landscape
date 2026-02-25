@@ -57,10 +57,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 52.95,
+      "bottleneck_tightness_index": 22.67,
       "bottleneck_drivers": [
-        "substitution_difficulty: no direct L3 quant nodes in current stack for this domain",
-        "leadtime_stress: domain score derived from L2 coverage/confidence signals"
+        "supply_concentration: 1.75/5 -> 25.0",
+        "lead_time_stress: 1.75/5 -> 25.0",
+        "substitution_friction: 1.75/5 -> 25.0",
+        "compliance_exposure: 1.17/5 -> 13.34"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -81,7 +83,20 @@
         }
       ],
       "confidence_tier": "high",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 1.75,
+        "lead_time_stress": 1.75,
+        "substitution_friction": 1.75,
+        "compliance_exposure": 1.17
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 25.0,
+        "lead_time_stress": 25.0,
+        "substitution_friction": 25.0,
+        "compliance_exposure": 13.34
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l1_energy_storage",
@@ -138,10 +153,12 @@
           "weighted_score": 2.5875
         }
       ],
-      "bottleneck_tightness_index": 54.78,
+      "bottleneck_tightness_index": 34.08,
       "bottleneck_drivers": [
-        "substitution_difficulty: rollup from 6 L3 bottleneck nodes in this domain",
-        "confidence_penalty: L2 coverage quality in this domain remains partial/gap-weighted"
+        "supply_concentration: 2.58/5 -> 41.66",
+        "lead_time_stress: 2.25/5 -> 35.0",
+        "substitution_friction: 2.0/5 -> 30.0",
+        "compliance_exposure: 1.83/5 -> 26.67"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -217,7 +234,20 @@
         }
       ],
       "confidence_tier": "high",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 2.58,
+        "lead_time_stress": 2.25,
+        "substitution_friction": 2.0,
+        "compliance_exposure": 1.83
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 41.66,
+        "lead_time_stress": 35.0,
+        "substitution_friction": 30.0,
+        "compliance_exposure": 26.67
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l1_flight_control_guidance",
@@ -274,10 +304,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 65.0,
+      "bottleneck_tightness_index": 37.5,
       "bottleneck_drivers": [
-        "capacity_stress: no direct L3 quant nodes in current stack for this domain",
-        "leadtime_stress: domain score derived from L2 coverage/confidence signals"
+        "supply_concentration: 2.58/5 -> 41.67",
+        "lead_time_stress: 2.5/5 -> 40.0",
+        "substitution_friction: 2.5/5 -> 40.0",
+        "compliance_exposure: 1.75/5 -> 25.0"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -303,7 +335,20 @@
         }
       ],
       "confidence_tier": "high",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 2.58,
+        "lead_time_stress": 2.5,
+        "substitution_friction": 2.5,
+        "compliance_exposure": 1.75
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 41.67,
+        "lead_time_stress": 40.0,
+        "substitution_friction": 40.0,
+        "compliance_exposure": 25.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l1_manufacturing_system",
@@ -360,10 +405,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 43.51,
+      "bottleneck_tightness_index": 27.5,
       "bottleneck_drivers": [
-        "capacity_stress: no direct L3 quant nodes in current stack for this domain",
-        "leadtime_stress: domain score derived from L2 coverage/confidence signals"
+        "supply_concentration: 2.08/5 -> 31.67",
+        "lead_time_stress: 2.0/5 -> 30.0",
+        "substitution_friction: 2.0/5 -> 30.0",
+        "compliance_exposure: 1.25/5 -> 15.0"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -399,7 +446,20 @@
         }
       ],
       "confidence_tier": "high",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 2.08,
+        "lead_time_stress": 2.0,
+        "substitution_friction": 2.0,
+        "compliance_exposure": 1.25
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 31.67,
+        "lead_time_stress": 30.0,
+        "substitution_friction": 30.0,
+        "compliance_exposure": 15.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l1_pnt",
@@ -456,10 +516,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 49.46,
+      "bottleneck_tightness_index": 47.42,
       "bottleneck_drivers": [
-        "substitution_difficulty: rollup from 4 L3 bottleneck nodes in this domain",
-        "confidence_penalty: L2 coverage quality in this domain remains partial/gap-weighted"
+        "supply_concentration: 2.92/5 -> 48.33",
+        "lead_time_stress: 3.0/5 -> 50.0",
+        "substitution_friction: 2.92/5 -> 48.33",
+        "compliance_exposure: 2.58/5 -> 41.67"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -485,7 +547,20 @@
         }
       ],
       "confidence_tier": "high",
-      "l1_component": "pnt"
+      "l1_component": "pnt",
+      "bti_dimensions": {
+        "supply_concentration": 2.92,
+        "lead_time_stress": 3.0,
+        "substitution_friction": 2.92,
+        "compliance_exposure": 2.58
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 48.33,
+        "lead_time_stress": 50.0,
+        "substitution_friction": 48.33,
+        "compliance_exposure": 41.67
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l1_propulsion",
@@ -542,10 +617,12 @@
           "weighted_score": 2.4403
         }
       ],
-      "bottleneck_tightness_index": 48.76,
+      "bottleneck_tightness_index": 29.09,
       "bottleneck_drivers": [
-        "substitution_difficulty: rollup from 6 L3 bottleneck nodes in this domain",
-        "confidence_penalty: L2 coverage quality in this domain remains partial/gap-weighted"
+        "supply_concentration: 2.25/5 -> 35.0",
+        "lead_time_stress: 2.08/5 -> 31.67",
+        "substitution_friction: 1.83/5 -> 26.67",
+        "compliance_exposure: 1.5/5 -> 20.0"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -601,7 +678,20 @@
         }
       ],
       "confidence_tier": "high",
-      "l1_component": "propulsion"
+      "l1_component": "propulsion",
+      "bti_dimensions": {
+        "supply_concentration": 2.25,
+        "lead_time_stress": 2.08,
+        "substitution_friction": 1.83,
+        "compliance_exposure": 1.5
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 35.0,
+        "lead_time_stress": 31.67,
+        "substitution_friction": 26.67,
+        "compliance_exposure": 20.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l1_secure_comms",
@@ -658,10 +748,12 @@
           "weighted_score": 9.8716
         }
       ],
-      "bottleneck_tightness_index": 70.67,
+      "bottleneck_tightness_index": 46.25,
       "bottleneck_drivers": [
-        "substitution_difficulty: rollup from 4 L3 bottleneck nodes in this domain",
-        "confidence_penalty: L2 coverage quality in this domain remains partial/gap-weighted"
+        "supply_concentration: 2.92/5 -> 48.34",
+        "lead_time_stress: 2.75/5 -> 45.0",
+        "substitution_friction: 3.0/5 -> 50.0",
+        "compliance_exposure: 2.5/5 -> 40.0"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -692,7 +784,20 @@
         }
       ],
       "confidence_tier": "high",
-      "l1_component": "secure_comms"
+      "l1_component": "secure_comms",
+      "bti_dimensions": {
+        "supply_concentration": 2.92,
+        "lead_time_stress": 2.75,
+        "substitution_friction": 3.0,
+        "compliance_exposure": 2.5
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 48.34,
+        "lead_time_stress": 45.0,
+        "substitution_friction": 50.0,
+        "compliance_exposure": 40.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_flight_control_guidance_air_data_sensor_suite",
@@ -737,10 +842,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 20.66,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1.67/5 -> 23.33",
+        "lead_time_stress: 1.67/5 -> 23.33",
+        "substitution_friction: 1.67/5 -> 23.33",
+        "compliance_exposure: 1.0/5 -> 10.0"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -769,7 +876,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 1.67,
+        "lead_time_stress": 1.67,
+        "substitution_friction": 1.67,
+        "compliance_exposure": 1.0
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 23.33,
+        "lead_time_stress": 23.33,
+        "substitution_friction": 23.33,
+        "compliance_exposure": 10.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_airframe_structures_airframe_architecture_references",
@@ -889,10 +1009,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 64,
+      "bottleneck_tightness_index": 32.33,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "leadtime_stress: RF PA/transceiver and crypto processor modules are exposed to specialty semiconductor lead-time spikes"
+        "supply_concentration: 2.33/5 -> 36.67",
+        "lead_time_stress: 2.33/5 -> 36.67",
+        "substitution_friction: 2.0/5 -> 30.0",
+        "compliance_exposure: 1.67/5 -> 23.33"
       ],
       "blockers": [
         "node-level supplier mapping is improved but still needs program-specific qualification evidence"
@@ -914,7 +1036,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2.33,
+        "lead_time_stress": 2.33,
+        "substitution_friction": 2.0,
+        "compliance_exposure": 1.67
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 36.67,
+        "lead_time_stress": 36.67,
+        "substitution_friction": 30.0,
+        "compliance_exposure": 23.33
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_pnt_anti_jam_antenna_array",
@@ -953,10 +1088,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 56,
+      "bottleneck_tightness_index": 51.67,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: module-level integration depends on constrained RF front-end and precision sensor components"
+        "supply_concentration: 3.0/5 -> 50.0",
+        "lead_time_stress: 3.33/5 -> 56.67",
+        "substitution_friction: 3.0/5 -> 50.0",
+        "compliance_exposure: 3.0/5 -> 50.0"
       ],
       "blockers": [
         "node-level supplier mapping is improved but still needs program-specific qualification evidence"
@@ -978,7 +1115,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 3.0,
+        "lead_time_stress": 3.33,
+        "substitution_friction": 3.0,
+        "compliance_exposure": 3.0
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50.0,
+        "lead_time_stress": 56.67,
+        "substitution_friction": 50.0,
+        "compliance_exposure": 50.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_propulsion_bldc_motor_assembly",
@@ -1017,10 +1167,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 61,
+      "bottleneck_tightness_index": 49.0,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: ESC/motor/prop matching limits drop-in substitutions without retest"
+        "supply_concentration: 3.33/5 -> 56.67",
+        "lead_time_stress: 3.0/5 -> 50.0",
+        "substitution_friction: 2.67/5 -> 43.33",
+        "compliance_exposure: 2.67/5 -> 43.33"
       ],
       "blockers": [
         "node-level supplier mapping is improved but still needs program-specific qualification evidence"
@@ -1042,7 +1194,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 3.33,
+        "lead_time_stress": 3.0,
+        "substitution_friction": 2.67,
+        "compliance_exposure": 2.67
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 56.67,
+        "lead_time_stress": 50.0,
+        "substitution_friction": 43.33,
+        "compliance_exposure": 43.33
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_energy_storage_bms_pcb_assembly",
@@ -1087,10 +1252,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 25.67,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2.0/5 -> 30.0",
+        "lead_time_stress: 2.0/5 -> 30.0",
+        "substitution_friction: 1.67/5 -> 23.33",
+        "compliance_exposure: 1.33/5 -> 16.67"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -1169,7 +1336,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 2.0,
+        "lead_time_stress": 2.0,
+        "substitution_friction": 1.67,
+        "compliance_exposure": 1.33
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30.0,
+        "lead_time_stress": 30.0,
+        "substitution_friction": 23.33,
+        "compliance_exposure": 16.67
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_pnt_barometric_altimeter_module",
@@ -1208,10 +1388,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 50,
+      "bottleneck_tightness_index": 20.66,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: module-level integration depends on constrained RF front-end and precision sensor components"
+        "supply_concentration: 1.67/5 -> 23.33",
+        "lead_time_stress: 1.67/5 -> 23.33",
+        "substitution_friction: 1.67/5 -> 23.33",
+        "compliance_exposure: 1.0/5 -> 10.0"
       ],
       "blockers": [
         "node-level supplier mapping is improved but still needs program-specific qualification evidence"
@@ -1233,7 +1415,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 1.67,
+        "lead_time_stress": 1.67,
+        "substitution_friction": 1.67,
+        "compliance_exposure": 1.0
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 23.33,
+        "lead_time_stress": 23.33,
+        "substitution_friction": 23.33,
+        "compliance_exposure": 10.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_energy_storage_battery_module_enclosure",
@@ -1278,10 +1473,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 17.33,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1.67/5 -> 23.33",
+        "lead_time_stress: 1.67/5 -> 23.33",
+        "substitution_friction: 1.0/5 -> 10.0",
+        "compliance_exposure: 1.0/5 -> 10.0"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -1360,7 +1557,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 1.67,
+        "lead_time_stress": 1.67,
+        "substitution_friction": 1.0,
+        "compliance_exposure": 1.0
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 23.33,
+        "lead_time_stress": 23.33,
+        "substitution_friction": 10.0,
+        "compliance_exposure": 10.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_manufacturing_system_capacity_expansion_programs_and_investment_signals",
@@ -1678,10 +1888,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 42.66,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 3.0/5 -> 50.0",
+        "lead_time_stress: 2.67/5 -> 43.33",
+        "substitution_friction: 2.67/5 -> 43.33",
+        "compliance_exposure: 2.0/5 -> 30.0"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -1710,7 +1922,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 3.0,
+        "lead_time_stress": 2.67,
+        "substitution_friction": 2.67,
+        "compliance_exposure": 2.0
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50.0,
+        "lead_time_stress": 43.33,
+        "substitution_friction": 43.33,
+        "compliance_exposure": 30.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_manufacturing_system_contractor_tier_line_level_takt_bottlenecks",
@@ -1952,10 +2177,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 68,
+      "bottleneck_tightness_index": 65.0,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "leadtime_stress: RF PA/transceiver and crypto processor modules are exposed to specialty semiconductor lead-time spikes"
+        "supply_concentration: 3.67/5 -> 63.33",
+        "lead_time_stress: 3.0/5 -> 50.0",
+        "substitution_friction: 4.67/5 -> 83.33",
+        "compliance_exposure: 3.67/5 -> 63.33"
       ],
       "blockers": [
         "export-control/compliance screening and crypto assurance steps slow alternate-source qualification"
@@ -1977,7 +2204,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 3.67,
+        "lead_time_stress": 3.0,
+        "substitution_friction": 4.67,
+        "compliance_exposure": 3.67
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 63.33,
+        "lead_time_stress": 50.0,
+        "substitution_friction": 83.33,
+        "compliance_exposure": 63.33
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_propulsion_esc_power_unit",
@@ -2016,10 +2256,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 61,
+      "bottleneck_tightness_index": 31.0,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: ESC/motor/prop matching limits drop-in substitutions without retest"
+        "supply_concentration: 2.33/5 -> 36.67",
+        "lead_time_stress: 2.33/5 -> 36.67",
+        "substitution_friction: 2.0/5 -> 30.0",
+        "compliance_exposure: 1.33/5 -> 16.67"
       ],
       "blockers": [
         "node-level supplier mapping is improved but still needs program-specific qualification evidence"
@@ -2041,7 +2283,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2.33,
+        "lead_time_stress": 2.33,
+        "substitution_friction": 2.0,
+        "compliance_exposure": 1.33
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 36.67,
+        "lead_time_stress": 36.67,
+        "substitution_friction": 30.0,
+        "compliance_exposure": 16.67
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_manufacturing_system_final_assembly_test_rack",
@@ -2086,10 +2341,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 27.33,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2.0/5 -> 30.0",
+        "lead_time_stress: 2.0/5 -> 30.0",
+        "substitution_friction: 2.0/5 -> 30.0",
+        "compliance_exposure: 1.33/5 -> 16.67"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -2128,7 +2385,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 2.0,
+        "lead_time_stress": 2.0,
+        "substitution_friction": 2.0,
+        "compliance_exposure": 1.33
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30.0,
+        "lead_time_stress": 30.0,
+        "substitution_friction": 30.0,
+        "compliance_exposure": 16.67
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_flight_control_guidance_flight_controller_pcb_assembly",
@@ -2173,10 +2443,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 32.67,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2.33/5 -> 36.67",
+        "lead_time_stress: 2.33/5 -> 36.67",
+        "substitution_friction: 2.33/5 -> 36.67",
+        "compliance_exposure: 1.33/5 -> 16.67"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -2205,7 +2477,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 2.33,
+        "lead_time_stress": 2.33,
+        "substitution_friction": 2.33,
+        "compliance_exposure": 1.33
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 36.67,
+        "lead_time_stress": 36.67,
+        "substitution_friction": 36.67,
+        "compliance_exposure": 16.67
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_airframe_structures_fuselage_shell_assembly",
@@ -2250,10 +2535,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 32.67,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2.33/5 -> 36.67",
+        "lead_time_stress: 2.33/5 -> 36.67",
+        "substitution_friction: 2.33/5 -> 36.67",
+        "compliance_exposure: 1.33/5 -> 16.67"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -2277,7 +2564,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 2.33,
+        "lead_time_stress": 2.33,
+        "substitution_friction": 2.33,
+        "compliance_exposure": 1.33
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 36.67,
+        "lead_time_stress": 36.67,
+        "substitution_friction": 36.67,
+        "compliance_exposure": 16.67
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_pnt_gnss_receiver_module",
@@ -2316,10 +2616,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 56,
+      "bottleneck_tightness_index": 40.33,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: module-level integration depends on constrained RF front-end and precision sensor components"
+        "supply_concentration: 2.67/5 -> 43.33",
+        "lead_time_stress: 2.67/5 -> 43.33",
+        "substitution_friction: 2.33/5 -> 36.67",
+        "compliance_exposure: 2.33/5 -> 36.67"
       ],
       "blockers": [
         "node-level supplier mapping is improved but still needs program-specific qualification evidence"
@@ -2341,7 +2643,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2.67,
+        "lead_time_stress": 2.67,
+        "substitution_friction": 2.33,
+        "compliance_exposure": 2.33
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 43.33,
+        "lead_time_stress": 43.33,
+        "substitution_friction": 36.67,
+        "compliance_exposure": 36.67
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_manufacturing_system_industrial_shortfall_identification",
@@ -2476,10 +2791,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 52,
+      "bottleneck_tightness_index": 77.0,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: module-level integration depends on constrained RF front-end and precision sensor components"
+        "supply_concentration: 4.33/5 -> 76.67",
+        "lead_time_stress: 4.33/5 -> 76.67",
+        "substitution_friction: 4.67/5 -> 83.33",
+        "compliance_exposure: 4.0/5 -> 70.0"
       ],
       "blockers": [
         "node-level supplier mapping is improved but still needs program-specific qualification evidence"
@@ -2501,7 +2818,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 4.33,
+        "lead_time_stress": 4.33,
+        "substitution_friction": 4.67,
+        "compliance_exposure": 4.0
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 76.67,
+        "lead_time_stress": 76.67,
+        "substitution_friction": 83.33,
+        "compliance_exposure": 70.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_flight_control_guidance_inertial_sensor_module",
@@ -2546,10 +2876,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 54.0,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 3.33/5 -> 56.67",
+        "lead_time_stress: 3.33/5 -> 56.67",
+        "substitution_friction: 3.33/5 -> 56.67",
+        "compliance_exposure: 2.67/5 -> 43.33"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -2578,7 +2910,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 3.33,
+        "lead_time_stress": 3.33,
+        "substitution_friction": 3.33,
+        "compliance_exposure": 2.67
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 56.67,
+        "lead_time_stress": 56.67,
+        "substitution_friction": 56.67,
+        "compliance_exposure": 43.33
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_airframe_structures_landing_skid_assembly",
@@ -2623,10 +2968,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1.0/5 -> 10.0",
+        "lead_time_stress: 1.0/5 -> 10.0",
+        "substitution_friction: 1.0/5 -> 10.0",
+        "compliance_exposure: 1.0/5 -> 10.0"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -2650,7 +2997,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 1.0,
+        "lead_time_stress": 1.0,
+        "substitution_friction": 1.0,
+        "compliance_exposure": 1.0
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10.0,
+        "lead_time_stress": 10.0,
+        "substitution_friction": 10.0,
+        "compliance_exposure": 10.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_energy_storage_li_ion_cell_block",
@@ -2695,10 +3055,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 62.0,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 4.0/5 -> 70.0",
+        "lead_time_stress: 3.33/5 -> 56.67",
+        "substitution_friction: 3.33/5 -> 56.67",
+        "compliance_exposure: 3.67/5 -> 63.33"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -2777,7 +3139,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 4.0,
+        "lead_time_stress": 3.33,
+        "substitution_friction": 3.33,
+        "compliance_exposure": 3.67
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 70.0,
+        "lead_time_stress": 56.67,
+        "substitution_friction": 56.67,
+        "compliance_exposure": 63.33
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_airframe_structures_manufacturability_takt_time_constraints",
@@ -2903,10 +3278,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 20.66,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1.67/5 -> 23.33",
+        "lead_time_stress: 1.67/5 -> 23.33",
+        "substitution_friction: 1.67/5 -> 23.33",
+        "compliance_exposure: 1.0/5 -> 10.0"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -2945,7 +3322,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 1.67,
+        "lead_time_stress": 1.67,
+        "substitution_friction": 1.67,
+        "compliance_exposure": 1.0
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 23.33,
+        "lead_time_stress": 23.33,
+        "substitution_friction": 23.33,
+        "compliance_exposure": 10.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_energy_storage_pack_thermal_interface_stack",
@@ -2990,10 +3380,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 31.33,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2.67/5 -> 43.33",
+        "lead_time_stress: 2.0/5 -> 30.0",
+        "substitution_friction: 2.0/5 -> 30.0",
+        "compliance_exposure: 1.33/5 -> 16.67"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -3072,7 +3464,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 2.67,
+        "lead_time_stress": 2.0,
+        "substitution_friction": 2.0,
+        "compliance_exposure": 1.33
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 43.33,
+        "lead_time_stress": 30.0,
+        "substitution_friction": 30.0,
+        "compliance_exposure": 16.67
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_secure_comms_power_amplifier_module",
@@ -3111,10 +3516,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 68,
+      "bottleneck_tightness_index": 51.0,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "leadtime_stress: RF PA/transceiver and crypto processor modules are exposed to specialty semiconductor lead-time spikes"
+        "supply_concentration: 3.33/5 -> 56.67",
+        "lead_time_stress: 3.33/5 -> 56.67",
+        "substitution_friction: 3.0/5 -> 50.0",
+        "compliance_exposure: 2.33/5 -> 36.67"
       ],
       "blockers": [
         "node-level supplier mapping is improved but still needs program-specific qualification evidence"
@@ -3136,7 +3543,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 3.33,
+        "lead_time_stress": 3.33,
+        "substitution_friction": 3.0,
+        "compliance_exposure": 2.33
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 56.67,
+        "lead_time_stress": 56.67,
+        "substitution_friction": 50.0,
+        "compliance_exposure": 36.67
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_propulsion_power_distribution_board",
@@ -3175,10 +3595,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 57,
+      "bottleneck_tightness_index": 19.0,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: ESC/motor/prop matching limits drop-in substitutions without retest"
+        "supply_concentration: 1.67/5 -> 23.33",
+        "lead_time_stress: 1.67/5 -> 23.33",
+        "substitution_friction: 1.33/5 -> 16.67",
+        "compliance_exposure: 1.0/5 -> 10.0"
       ],
       "blockers": [
         "node-level supplier mapping is improved but still needs program-specific qualification evidence"
@@ -3200,7 +3622,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 1.67,
+        "lead_time_stress": 1.67,
+        "substitution_friction": 1.33,
+        "compliance_exposure": 1.0
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 23.33,
+        "lead_time_stress": 23.33,
+        "substitution_friction": 16.67,
+        "compliance_exposure": 10.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_propulsion_propeller_rotor_set",
@@ -3239,10 +3674,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 57,
+      "bottleneck_tightness_index": 17.33,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: ESC/motor/prop matching limits drop-in substitutions without retest"
+        "supply_concentration: 1.67/5 -> 23.33",
+        "lead_time_stress: 1.33/5 -> 16.67",
+        "substitution_friction: 1.33/5 -> 16.67",
+        "compliance_exposure: 1.0/5 -> 10.0"
       ],
       "blockers": [
         "node-level supplier mapping is improved but still needs program-specific qualification evidence"
@@ -3264,7 +3701,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 1.67,
+        "lead_time_stress": 1.33,
+        "substitution_friction": 1.33,
+        "compliance_exposure": 1.0
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 23.33,
+        "lead_time_stress": 16.67,
+        "substitution_friction": 16.67,
+        "compliance_exposure": 10.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_secure_comms_rf_transceiver_module",
@@ -3303,10 +3753,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 68,
+      "bottleneck_tightness_index": 36.67,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "leadtime_stress: RF PA/transceiver and crypto processor modules are exposed to specialty semiconductor lead-time spikes"
+        "supply_concentration: 2.33/5 -> 36.67",
+        "lead_time_stress: 2.33/5 -> 36.67",
+        "substitution_friction: 2.33/5 -> 36.67",
+        "compliance_exposure: 2.33/5 -> 36.67"
       ],
       "blockers": [
         "node-level supplier mapping is improved but still needs program-specific qualification evidence"
@@ -3328,7 +3780,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2.33,
+        "lead_time_stress": 2.33,
+        "substitution_friction": 2.33,
+        "compliance_exposure": 2.33
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 36.67,
+        "lead_time_stress": 36.67,
+        "substitution_friction": 36.67,
+        "compliance_exposure": 36.67
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_manufacturing_system_reflow_oven_line",
@@ -3373,10 +3838,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 15.34,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1.33/5 -> 16.67",
+        "lead_time_stress: 1.33/5 -> 16.67",
+        "substitution_friction: 1.33/5 -> 16.67",
+        "compliance_exposure: 1.0/5 -> 10.0"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -3415,7 +3882,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 1.33,
+        "lead_time_stress": 1.33,
+        "substitution_friction": 1.33,
+        "compliance_exposure": 1.0
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 16.67,
+        "lead_time_stress": 16.67,
+        "substitution_friction": 16.67,
+        "compliance_exposure": 10.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_manufacturing_system_smt_placement_line",
@@ -3460,10 +3940,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 46.67,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 3.33/5 -> 56.67",
+        "lead_time_stress: 3.0/5 -> 50.0",
+        "substitution_friction: 3.0/5 -> 50.0",
+        "compliance_exposure: 1.67/5 -> 23.33"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -3502,7 +3984,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 3.33,
+        "lead_time_stress": 3.0,
+        "substitution_friction": 3.0,
+        "compliance_exposure": 1.67
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 56.67,
+        "lead_time_stress": 50.0,
+        "substitution_friction": 50.0,
+        "compliance_exposure": 23.33
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_energy_storage_source_id",
@@ -3880,10 +4375,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 20.66,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1.67/5 -> 23.33",
+        "lead_time_stress: 1.67/5 -> 23.33",
+        "substitution_friction: 1.67/5 -> 23.33",
+        "compliance_exposure: 1.0/5 -> 10.0"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -3907,7 +4404,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 1.67,
+        "lead_time_stress": 1.67,
+        "substitution_friction": 1.67,
+        "compliance_exposure": 1.0
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 23.33,
+        "lead_time_stress": 23.33,
+        "substitution_friction": 23.33,
+        "compliance_exposure": 10.0
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_manufacturing_system_throughput_and_cost_reduction_signals",
@@ -4129,10 +4639,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 27.33,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2.0/5 -> 30.0",
+        "lead_time_stress: 2.0/5 -> 30.0",
+        "substitution_friction: 2.0/5 -> 30.0",
+        "compliance_exposure: 1.33/5 -> 16.67"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -4156,7 +4668,20 @@
         }
       ],
       "confidence_tier": "medium",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 2.0,
+        "lead_time_stress": 2.0,
+        "substitution_friction": 2.0,
+        "compliance_exposure": 1.33
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30.0,
+        "lead_time_stress": 30.0,
+        "substitution_friction": 30.0,
+        "compliance_exposure": 16.67
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l2_energy_storage_l1_energy_census_hs850760_2024_2025",
@@ -5733,10 +6258,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 21.0,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -5815,7 +6342,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_pnt_antenna_radome",
@@ -5854,10 +6394,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 58,
+      "bottleneck_tightness_index": 35.0,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: oscillator/filter and sensor die packaging queues create schedule risk at part level"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -5877,7 +6419,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 3,
+        "substitution_friction": 2,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 50,
+        "substitution_friction": 30,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_securecomms_antenna_rf_frontend",
@@ -6162,10 +6717,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1/5 -> 10",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -6244,7 +6801,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 1,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_pnt_beamforming_ic",
@@ -6283,10 +6853,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 58,
+      "bottleneck_tightness_index": 70.0,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: oscillator/filter and sensor die packaging queues create schedule risk at part level"
+        "supply_concentration: 4/5 -> 70",
+        "lead_time_stress: 4/5 -> 70",
+        "substitution_friction: 4/5 -> 70",
+        "compliance_exposure: 4/5 -> 70"
       ],
       "blockers": [
         "specialized RF timing components have limited defense-qualified alternates"
@@ -6308,7 +6880,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 4,
+        "lead_time_stress": 4,
+        "substitution_friction": 4,
+        "compliance_exposure": 4
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 70,
+        "lead_time_stress": 70,
+        "substitution_friction": 70,
+        "compliance_exposure": 70
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_fcg_board_to_board_connector",
@@ -6353,10 +6938,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -6385,7 +6972,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_airframe_bulkhead_frame_ring",
@@ -6430,10 +7030,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -6457,7 +7059,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_pnt_crpa_patch_element",
@@ -6496,10 +7111,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 58,
+      "bottleneck_tightness_index": 50.0,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: oscillator/filter and sensor die packaging queues create schedule risk at part level"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 3/5 -> 50"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -6519,7 +7136,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 3
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 50
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_energy_cathode_coated_foil",
@@ -6564,10 +7194,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 80.0,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 5/5 -> 90",
+        "lead_time_stress: 4/5 -> 70",
+        "substitution_friction: 4/5 -> 70",
+        "compliance_exposure: 5/5 -> 90"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -6646,7 +7278,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 5,
+        "lead_time_stress": 4,
+        "substitution_friction": 4,
+        "compliance_exposure": 5
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 90,
+        "lead_time_stress": 70,
+        "substitution_friction": 70,
+        "compliance_exposure": 90
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_energy_cell_monitor_asic",
@@ -6691,10 +7336,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 46.0,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -6773,7 +7420,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_airframe_center_tub_section",
@@ -6818,10 +7478,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 46.0,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -6845,7 +7507,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_fcg_ceramic_imu_package",
@@ -6890,10 +7565,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 66.0,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 4/5 -> 70",
+        "lead_time_stress: 4/5 -> 70",
+        "substitution_friction: 4/5 -> 70",
+        "compliance_exposure: 3/5 -> 50"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -6922,7 +7599,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 4,
+        "lead_time_stress": 4,
+        "substitution_friction": 4,
+        "compliance_exposure": 3
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 70,
+        "lead_time_stress": 70,
+        "substitution_friction": 70,
+        "compliance_exposure": 50
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_securecomms_circulator",
@@ -6961,10 +7651,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 70,
+      "bottleneck_tightness_index": 61.0,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "substitution_difficulty: RF front-end and secure-element alternatives have limited interoperability at part level"
+        "supply_concentration: 4/5 -> 70",
+        "lead_time_stress: 4/5 -> 70",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 3/5 -> 50"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -6984,7 +7676,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 4,
+        "lead_time_stress": 4,
+        "substitution_friction": 3,
+        "compliance_exposure": 3
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 70,
+        "lead_time_stress": 70,
+        "substitution_friction": 50,
+        "compliance_exposure": 50
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_securecomms_coaxial_feedline",
@@ -7023,10 +7728,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 68,
+      "bottleneck_tightness_index": 21.0,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "substitution_difficulty: RF front-end and secure-element alternatives have limited interoperability at part level"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -7046,7 +7753,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_energy_compression_tie_rod",
@@ -7091,10 +7811,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1/5 -> 10",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -7173,7 +7895,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 1,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_fcg_conformal_coated_pcb",
@@ -7218,10 +7953,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -7250,7 +7987,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_mfg_conveyor_mesh_belt",
@@ -7295,10 +8045,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1/5 -> 10",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -7337,7 +8089,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 1,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_energy_coolant_microchannel_plate",
@@ -7382,10 +8147,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 42.0,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -7464,7 +8231,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_propulsion_copper_bus_plane",
@@ -7503,10 +8283,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 63,
+      "bottleneck_tightness_index": 21.0,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: rotor magnet, MOSFET, and gate-driver combinations require requalification when replaced"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -7526,7 +8308,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_airframe_cross_brace",
@@ -7571,10 +8366,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1/5 -> 10",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -7598,7 +8395,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 1,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_securecomms_crypto_key_store",
@@ -7702,10 +8512,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 63,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: rotor magnet, MOSFET, and gate-driver combinations require requalification when replaced"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -7725,7 +8537,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_propulsion_dc_link_capacitor_bank",
@@ -7764,10 +8589,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 63,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: rotor magnet, MOSFET, and gate-driver combinations require requalification when replaced"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -7787,7 +8614,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_mfg_data_acquisition_chassis",
@@ -7832,10 +8672,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 46.0,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -7874,7 +8716,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_fcg_differential_pressure_sensor",
@@ -7919,10 +8774,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -7951,7 +8808,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_securecomms_duplexer_filter",
@@ -7990,10 +8860,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 70,
+      "bottleneck_tightness_index": 46.0,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "substitution_difficulty: RF front-end and secure-element alternatives have limited interoperability at part level"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -8013,7 +8885,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_propulsion_esc_control_mcu",
@@ -8240,10 +9125,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -8267,7 +9154,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_energy_end_plate_pair",
@@ -8312,10 +9212,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 21.0,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -8394,7 +9296,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_pnt_fog_rate_sensor",
@@ -8433,10 +9348,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 58,
+      "bottleneck_tightness_index": 86.0,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: oscillator/filter and sensor die packaging queues create schedule risk at part level"
+        "supply_concentration: 5/5 -> 90",
+        "lead_time_stress: 5/5 -> 90",
+        "substitution_friction: 5/5 -> 90",
+        "compliance_exposure: 4/5 -> 70"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -8456,7 +9373,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 5,
+        "lead_time_stress": 5,
+        "substitution_friction": 5,
+        "compliance_exposure": 4
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 90,
+        "lead_time_stress": 90,
+        "substitution_friction": 90,
+        "compliance_exposure": 70
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_mfg_feeder_bank",
@@ -8501,10 +9431,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 42.0,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -8543,7 +9475,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_mfg_fixture_plate",
@@ -8588,10 +9533,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1/5 -> 10",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -8630,7 +9577,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 1,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_securecomms_frequency_synthesizer",
@@ -8669,10 +9629,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 70,
+      "bottleneck_tightness_index": 50.0,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "substitution_difficulty: RF front-end and secure-element alternatives have limited interoperability at part level"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 3/5 -> 50"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -8692,7 +9654,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 3
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 50
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_pnt_gnss_multiband",
@@ -8791,10 +9766,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 74,
+      "bottleneck_tightness_index": 66.0,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "substitution_difficulty: RF front-end and secure-element alternatives have limited interoperability at part level"
+        "supply_concentration: 4/5 -> 70",
+        "lead_time_stress: 4/5 -> 70",
+        "substitution_friction: 4/5 -> 70",
+        "compliance_exposure: 3/5 -> 50"
       ],
       "blockers": [
         "export-control/compliance screening and crypto assurance steps slow alternate-source qualification"
@@ -8816,7 +9793,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 4,
+        "lead_time_stress": 4,
+        "substitution_friction": 4,
+        "compliance_exposure": 3
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 70,
+        "lead_time_stress": 70,
+        "substitution_friction": 70,
+        "compliance_exposure": 50
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_propulsion_gate_driver_ic",
@@ -8855,10 +9845,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 63,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: rotor magnet, MOSFET, and gate-driver combinations require requalification when replaced"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "magnetics and high-current switching components are exposed to concentrated upstream suppliers"
@@ -8880,7 +9872,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_energy_graphite_heat_spreader",
@@ -8925,10 +9930,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 36.0,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -9007,7 +10014,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_securecomms_ground_terminal",
@@ -9116,10 +10136,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -9158,7 +10180,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_airframe_hinge_bracket",
@@ -9203,10 +10238,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1/5 -> 10",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -9230,7 +10267,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 1,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_securecomms_iq_transceiver_ic",
@@ -9269,10 +10319,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 70,
+      "bottleneck_tightness_index": 50.0,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "substitution_difficulty: RF front-end and secure-element alternatives have limited interoperability at part level"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 3/5 -> 50"
       ],
       "blockers": [
         "export-control/compliance screening and crypto assurance steps slow alternate-source qualification"
@@ -9294,7 +10346,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 3
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 50
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_pnt_imu_control_asic",
@@ -9333,10 +10398,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 58,
+      "bottleneck_tightness_index": 75.0,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: oscillator/filter and sensor die packaging queues create schedule risk at part level"
+        "supply_concentration: 4/5 -> 70",
+        "lead_time_stress: 4/5 -> 70",
+        "substitution_friction: 5/5 -> 90",
+        "compliance_exposure: 4/5 -> 70"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -9356,7 +10423,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 4,
+        "lead_time_stress": 4,
+        "substitution_friction": 5,
+        "compliance_exposure": 4
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 70,
+        "lead_time_stress": 70,
+        "substitution_friction": 90,
+        "compliance_exposure": 70
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_pnt_imu_grade",
@@ -9456,10 +10536,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 70,
+      "bottleneck_tightness_index": 55.0,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "substitution_difficulty: RF front-end and secure-element alternatives have limited interoperability at part level"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 4/5 -> 70",
+        "compliance_exposure: 3/5 -> 50"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -9479,7 +10561,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 4,
+        "compliance_exposure": 3
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 70,
+        "compliance_exposure": 50
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_energy_cell_lfp",
@@ -9632,10 +10727,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 36.0,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -9664,7 +10761,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_mfg_load_bank_module",
@@ -9709,10 +10819,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -9751,7 +10863,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_propulsion_mosfet_half_bridge",
@@ -9790,10 +10915,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 63,
+      "bottleneck_tightness_index": 41.0,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: rotor magnet, MOSFET, and gate-driver combinations require requalification when replaced"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [
         "magnetics and high-current switching components are exposed to concentrated upstream suppliers"
@@ -9815,7 +10942,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 2,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 30,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_fcg_main_mcu",
@@ -9860,10 +11000,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 46.0,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -9892,7 +11034,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_pnt_micro_valve_cap",
@@ -9931,10 +11086,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 56,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: oscillator/filter and sensor die packaging queues create schedule risk at part level"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -9954,7 +11111,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_propulsion_bearing_shaft",
@@ -10260,10 +11430,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 63,
+      "bottleneck_tightness_index": 21.0,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: rotor magnet, MOSFET, and gate-driver combinations require requalification when replaced"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -10283,7 +11455,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_airframe_mounting_lug",
@@ -10328,10 +11513,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1/5 -> 10",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -10355,7 +11542,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 1,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_energy_cell_nmc",
@@ -10508,10 +11708,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1/5 -> 10",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -10550,7 +11752,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 1,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_airframe_nose_shell_panel",
@@ -10595,10 +11810,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -10622,7 +11839,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_securecomms_output_match_network",
@@ -10661,10 +11891,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 70,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "substitution_difficulty: RF front-end and secure-element alternatives have limited interoperability at part level"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -10684,7 +11916,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_energy_pack_busbar_fuse",
@@ -10837,10 +12082,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 21.0,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -10919,7 +12166,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_energy_pack_thermal",
@@ -11068,10 +12328,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 70,
+      "bottleneck_tightness_index": 30.0,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "substitution_difficulty: RF front-end and secure-element alternatives have limited interoperability at part level"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -11091,7 +12353,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_mfg_pick_and_place_head",
@@ -11136,10 +12411,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 57.0,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 4/5 -> 70",
+        "lead_time_stress: 4/5 -> 70",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -11178,7 +12455,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 4,
+        "lead_time_stress": 4,
+        "substitution_friction": 3,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 70,
+        "lead_time_stress": 70,
+        "substitution_friction": 50,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_fcg_pitot_tube",
@@ -11223,10 +12513,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -11255,7 +12547,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_fcg_power_regulator_ic",
@@ -11300,10 +12605,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -11332,7 +12639,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_pnt_pressure_sensor_die",
@@ -11371,10 +12691,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 56,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: oscillator/filter and sensor die packaging queues create schedule risk at part level"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -11394,7 +12716,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_energy_prismatic_cell_can",
@@ -11439,10 +12774,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 50.0,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 3/5 -> 50"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -11521,7 +12858,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 3
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 50
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_propulsion_propeller_adapter_collet",
@@ -11560,10 +12910,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 61,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: rotor magnet, MOSFET, and gate-driver combinations require requalification when replaced"
+        "supply_concentration: 1/5 -> 10",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -11583,7 +12935,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 1,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_propulsion_propeller_blade",
@@ -11622,10 +12987,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 63,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: rotor magnet, MOSFET, and gate-driver combinations require requalification when replaced"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -11645,7 +13012,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_propulsion_propeller_hub",
@@ -11684,10 +13064,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 63,
+      "bottleneck_tightness_index": 16.0,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: rotor magnet, MOSFET, and gate-driver combinations require requalification when replaced"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -11707,7 +13089,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_propulsion_propeller_material",
@@ -11834,10 +13229,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 58,
+      "bottleneck_tightness_index": 70.0,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: oscillator/filter and sensor die packaging queues create schedule risk at part level"
+        "supply_concentration: 4/5 -> 70",
+        "lead_time_stress: 4/5 -> 70",
+        "substitution_friction: 4/5 -> 70",
+        "compliance_exposure: 4/5 -> 70"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -11857,7 +13254,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 4,
+        "lead_time_stress": 4,
+        "substitution_friction": 4,
+        "compliance_exposure": 4
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 70,
+        "lead_time_stress": 70,
+        "substitution_friction": 70,
+        "compliance_exposure": 70
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_pnt_rf_front_end_ic",
@@ -11896,10 +13306,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 58,
+      "bottleneck_tightness_index": 50.0,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: oscillator/filter and sensor die packaging queues create schedule risk at part level"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 3/5 -> 50"
       ],
       "blockers": [
         "specialized RF timing components have limited defense-qualified alternates"
@@ -11921,7 +13333,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 3
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 50
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_securecomms_rf_shield_can",
@@ -11960,10 +13385,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 70,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "substitution_difficulty: RF front-end and secure-element alternatives have limited interoperability at part level"
+        "supply_concentration: 1/5 -> 10",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -11983,7 +13410,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 1,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_securecomms_rf_transceiver",
@@ -12094,10 +13534,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -12121,7 +13563,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_propulsion_rotor_magnet_ring",
@@ -12160,10 +13615,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 63,
+      "bottleneck_tightness_index": 80.0,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: rotor magnet, MOSFET, and gate-driver combinations require requalification when replaced"
+        "supply_concentration: 5/5 -> 90",
+        "lead_time_stress: 4/5 -> 70",
+        "substitution_friction: 4/5 -> 70",
+        "compliance_exposure: 5/5 -> 90"
       ],
       "blockers": [
         "magnetics and high-current switching components are exposed to concentrated upstream suppliers"
@@ -12185,7 +13642,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 5,
+        "lead_time_stress": 4,
+        "substitution_friction": 4,
+        "compliance_exposure": 5
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 90,
+        "lead_time_stress": 70,
+        "substitution_friction": 70,
+        "compliance_exposure": 90
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_pnt_saw_filter",
@@ -12224,10 +13694,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 58,
+      "bottleneck_tightness_index": 30.0,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: oscillator/filter and sensor die packaging queues create schedule risk at part level"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [
         "specialized RF timing components have limited defense-qualified alternates"
@@ -12249,7 +13721,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_securecomms_secure_element_ic",
@@ -12288,10 +13773,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 74,
+      "bottleneck_tightness_index": 70.0,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "substitution_difficulty: RF front-end and secure-element alternatives have limited interoperability at part level"
+        "supply_concentration: 4/5 -> 70",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 5/5 -> 90",
+        "compliance_exposure: 4/5 -> 70"
       ],
       "blockers": [
         "export-control/compliance screening and crypto assurance steps slow alternate-source qualification"
@@ -12313,7 +13800,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 4,
+        "lead_time_stress": 3,
+        "substitution_friction": 5,
+        "compliance_exposure": 4
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 70,
+        "lead_time_stress": 50,
+        "substitution_friction": 90,
+        "compliance_exposure": 70
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_energy_separator_film_roll",
@@ -12358,10 +13858,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 56.0,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 4/5 -> 70",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 3/5 -> 50"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -12440,7 +13942,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 4,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 3
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 70,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 50
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_energy_separator_supply",
@@ -12594,10 +14109,12 @@
           "weighted_score": 2.8681
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 16.0,
       "bottleneck_drivers": [
-        "component-level proxy from energy storage evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -12676,7 +14193,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "energy_storage"
+      "l1_component": "energy_storage",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_airframe_skid_tube",
@@ -12721,10 +14251,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1/5 -> 10",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -12748,7 +14280,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 1,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_fcg_soc_module",
@@ -12793,10 +14338,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 66.0,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 4/5 -> 70",
+        "lead_time_stress: 4/5 -> 70",
+        "substitution_friction: 4/5 -> 70",
+        "compliance_exposure: 3/5 -> 50"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -12825,7 +14372,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 4,
+        "lead_time_stress": 4,
+        "substitution_friction": 4,
+        "compliance_exposure": 3
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 70,
+        "lead_time_stress": 70,
+        "substitution_friction": 70,
+        "compliance_exposure": 50
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_airframe_spar_cap_strip",
@@ -12870,10 +14430,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 30.0,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -12897,7 +14459,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_fcg_static_port_fitting",
@@ -12942,10 +14517,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1/5 -> 10",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -12974,7 +14551,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 1,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_propulsion_stator_lamination_stack",
@@ -13013,10 +14603,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 63,
+      "bottleneck_tightness_index": 46.0,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: rotor magnet, MOSFET, and gate-driver combinations require requalification when replaced"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [
         "magnetics and high-current switching components are exposed to concentrated upstream suppliers"
@@ -13038,7 +14630,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_pnt_tcxo_oscillator",
@@ -13077,10 +14682,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 58,
+      "bottleneck_tightness_index": 41.0,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: oscillator/filter and sensor die packaging queues create schedule risk at part level"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [
         "specialized RF timing components have limited defense-qualified alternates"
@@ -13102,7 +14709,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 2,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 30,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_securecomms_trng_block",
@@ -13141,10 +14761,12 @@
           "weighted_score": 1.6859
         }
       ],
-      "bottleneck_tightness_index": 74,
+      "bottleneck_tightness_index": 70.0,
       "bottleneck_drivers": [
-        "compliance_gating: crypto and trusted communications elements require standards-conformant integration and validation",
-        "substitution_difficulty: RF front-end and secure-element alternatives have limited interoperability at part level"
+        "supply_concentration: 4/5 -> 70",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 5/5 -> 90",
+        "compliance_exposure: 4/5 -> 70"
       ],
       "blockers": [
         "export-control/compliance screening and crypto assurance steps slow alternate-source qualification"
@@ -13166,7 +14788,20 @@
           "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 4,
+        "lead_time_stress": 3,
+        "substitution_friction": 5,
+        "compliance_exposure": 4
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 70,
+        "lead_time_stress": 50,
+        "substitution_friction": 90,
+        "compliance_exposure": 70
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_pnt_temp_compensation_eeprom",
@@ -13205,10 +14840,12 @@
           "weighted_score": 2.208
         }
       ],
-      "bottleneck_tightness_index": 58,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "substitution_difficulty: qualified GNSS/IMU and anti-jam supply base is narrow in defense-ready configurations",
-        "leadtime_stress: oscillator/filter and sensor die packaging queues create schedule risk at part level"
+        "supply_concentration: 1/5 -> 10",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -13228,7 +14865,20 @@
           "url": "https://www.u-blox.com/en/product/zed-f9p-module"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 1,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_mfg_tensioner_roller",
@@ -13273,10 +14923,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 1/5 -> 10",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -13315,7 +14967,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 1,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_fcg_three_axis_accelerometer_die",
@@ -13360,10 +15025,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 46.0,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -13392,7 +15059,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_fcg_three_axis_gyro_die",
@@ -13437,10 +15117,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 50.0,
       "bottleneck_drivers": [
-        "component-level proxy from flight control guidance evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 3/5 -> 50",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 3/5 -> 50"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -13469,7 +15151,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "flight_control_guidance"
+      "l1_component": "flight_control_guidance",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 3,
+        "substitution_friction": 3,
+        "compliance_exposure": 3
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 50,
+        "substitution_friction": 50,
+        "compliance_exposure": 50
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_airframe_upper_skin_panel",
@@ -13514,10 +15209,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -13541,7 +15238,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_airframe_vertical_fin_panel",
@@ -13586,10 +15296,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "component-level proxy from airframe structures evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -13613,7 +15325,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "airframe_structures"
+      "l1_component": "airframe_structures",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_mfg_vision_alignment_camera",
@@ -13658,10 +15383,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 41.0,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 3/5 -> 50",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 3/5 -> 50",
+        "compliance_exposure: 2/5 -> 30"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -13700,7 +15427,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 3,
+        "lead_time_stress": 2,
+        "substitution_friction": 3,
+        "compliance_exposure": 2
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 50,
+        "lead_time_stress": 30,
+        "substitution_friction": 50,
+        "compliance_exposure": 30
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_pnt_vision_aided_nav",
@@ -13805,10 +15545,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -13847,7 +15589,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_mfg_wire_guide_nozzle",
@@ -13892,10 +15647,12 @@
           "weighted_score": 7.1706
         }
       ],
-      "bottleneck_tightness_index": null,
+      "bottleneck_tightness_index": 26.0,
       "bottleneck_drivers": [
-        "component-level proxy from manufacturing system evidence corpus",
-        "bottleneck_tightness_index: null pending node-level quant mapping for v2 physical hierarchy"
+        "supply_concentration: 2/5 -> 30",
+        "lead_time_stress: 2/5 -> 30",
+        "substitution_friction: 2/5 -> 30",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [
         "no node-level capacity/lead-time quant anchors mapped yet for this v2 physical node",
@@ -13934,7 +15691,20 @@
         }
       ],
       "confidence_tier": "low",
-      "l1_component": "manufacturing_system"
+      "l1_component": "manufacturing_system",
+      "bti_dimensions": {
+        "supply_concentration": 2,
+        "lead_time_stress": 2,
+        "substitution_friction": 2,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 30,
+        "lead_time_stress": 30,
+        "substitution_friction": 30,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     },
     {
       "node_id": "n_l3_propulsion_xt90_power_connector",
@@ -13973,10 +15743,12 @@
           "weighted_score": 6.8635
         }
       ],
-      "bottleneck_tightness_index": 61,
+      "bottleneck_tightness_index": 10.0,
       "bottleneck_drivers": [
-        "capacity_stress: motor electromagnetic materials and power electronics share constrained upstream capacity",
-        "substitution_difficulty: rotor magnet, MOSFET, and gate-driver combinations require requalification when replaced"
+        "supply_concentration: 1/5 -> 10",
+        "lead_time_stress: 1/5 -> 10",
+        "substitution_friction: 1/5 -> 10",
+        "compliance_exposure: 1/5 -> 10"
       ],
       "blockers": [],
       "evidence_sources": [
@@ -13996,7 +15768,20 @@
           "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section4872&num=0&edition=prelim"
         }
       ],
-      "confidence_tier": "medium"
+      "confidence_tier": "medium",
+      "bti_dimensions": {
+        "supply_concentration": 1,
+        "lead_time_stress": 1,
+        "substitution_friction": 1,
+        "compliance_exposure": 1
+      },
+      "bti_dimension_scores": {
+        "supply_concentration": 10,
+        "lead_time_stress": 10,
+        "substitution_friction": 10,
+        "compliance_exposure": 10
+      },
+      "research_date": "2026-02-25"
     }
   ]
 }

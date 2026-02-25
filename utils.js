@@ -37,8 +37,10 @@ export function normalizeToken(v) {
     .replace(/^-+|-+$/g, '');
 }
 
-/** Read BTI score from a Cytoscape element (tries v2, v1, legacy). */
+/** Read BTI score from a Cytoscape element (tries v3, v2, v1, legacy). */
 export function getTightnessIndex(nodeOrEle) {
+  const fromV3 = Number(nodeOrEle.data('bottleneck_tightness_index_v3'));
+  if (Number.isFinite(fromV3)) return fromV3;
   const fromV2 = Number(nodeOrEle.data('bottleneck_tightness_index_v2'));
   if (Number.isFinite(fromV2)) return fromV2;
   const fromV1 = Number(nodeOrEle.data('bottleneck_tightness_index_v1'));
