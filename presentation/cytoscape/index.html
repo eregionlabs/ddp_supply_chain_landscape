@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#2d6a4f" />
+    <meta name="description" content="DDP Supply Chain Landscape — interactive dependency intelligence mapping bottleneck pressure, supplier exposure, and evidence sourcing across defense supply chain layers." />
+    <meta property="og:title" content="DDP Supply Chain Landscape" />
+    <meta property="og:description" content="Interactive dependency intelligence mapping bottleneck pressure, supplier exposure, and evidence sourcing across defense supply chain layers." />
+    <meta property="og:type" content="website" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:;" />
+    <title>DDP Supply Chain Landscape</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect rx='18' width='100' height='100' fill='%233b6fb5'/><text x='50' y='72' font-size='60' text-anchor='middle' fill='white' font-family='system-ui'>G</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Manrope:wght@500..800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="vendor/cytoscape-3.30.2.min.js"></script>
+    <script src="vendor/dagre-0.8.5.min.js"></script>
+    <script src="vendor/cytoscape-dagre-2.5.0.js"></script>
+  </head>
+  <body>
+    <a href="#cy" class="skip-nav">Skip to graph</a>
+
+    <div id="topPanel">
+    <header class="top-header">
+      <div class="brand-lockup">
+        <div class="brand-title-row">
+          <strong>Defense Industrial Base Constraint Map</strong>
+        </div>
+      </div>
+      <small id="kpi" class="kpi">loading&hellip;</small>
+    </header>
+
+    <section class="control-bar" role="toolbar" aria-label="Graph controls">
+      <div class="control-cluster control-mode">
+        <span class="cluster-label" id="viewLabel">View</span>
+        <div class="mode-toggle" id="modeToggle" role="group" aria-labelledby="viewLabel">
+          <button class="mode-btn active" data-mode="executive">Executive</button>
+          <button class="mode-btn" data-mode="analyst">Analyst</button>
+        </div>
+      </div>
+      <div class="control-cluster control-search">
+        <label class="cluster-label" for="search">Search</label>
+        <input id="search" placeholder="Node, id, or company" />
+      </div>
+      <div class="control-cluster">
+        <label class="cluster-label" for="domainFilter">Domain</label>
+        <select id="domainFilter">
+          <option value="all">All</option>
+          <option value="airframe_structures">Airframe</option>
+          <option value="energy_storage">Energy</option>
+          <option value="flight_control_guidance">Flight Ctrl</option>
+          <option value="manufacturing_system">Manufacturing</option>
+          <option value="pnt">PNT</option>
+          <option value="propulsion">Propulsion</option>
+          <option value="secure_comms">Secure Comms</option>
+        </select>
+      </div>
+      <div class="control-cluster">
+        <label class="cluster-label" for="confFilter">Confidence</label>
+        <select id="confFilter">
+          <option value="all">All</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+      <div class="control-cluster">
+        <label class="cluster-label" for="pressureFilter">Pressure</label>
+        <select id="pressureFilter">
+          <option value="all">All</option>
+          <option value="high">High (&ge;70)</option>
+          <option value="med">Medium (40&ndash;69)</option>
+          <option value="low">Low (&lt;40)</option>
+        </select>
+      </div>
+      <div class="control-cluster control-toggle">
+        <label class="toggle-switch" for="companyToggle">
+          <input type="checkbox" id="companyToggle" />
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label" id="companyToggleLabel">Company overlay (0)</span>
+      </div>
+      <div class="control-cluster control-actions">
+        <button id="showTop10">Top Bottlenecks</button>
+        <button id="reset">Reset</button>
+      </div>
+    </section>
+
+    <section class="idea-strip-wrap">
+      <div class="idea-strip-title">Candidate Paths</div>
+      <div id="spotlightButtons" class="spotlight-group"></div>
+    </section>
+    </div>
+    <div id="topPanelResizer" title="Drag to resize top panel"></div>
+
+    <main>
+      <div class="graph-wrap">
+        <div id="cy" role="img" aria-label="Supply chain dependency graph">
+          <div id="graphSpinner" class="graph-spinner" aria-label="Loading graph">
+            <div class="spinner-ring"></div>
+            <span>Loading graph&hellip;</span>
+          </div>
+        </div>
+      </div>
+      <div id="panelResizer" title="Drag to resize panel"></div>
+      <aside id="panel" aria-label="Detail panel">
+        <div class="panel-metrics" id="panelMetrics">
+          <div class="panel-metric">
+            <span class="panel-metric-value metric-blue" id="pmNodes">--</span>
+            <span class="panel-metric-label">L1/L2/L3</span>
+          </div>
+          <div class="panel-metric">
+            <span class="panel-metric-value metric-amber" id="pmBottleneck">--</span>
+            <span class="panel-metric-label">Bottlenecks (Top List)</span>
+          </div>
+        </div>
+        <div class="card detail-card">
+          <div class="card-header">Details</div>
+          <div id="details"><small>Select a node to inspect risk profile, dependencies, and linked companies.</small></div>
+          <div class="detail-subsection top-bottlenecks-wrap">
+            <div class="detail-subtitle">Top Bottlenecks</div>
+            <div id="topBottlenecksPanel"><small>Sorted by Bottleneck Pressure (0&ndash;100).</small></div>
+          </div>
+        </div>
+        <div class="card legend-card">
+          <details>
+            <summary>Legend</summary>
+            <div class="legend">
+              <div class="legend-item"><span class="legend-swatch roundrect l1-swatch"></span> L1 anchor</div>
+              <div class="legend-item"><span class="legend-swatch roundrect l2-swatch"></span> L2 component</div>
+              <div class="legend-item"><span class="legend-swatch circle l3-swatch"></span> L3 component</div>
+              <div class="legend-item"><span class="legend-swatch diamond company-swatch"></span> Company</div>
+            </div>
+            <div class="legend-section">Confidence (opacity)</div>
+            <div class="legend">
+              <div class="legend-item"><span class="legend-swatch circle conf-high"></span> High</div>
+              <div class="legend-item"><span class="legend-swatch circle conf-med"></span> Med</div>
+              <div class="legend-item"><span class="legend-swatch circle conf-low"></span> Low</div>
+            </div>
+            <div class="legend-section">Node size = Bottleneck Pressure (0&ndash;100)</div>
+            <div class="legend-section">Node color = Bottleneck Pressure (same metric; darker = tighter)</div>
+          </details>
+        </div>
+      </aside>
+    </main>
+
+    <button id="panelToggle" class="panel-toggle-btn" aria-label="Toggle detail panel" aria-expanded="false" aria-controls="panel">Details</button>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
