@@ -1979,10 +1979,9 @@ small { color: var(--text-primary); font-size: 10.5px; }
 .theme-toggle-btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 34px;
+  gap: 6px;
   height: 34px;
-  padding: 0;
+  padding: 0 12px 0 10px;
   border: 1px solid rgba(255,255,255,0.16);
   border-radius: var(--r-sm);
   background: rgba(255,255,255,0.08);
@@ -1991,6 +1990,10 @@ small { color: var(--text-primary); font-size: 10.5px; }
   transition: all var(--dur) var(--ease);
   flex-shrink: 0;
   font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 .theme-toggle-btn:hover {
   background: rgba(255,255,255,0.14);
@@ -2002,15 +2005,18 @@ small { color: var(--text-primary); font-size: 10.5px; }
   transform: translateY(0);
 }
 
-.theme-icon { display: none; }
+.theme-icon { display: none; flex-shrink: 0; }
+.theme-toggle-label { display: none; }
 
-/* Dark mode (default): show sun icon to switch to light */
+/* Dark mode (default): show sun icon + "Light" label */
 .theme-icon-sun { display: block; }
-.theme-icon-moon { display: none; }
+.theme-label-light { display: inline; }
 
-/* Light mode: show moon icon to switch to dark */
+/* Light mode: show moon icon + "Dark" label */
 [data-theme="light"] .theme-icon-sun { display: none; }
 [data-theme="light"] .theme-icon-moon { display: block; }
+[data-theme="light"] .theme-label-light { display: none; }
+[data-theme="light"] .theme-label-dark { display: inline; }
 
 [data-theme="light"] .theme-toggle-btn {
   border-color: rgba(0,0,0,0.14);
