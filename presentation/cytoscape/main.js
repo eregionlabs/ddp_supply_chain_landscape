@@ -183,6 +183,8 @@ companyToggleEl.addEventListener('change', () => {
 });
 
 document.getElementById('showTop10').addEventListener('click', () => {
+  clearChainHighlight();
+  clearFocusClasses(cy);
   cy.nodes().removeClass('top10');
   const topNodes = cy.nodes()
     .filter(n => isCoreLayerNode(n))
