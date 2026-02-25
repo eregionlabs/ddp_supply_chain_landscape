@@ -14,6 +14,40 @@ import {
 
 const LS_PREFIX = 'ddp.cy.';
 
+/* ── Intro overlay ── */
+const introOverlay  = document.getElementById('introOverlay');
+const introCloseBtn = document.getElementById('introClose');
+const introDontShow = document.getElementById('introDontShow');
+const introReopen   = document.getElementById('introReopen');
+
+function dismissIntro() {
+  if (!introOverlay) return;
+  introOverlay.classList.add('intro-hidden');
+  setTimeout(() => { introOverlay.style.display = 'none'; }, 350);
+  if (introDontShow && introDontShow.checked) {
+    try { localStorage.setItem(LS_PREFIX + 'introSeen', '1'); } catch {}
+  }
+}
+
+/* Hide on first load if user already dismissed permanently */
+try {
+  if (localStorage.getItem(LS_PREFIX + 'introSeen') && introOverlay) {
+    introOverlay.style.display = 'none';
+    introOverlay.classList.add('intro-hidden');
+  }
+} catch {}
+
+if (introCloseBtn) introCloseBtn.addEventListener('click', dismissIntro);
+if (introOverlay) introOverlay.addEventListener('click', (e) => {
+  if (e.target === introOverlay) dismissIntro();
+});
+if (introReopen && introOverlay) {
+  introReopen.addEventListener('click', () => {
+    introOverlay.style.display = '';
+    introOverlay.classList.remove('intro-hidden');
+  });
+}
+
 /* ── DOM refs ── */
 const details              = document.getElementById('details');
 const searchEl             = document.getElementById('search');
