@@ -9,8 +9,7 @@ import {
   getCompanyOverlayActive, setCompanyOverlayActive,
   getVisibleElements, applyFilters, clearFocusClasses,
   renderTopBottlenecksPanel, updateKPI,
-  isDomainExpanded, toggleDomainExpansion, getExpandedDomains, clearExpandedDomains,
-  setSearchForcedIds
+  isDomainExpanded, toggleDomainExpansion, getExpandedDomains, clearExpandedDomains
 } from './filters.js';
 
 const LS_PREFIX = 'ddp.cy.';
@@ -219,23 +218,58 @@ function syncFilterHighlights() {
 }
 
 /* ── Filter listeners ── */
-let prevSearchForcedKey = '';
+const searchExpandedDomains = new Set();   /* domains auto-expanded by search */
+
 searchEl.addEventListener('input', () => {
   const q = (searchEl.value || '').trim().toLowerCase();
-  /* Compute which component IDs the search forces into the graph */
-  const forced = new Set();
+
+  /* Find component IDs matched via company-name index */
+  const matchedIds = new Set();
   if (q && companyNameToComponents) {
     for (const [coName, compIds] of companyNameToComponents) {
       if (coName.includes(q)) {
-        for (const id of compIds) forced.add(id);
+        for (const id of compIds) matchedIds.add(id);
       }
     }
   }
-  const forcedKey = [...forced].sort().join(',');
-  setSearchForcedIds(forced);
-  if (forcedKey !== prevSearchForcedKey) {
-    prevSearchForcedKey = forcedKey;
-    rebuildGraph();          /* injects/removes forced nodes, calls applyFilters */
+  /* Also include direct label/id matches from allNodes */
+  if (q) {
+    for (const n of allNodes) {
+      const label = String(n.data.label || '').toLowerCase();
+      const id = String(n.data.id || '').toLowerCase();
+      if (label.includes(q) || id.includes(q)) matchedIds.add(n.data.id);
+    }
+  }
+
+  /* Determine which domains need expanding for these matches */
+  const neededDomains = new Set();
+  for (const nid of matchedIds) {
+    const node = allNodes.find(n => n.data.id === nid);
+    if (node) {
+      const dk = (node.data.l1_component || '').trim();
+      if (dk) neededDomains.add(dk);
+    }
+  }
+
+  /* Collapse any domains that were auto-expanded by a PREVIOUS search
+     but are no longer needed, then expand newly needed ones */
+  let needsRebuild = false;
+  for (const dk of searchExpandedDomains) {
+    if (!neededDomains.has(dk)) {
+      if (isDomainExpanded(dk)) { toggleDomainExpansion(dk); needsRebuild = true; }
+      searchExpandedDomains.delete(dk);
+    }
+  }
+  for (const dk of neededDomains) {
+    if (!isDomainExpanded(dk)) {
+      toggleDomainExpansion(dk);
+      searchExpandedDomains.add(dk);
+      needsRebuild = true;
+    }
+  }
+
+  if (needsRebuild) {
+    rebuildGraph();          /* includes applyFilters */
   } else {
     applyFilters(cy, filterEls);
   }

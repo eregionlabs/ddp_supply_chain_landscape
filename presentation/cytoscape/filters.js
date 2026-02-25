@@ -20,10 +20,6 @@ export function clearExpandedDomains()         { expandedDomains.clear(); }
 export function getCompanyOverlayActive() { return companyOverlayActive; }
 export function setCompanyOverlayActive(v){ companyOverlayActive = v; }
 
-/* ── Search-forced node IDs (injected into graph even when domain collapsed) ── */
-let searchForcedIds = new Set();
-export function getSearchForcedIds() { return searchForcedIds; }
-export function setSearchForcedIds(ids) { searchForcedIds = ids; }
 
 /* ── Helper: domain key from raw node data (mirrors layout.js laneKeyForNode) ── */
 function domainKeyFromData(d) {
@@ -51,10 +47,7 @@ export function getVisibleElements(allNodes, allEdges) {
     const layer = String(n.data.layer || '').toUpperCase();
     const dk = domainKeyFromData(n.data);
 
-    /* Always include search-forced nodes regardless of collapse state */
-    if (searchForcedIds.has(n.data.id)) {
-      filtered.push(n);
-    } else if (layer === 'L1') {
+    if (layer === 'L1') {
       filtered.push(n);
     } else if (isDomainExpanded(dk)) {
       filtered.push(n);
@@ -161,9 +154,29 @@ export function applyFilters(cy, { searchEl, domainEl, confEl, pressureEl, compa
     });
   }
 
+  /* Highlight edges between search-matched nodes; dim the rest */
   cy.edges().forEach(e => {
-    if (e.source().hasClass('dim') || e.target().hasClass('dim')) e.addClass('dim');
+    const srcMatch = e.source().hasClass('search-match');
+    const tgtMatch = e.target().hasClass('search-match');
+    if (srcMatch && tgtMatch) {
+      e.addClass('search-match');
+    } else if (e.source().hasClass('dim') || e.target().hasClass('dim')) {
+      e.addClass('dim');
+    }
   });
+
+  /* Also highlight hierarchy edges from matched L3 up to their L2/L1 parents */
+  if (q) {
+    cy.nodes('.search-match').forEach(n => {
+      n.connectedEdges().forEach(e => {
+        const other = e.source().id() === n.id() ? e.target() : e.source();
+        if (!other.hasClass('dim')) {
+          e.removeClass('dim');
+          e.addClass('search-match');
+        }
+      });
+    });
+  }
 }
 
 export function clearFocusClasses(cy) {

@@ -398,11 +398,17 @@ export const cyStyles = [
     'overlay-opacity': 0
   }},
   /* Search match — bright accent ring so results stand out */
-  { selector: '.search-match', style: {
+  { selector: 'node.search-match', style: {
     'opacity': 1, 'text-opacity': 1,
     'border-width': 3, 'border-color': '#F59E0B',
     'overlay-opacity': 0,
     'z-index': 9990
+  }},
+  { selector: 'edge.search-match', style: {
+    'opacity': 1,
+    'line-color': '#F59E0B', 'target-arrow-color': '#F59E0B',
+    'width': 1.8,
+    'z-index': 9989
   }},
   /* Focus — selected node on top with accent border */
   { selector: '.focus', style: {
