@@ -1525,6 +1525,136 @@ small { color: var(--text-primary); font-size: 10.5px; }
 
 
 /* ════════════════════════════════════════════════════════════
+   12b. BTI v3 DIMENSION BREAKDOWN BARS
+   ════════════════════════════════════════════════════════════ */
+
+.bti-dimensions {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px 10px;
+  margin: 0 0 4px;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.02);
+}
+.bti-dim-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bti-dim-label {
+  flex: 0 0 68px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--txt-secondary, #94a3b8);
+  letter-spacing: 0.02em;
+}
+.bti-dim-label small {
+  font-weight: 400;
+  opacity: 0.7;
+}
+.bti-dim-bar-track {
+  flex: 1;
+  height: 8px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.bti-dim-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+.bti-dim-value {
+  flex: 0 0 26px;
+  text-align: right;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--txt-primary, #e2e8f0);
+}
+.bti-research-date {
+  text-align: right;
+  padding-top: 2px;
+  color: var(--txt-secondary, #94a3b8);
+}
+.bti-research-date small {
+  font-size: 9px;
+}
+
+[data-theme="light"] .bti-dimensions {
+  border-color: rgba(0,0,0,0.06);
+  background: rgba(0,0,0,0.02);
+}
+[data-theme="light"] .bti-dim-bar-track {
+  background: rgba(0,0,0,0.06);
+}
+
+/* ── BTI methodology link ── */
+.bti-method-link {
+  font-size: 10px;
+  color: var(--accent, var(--blue));
+  text-decoration: none;
+  cursor: pointer;
+}
+.bti-method-link:hover { text-decoration: underline; }
+
+/* ── BTI methodology overlay extras ── */
+.bti-rubric-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  margin: 8px 0 4px;
+  color: var(--text-secondary);
+}
+.bti-rubric-table th {
+  text-align: left;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  color: var(--text-muted);
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--border);
+}
+.bti-rubric-table td {
+  padding: 6px;
+  border-bottom: 1px solid var(--border, rgba(255,255,255,0.06));
+  vertical-align: top;
+  line-height: 1.35;
+}
+.bti-rubric-table td:first-child { white-space: nowrap; }
+.bti-rubric-table small { color: var(--text-muted); }
+
+.bti-formula-block {
+  background: var(--surface-2, rgba(255,255,255,0.04));
+  border: 1px solid var(--border, rgba(255,255,255,0.06));
+  border-radius: var(--r-sm);
+  padding: 10px 12px;
+  margin: 6px 0;
+  text-align: center;
+}
+.bti-formula {
+  font-family: 'Manrope', monospace;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.bti-formula-block small {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .bti-rubric-table td {
+  border-bottom-color: rgba(0,0,0,0.08);
+}
+[data-theme="light"] .bti-formula-block {
+  background: rgba(0,0,0,0.03);
+  border-color: rgba(0,0,0,0.08);
+}
+
+
+/* ════════════════════════════════════════════════════════════
    13. COLOR-CODED COMPANY RISK SCORES
    ════════════════════════════════════════════════════════════ */
 

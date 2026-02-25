@@ -32,7 +32,7 @@ function domainKeyFromData(d) {
 
 /* ── Helper: BTI from raw node data (pre-cy) ── */
 function rawBti(d) {
-  return Number(d.bottleneck_tightness_index_v2 ?? d.bottleneck_tightness_index_v1 ?? d.bottleneck_score) || 0;
+  return Number(d.bottleneck_tightness_index_v3 ?? d.bottleneck_tightness_index_v2 ?? d.bottleneck_tightness_index_v1 ?? d.bottleneck_score) || 0;
 }
 
 /* ── Visible elements (executive view with progressive disclosure) ── */

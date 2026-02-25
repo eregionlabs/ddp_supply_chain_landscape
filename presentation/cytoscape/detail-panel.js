@@ -270,6 +270,36 @@ export function renderComponentDetail(node, ctx) {
 
   const blockerCount = blockerList.length + driverList.length + (blockerRaw ? 1 : 0);
 
+  /* BTI v3 dimension breakdown */
+  const btiDims = n.bti_dimensions || null;
+  const btiDimScores = n.bti_dimension_scores || null;
+  const researchDate = n.research_date || '';
+  const dimLabels = { supply_concentration: 'Supply Concentration', lead_time_stress: 'Lead Time Stress', substitution_friction: 'Substitution Friction', compliance_exposure: 'Compliance Exposure' };
+  const dimShort = { supply_concentration: 'SC', lead_time_stress: 'LT', substitution_friction: 'SF', compliance_exposure: 'CE' };
+  const dimWeights = { supply_concentration: 0.30, lead_time_stress: 0.25, substitution_friction: 0.25, compliance_exposure: 0.20 };
+  let dimensionHtml = '';
+  if (btiDimScores && typeof btiDimScores === 'object') {
+    const dimEntries = Object.entries(dimShort).map(([key, short]) => {
+      const score = Number(btiDimScores[key]) || 0;
+      const ordinal = btiDims ? (Number(btiDims[key]) || 0) : 0;
+      const pct = Math.max(0, Math.min(100, score));
+      const color = pct >= 70 ? 'var(--red)' : pct >= 40 ? 'var(--amber)' : 'var(--green)';
+      const weight = Math.round((dimWeights[key] || 0) * 100);
+      return `<div class="bti-dim-row">
+        <span class="bti-dim-label" title="${escHtml(dimLabels[key])}">${short} <small>(${weight}%)</small></span>
+        <div class="bti-dim-bar-track"><div class="bti-dim-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+        <span class="bti-dim-value">${score}</span>
+      </div>`;
+    });
+    dimensionHtml = `<div class="bti-dimensions">${dimEntries.join('')}</div>`;
+    dimensionHtml += `<div class="bti-research-date">`;
+    if (researchDate) {
+      dimensionHtml += `<small>Research: ${escHtml(researchDate)}</small> &middot; `;
+    }
+    dimensionHtml += `<a href="#" class="bti-method-link" onclick="event.preventDefault();window.__openBtiMethod&&window.__openBtiMethod()">How is this scored?</a>`;
+    dimensionHtml += `</div>`;
+  }
+
   detailsEl.innerHTML = `
     <div data-node-id="${escHtml(n.id)}"><div class="detail-title">${escHtml(n.label)}</div>
     <div class="detail-metrics-grid">
@@ -278,6 +308,7 @@ export function renderComponentDetail(node, ctx) {
       <button class="detail-metric-card" data-metric="suppliers" type="button"><small>Suppliers</small><strong>${supplierCount}</strong></button>
       <button class="detail-metric-card" data-metric="sources" type="button"><small>Sources</small><strong>${sourceCount}</strong></button>
     </div>
+    ${dimensionHtml}
     <div class="detail-grid">
       <div class="detail-row"><span>Layer</span><span>${escHtml(String(n.layer || '?'))}</span></div>
       <div class="detail-row"><span>Domain</span><span>${escHtml(String(n.l1_component || 'n/a'))}</span></div>

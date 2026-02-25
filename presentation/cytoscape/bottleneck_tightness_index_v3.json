@@ -1,0 +1,106 @@
+{
+  "index_id": "bottleneck_tightness_index_v3",
+  "generated_at_utc": "2026-02-25T17:09:44+00:00",
+  "scale": "0_to_100",
+  "formula": "BTI = 0.30*SC + 0.25*LT + 0.25*SF + 0.20*CE",
+  "ordinal_mapping": {
+    "1": 10,
+    "2": 30,
+    "3": 50,
+    "4": 70,
+    "5": 90
+  },
+  "weights": {
+    "supply_concentration": 0.3,
+    "lead_time_stress": 0.25,
+    "substitution_friction": 0.25,
+    "compliance_exposure": 0.2
+  },
+  "dimension_rubrics": {
+    "supply_concentration": "1=5+ suppliers multi-geo commodity, 2=3-4 allied, 3=2-3 some concentration, 4=duopoly/single-geo, 5=sole source/adversary monopoly",
+    "lead_time_stress": "1=stock <4wk, 2=4-12wk, 3=12-26wk, 4=26-52wk allocation, 5=>52wk custom",
+    "substitution_friction": "1=drop-in commodity, 2=minor requalification, 3=board/firmware redesign, 4=months requalification, 5=no alternative at spec",
+    "compliance_exposure": "1=EAR99 domestic, 2=minor tariff <10%, 3=moderate tariff/DFARS, 4=high tariff >25%/NDAA, 5=ITAR/10USC4872"
+  },
+  "rollup_method": "SC-weighted average of child L3 scores",
+  "confidence_note": "Confidence is metadata only \u2014 does NOT modify BTI score.",
+  "summary": {
+    "node_counts": {
+      "l1": 7,
+      "l2": 28,
+      "l3": 84,
+      "total": 119
+    },
+    "level_avg_bti": {
+      "l1": 43.48,
+      "l2": 38.35,
+      "l3": 34.93
+    },
+    "top10_overall": [
+      {
+        "node_id": "n_l3_pnt_fog_rate_sensor",
+        "label": "FOG rate sensor",
+        "bti_score": 86.0,
+        "confidence_tier": "high"
+      },
+      {
+        "node_id": "n_l3_energy_cathode_coated_foil",
+        "label": "Cathode coated foil",
+        "bti_score": 80.0,
+        "confidence_tier": "high"
+      },
+      {
+        "node_id": "n_l3_propulsion_rotor_magnet_ring",
+        "label": "Rotor magnet ring",
+        "bti_score": 80.0,
+        "confidence_tier": "high"
+      },
+      {
+        "node_id": "n_l2_pnt_inertial_measurement_module",
+        "label": "Inertial measurement module",
+        "bti_score": 77.78,
+        "confidence_tier": "medium"
+      },
+      {
+        "node_id": "n_l3_pnt_imu_control_asic",
+        "label": "IMU control ASIC",
+        "bti_score": 75.0,
+        "confidence_tier": "low"
+      },
+      {
+        "node_id": "n_l3_pnt_beamforming_ic",
+        "label": "Beamforming IC",
+        "bti_score": 70.0,
+        "confidence_tier": "medium"
+      },
+      {
+        "node_id": "n_l3_pnt_quartz_accelerometer",
+        "label": "Quartz accelerometer",
+        "bti_score": 70.0,
+        "confidence_tier": "medium"
+      },
+      {
+        "node_id": "n_l3_securecomms_secure_element_ic",
+        "label": "Secure element IC",
+        "bti_score": 70.0,
+        "confidence_tier": "medium"
+      },
+      {
+        "node_id": "n_l3_securecomms_trng_block",
+        "label": "TRNG block",
+        "bti_score": 70.0,
+        "confidence_tier": "medium"
+      },
+      {
+        "node_id": "n_l2_secure_comms_crypto_processor_module",
+        "label": "Crypto processor module",
+        "bti_score": 66.05,
+        "confidence_tier": "medium"
+      }
+    ]
+  },
+  "inputs": {
+    "research_files": "analysis/bti_v3_research/*.jsonl",
+    "hierarchy": "presentation/cytoscape/component_hierarchy_v1.json"
+  }
+}

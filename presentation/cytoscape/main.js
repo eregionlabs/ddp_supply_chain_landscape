@@ -48,6 +48,31 @@ if (introReopen && introOverlay) {
   });
 }
 
+/* ── BTI Methodology overlay ── */
+const btiMethodOverlay = document.getElementById('btiMethodOverlay');
+const btiMethodCloseBtn = document.getElementById('btiMethodClose');
+const btiMethodOpenBtn = document.getElementById('btiMethodOpen');
+
+function dismissBtiMethod() {
+  if (!btiMethodOverlay) return;
+  btiMethodOverlay.classList.add('intro-hidden');
+  setTimeout(() => { btiMethodOverlay.style.display = 'none'; }, 350);
+}
+function openBtiMethod() {
+  if (!btiMethodOverlay) return;
+  btiMethodOverlay.style.display = '';
+  btiMethodOverlay.classList.remove('intro-hidden');
+}
+
+if (btiMethodCloseBtn) btiMethodCloseBtn.addEventListener('click', dismissBtiMethod);
+if (btiMethodOverlay) btiMethodOverlay.addEventListener('click', (e) => {
+  if (e.target === btiMethodOverlay) dismissBtiMethod();
+});
+if (btiMethodOpenBtn) btiMethodOpenBtn.addEventListener('click', openBtiMethod);
+
+/* expose for detail-panel link */
+window.__openBtiMethod = openBtiMethod;
+
 /* ── DOM refs ── */
 const details              = document.getElementById('details');
 const searchEl             = document.getElementById('search');
