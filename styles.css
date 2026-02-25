@@ -1993,6 +1993,69 @@ small { color: var(--text-primary); font-size: 10.5px; }
   color: rgba(56, 189, 248, 0.85);
 }
 
+/* Footer disclaimer */
+.footer-disclaimer {
+  font-size: 0.72rem;
+  color: rgba(148, 163, 184, 0.6);
+  cursor: pointer;
+}
+.footer-disclaimer summary {
+  list-style: none;
+  user-select: none;
+}
+.footer-disclaimer summary::-webkit-details-marker { display: none; }
+.footer-disclaimer summary:hover {
+  color: rgba(148, 163, 184, 0.9);
+}
+.footer-disclaimer[open] summary {
+  color: rgba(148, 163, 184, 0.9);
+  margin-bottom: 6px;
+}
+.disclaimer-body {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(540px, 92vw);
+  margin-bottom: 10px;
+  padding: 16px 20px;
+  background: var(--bg-card, #1A1F2E);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r-md, 8px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  font-size: 0.75rem;
+  line-height: 1.55;
+  color: rgba(203, 213, 225, 0.8);
+  text-align: left;
+  z-index: 9000;
+}
+.disclaimer-body p {
+  margin: 0 0 8px;
+}
+.disclaimer-body p:last-child {
+  margin-bottom: 0;
+}
+.disclaimer-body strong {
+  color: rgba(226, 232, 240, 0.95);
+  font-weight: 600;
+}
+[data-theme="light"] .footer-disclaimer {
+  color: rgba(60, 50, 40, 0.5);
+}
+[data-theme="light"] .footer-disclaimer summary:hover,
+[data-theme="light"] .footer-disclaimer[open] summary {
+  color: rgba(60, 50, 40, 0.75);
+}
+[data-theme="light"] .disclaimer-body {
+  background: #FFFDF9;
+  border-color: rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  color: rgba(60, 50, 40, 0.75);
+}
+[data-theme="light"] .disclaimer-body strong {
+  color: rgba(28, 23, 20, 0.9);
+}
+
 
 /* ════════════════════════════════════════════════════════════
    22. THEME TOGGLE BUTTON
