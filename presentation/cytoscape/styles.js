@@ -397,6 +397,13 @@ export const cyStyles = [
     'border-width': 2.8, 'border-color': '#EF4444',
     'overlay-opacity': 0
   }},
+  /* Search match — bright accent ring so results stand out */
+  { selector: '.search-match', style: {
+    'opacity': 1, 'text-opacity': 1,
+    'border-width': 3, 'border-color': '#F59E0B',
+    'overlay-opacity': 0,
+    'z-index': 9990
+  }},
   /* Focus — selected node on top with accent border */
   { selector: '.focus', style: {
     'opacity': 1, 'text-opacity': 1,

@@ -20,6 +20,11 @@ export function clearExpandedDomains()         { expandedDomains.clear(); }
 export function getCompanyOverlayActive() { return companyOverlayActive; }
 export function setCompanyOverlayActive(v){ companyOverlayActive = v; }
 
+/* ── Search-forced node IDs (injected into graph even when domain collapsed) ── */
+let searchForcedIds = new Set();
+export function getSearchForcedIds() { return searchForcedIds; }
+export function setSearchForcedIds(ids) { searchForcedIds = ids; }
+
 /* ── Helper: domain key from raw node data (mirrors layout.js laneKeyForNode) ── */
 function domainKeyFromData(d) {
   const direct = (d.l1_component || '').trim();
@@ -46,7 +51,10 @@ export function getVisibleElements(allNodes, allEdges) {
     const layer = String(n.data.layer || '').toUpperCase();
     const dk = domainKeyFromData(n.data);
 
-    if (layer === 'L1') {
+    /* Always include search-forced nodes regardless of collapse state */
+    if (searchForcedIds.has(n.data.id)) {
+      filtered.push(n);
+    } else if (layer === 'L1') {
       filtered.push(n);
     } else if (isDomainExpanded(dk)) {
       filtered.push(n);
@@ -101,15 +109,16 @@ export function applyFilters(cy, { searchEl, domainEl, confEl, pressureEl, compa
     }
   }
 
-  cy.elements().removeClass('dim');
+  cy.elements().removeClass('dim search-match');
 
   cy.nodes().forEach(n => {
     const label = String(n.data('label') || '').toLowerCase();
     const id = String(n.data('id') || '').toLowerCase();
     const isCompany = n.data('node_type') === 'company';
+    const isCompanyMatch = companyMatchedComponents.has(n.id());
 
     let ok = true;
-    if (q && !(label.includes(q) || id.includes(q) || companyMatchedComponents.has(n.id()))) ok = false;
+    if (q && !(label.includes(q) || id.includes(q) || isCompanyMatch)) ok = false;
 
     if (!isCompany) {
       if (domain !== 'all' && String(n.data('l1_component') || '').toLowerCase() !== domain) ok = false;
@@ -126,7 +135,11 @@ export function applyFilters(cy, { searchEl, domainEl, confEl, pressureEl, compa
       if (!ct.includes(conf)) ok = false;
     }
 
-    if (!ok) n.addClass('dim');
+    if (!ok) {
+      n.addClass('dim');
+    } else if (q && (isCompanyMatch || label.includes(q) || id.includes(q))) {
+      n.addClass('search-match');
+    }
   });
 
   /* Also un-dim company nodes connected to matched components (overlay edges) */
@@ -136,13 +149,14 @@ export function applyFilters(cy, { searchEl, domainEl, confEl, pressureEl, compa
         cn.connectedEdges().forEach(e => {
           const other = e.source().id() === cn.id() ? e.target() : e.source();
           other.removeClass('dim');
+          other.addClass('search-match');
         });
       } else {
         const hasMatch = cn.connectedEdges().some(e => {
           const other = e.source().id() === cn.id() ? e.target() : e.source();
           return !other.hasClass('dim');
         });
-        if (hasMatch) cn.removeClass('dim');
+        if (hasMatch) { cn.removeClass('dim'); cn.addClass('search-match'); }
       }
     });
   }

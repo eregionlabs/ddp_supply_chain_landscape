@@ -9,7 +9,8 @@ import {
   getCompanyOverlayActive, setCompanyOverlayActive,
   getVisibleElements, applyFilters, clearFocusClasses,
   renderTopBottlenecksPanel, updateKPI,
-  isDomainExpanded, toggleDomainExpansion, getExpandedDomains, clearExpandedDomains
+  isDomainExpanded, toggleDomainExpansion, getExpandedDomains, clearExpandedDomains,
+  setSearchForcedIds
 } from './filters.js';
 
 const LS_PREFIX = 'ddp.cy.';
@@ -218,7 +219,28 @@ function syncFilterHighlights() {
 }
 
 /* ── Filter listeners ── */
-searchEl.addEventListener('input', () => { applyFilters(cy, filterEls); syncFilterHighlights(); });
+let prevSearchForcedKey = '';
+searchEl.addEventListener('input', () => {
+  const q = (searchEl.value || '').trim().toLowerCase();
+  /* Compute which component IDs the search forces into the graph */
+  const forced = new Set();
+  if (q && companyNameToComponents) {
+    for (const [coName, compIds] of companyNameToComponents) {
+      if (coName.includes(q)) {
+        for (const id of compIds) forced.add(id);
+      }
+    }
+  }
+  const forcedKey = [...forced].sort().join(',');
+  setSearchForcedIds(forced);
+  if (forcedKey !== prevSearchForcedKey) {
+    prevSearchForcedKey = forcedKey;
+    rebuildGraph();          /* injects/removes forced nodes, calls applyFilters */
+  } else {
+    applyFilters(cy, filterEls);
+  }
+  syncFilterHighlights();
+});
 domainEl.addEventListener('change', () => { applyFilters(cy, filterEls); syncFilterHighlights(); });
 confEl.addEventListener('change', () => { applyFilters(cy, filterEls); syncFilterHighlights(); });
 pressureEl.addEventListener('change', () => { applyFilters(cy, filterEls); syncFilterHighlights(); });
