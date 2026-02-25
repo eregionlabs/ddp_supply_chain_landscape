@@ -2,7 +2,7 @@
 
 import { loadElements, loadCompanyOverlay, loadCompanyRollupL1, loadCompanyRollupL2 } from './graph_data.js';
 import { escHtml, isCoreLayerNode, compareBtiNodesDesc, getTightnessIndex } from './utils.js';
-import { cyStyles } from './styles.js';
+import { cyStyles, isLightTheme } from './styles.js';
 import { runLayout, initBackdropCanvas, drawDomainBackgrounds, laneKeyForNode, getCollapsedHotspots } from './layout.js';
 import { renderComponentDetail, renderCompanyDetail, closeMetricPopover, showMetricPopover } from './detail-panel.js';
 import {
@@ -176,6 +176,22 @@ searchEl.addEventListener('input', () => { applyFilters(cy, filterEls); syncFilt
 domainEl.addEventListener('change', () => { applyFilters(cy, filterEls); syncFilterHighlights(); });
 confEl.addEventListener('change', () => { applyFilters(cy, filterEls); syncFilterHighlights(); });
 pressureEl.addEventListener('change', () => { applyFilters(cy, filterEls); syncFilterHighlights(); });
+
+/* ── Theme toggle ── */
+const themeToggleEl = document.getElementById('themeToggle');
+if (themeToggleEl) {
+  themeToggleEl.addEventListener('click', () => {
+    const isLight = document.documentElement.dataset.theme === 'light';
+    const newTheme = isLight ? 'dark' : 'light';
+    document.documentElement.dataset.theme = newTheme === 'dark' ? '' : newTheme;
+    if (newTheme === 'dark') delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = 'light';
+    try { localStorage.setItem(LS_PREFIX + 'theme', newTheme === 'dark' ? '' : 'light'); } catch {}
+    /* Re-render: force Cytoscape to re-evaluate all style functions */
+    cy.style().update();
+    drawDomainBackgrounds(cy);
+  });
+}
 
 companyToggleEl.addEventListener('change', () => {
   setCompanyOverlayActive(companyToggleEl.checked);

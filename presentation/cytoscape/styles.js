@@ -1,6 +1,6 @@
 /* ── styles.js ── Cytoscape stylesheet: domain-aware colors + pressure encoding ── */
 /*
- * Dark canvas (#0D1117 base). Two visual dimensions:
+ * Two visual dimensions, theme-aware (dark / light):
  *   1. Domain identity → accent color tint on node fill & border
  *   2. Pressure severity → saturation + brightness ramp (neutral → vivid warm)
  *
@@ -14,6 +14,11 @@
 
 import { getLayerValue, getTightnessIndex, getTightnessTier } from './utils.js';
 import { DOMAIN_TINTS } from './graph_data.js';
+
+/* ── Theme detection ── */
+export function isLightTheme() {
+  return document.documentElement.dataset.theme === 'light';
+}
 
 function confOpacity(ele) {
   const c = (ele.data('confidence') || '').toLowerCase();
@@ -40,29 +45,35 @@ function domainAccent(ele) {
   return DOMAIN_TINTS[l1] || DOMAIN_TINTS.other || '#64748B';
 }
 
-/* ── Pressure-aware fill that blends domain accent color ──
- *  t=0.0  → dark muted (barely visible, domain-tinted)
- *  t=0.5  → warm mid (domain accent showing through)
- *  t=1.0  → vivid warm-red (pressure dominates)
+/* ── Pressure-aware fill ──
+ * Dark mode:  t=0 → dark muted,   t=1 → vivid warm-red
+ * Light mode: t=0 → light cream,  t=1 → vivid warm-red
  */
 function pressureFill(ele) {
   const t = btiRatio(ele);
   const accent = hexRgb(domainAccent(ele));
+  const curve = Math.pow(t, 1.6);
 
-  /* Base: very dark with subtle domain tint */
+  if (isLightTheme()) {
+    /* Light: cream base with domain tint → warm red */
+    const baseR = 248 - accent.r * 0.02;
+    const baseG = 244 - accent.g * 0.02;
+    const baseB = 238 - accent.b * 0.02;
+    const hotR = 220, hotG = 50, hotB = 45;
+    const r = Math.round(baseR + (hotR - baseR) * curve);
+    const g = Math.round(baseG + (hotG - baseG) * curve);
+    const b = Math.round(baseB + (hotB - baseB) * curve);
+    return `rgb(${r}, ${g}, ${b})`;
+  }
+
+  /* Dark: very dark base with subtle domain tint */
   const baseR = 22 + accent.r * 0.08;
   const baseG = 28 + accent.g * 0.06;
   const baseB = 36 + accent.b * 0.08;
-
-  /* Hot: vivid warm red */
   const hotR = 220, hotG = 50, hotB = 45;
-
-  /* Blend with non-linear curve (pressure accelerates toward red) */
-  const curve = Math.pow(t, 1.6);
   const r = Math.round(baseR + (hotR - baseR) * curve);
   const g = Math.round(baseG + (hotG - baseG) * curve);
   const b = Math.round(baseB + (hotB - baseB) * curve);
-
   return `rgb(${r}, ${g}, ${b})`;
 }
 
@@ -71,31 +82,58 @@ function pressureBorder(ele) {
   const accent = hexRgb(domainAccent(ele));
   const curve = Math.pow(t, 1.4);
 
-  /* Low pressure: domain accent at low opacity; high: bright warm */
+  if (isLightTheme()) {
+    /* Light: domain accent at moderate opacity → warm red */
+    const r = Math.round(accent.r * 0.55 * (1 - curve) + 200 * curve);
+    const g = Math.round(accent.g * 0.45 * (1 - curve) + 60 * curve);
+    const b = Math.round(accent.b * 0.45 * (1 - curve) + 50 * curve);
+    const a = 0.35 + t * 0.50;
+    return `rgba(${r}, ${g}, ${b}, ${a.toFixed(2)})`;
+  }
+
+  /* Dark: domain accent at low opacity → bright warm */
   const r = Math.round(accent.r * 0.35 * (1 - curve) + 200 * curve);
   const g = Math.round(accent.g * 0.35 * (1 - curve) + 60 * curve);
   const b = Math.round(accent.b * 0.35 * (1 - curve) + 50 * curve);
   const a = 0.25 + t * 0.55;
-
   return `rgba(${r}, ${g}, ${b}, ${a.toFixed(2)})`;
 }
 
+function labelColor(ele) {
+  if (isLightTheme()) return '#4A4139';
+  return '#CBD5E1';
+}
+
+function labelOutlineColor() {
+  return isLightTheme() ? '#F5F1EB' : '#0D1117';
+}
+
+function labelBgColor() {
+  return isLightTheme() ? 'rgba(245, 241, 235, 0.75)' : 'rgba(13, 17, 23, 0.70)';
+}
+
 function labelOpacity(ele) {
+  const light = isLightTheme();
   const layer = String(ele.data('layer') || '').toUpperCase();
   if (layer === 'L1') return 1;
-  if (layer === 'L2') return 0.88;
+  if (layer === 'L2') return light ? 0.92 : 0.88;
   if (layer === 'L3') {
     const tier = getTightnessTier(ele);
-    if (tier >= 3) return 0.72;
-    if (tier >= 2) return 0.48;
-    return 0.22;
+    if (tier >= 3) return light ? 0.85 : 0.72;
+    if (tier >= 2) return light ? 0.65 : 0.48;
+    return light ? 0.40 : 0.22;
   }
-  if (getTightnessTier(ele) >= 3) return 0.58;
-  return 0.12;
+  if (getTightnessTier(ele) >= 3) return light ? 0.70 : 0.58;
+  return light ? 0.25 : 0.12;
 }
 
 function nodeFill(ele) {
   const nt = (ele.data('node_type') || '').toLowerCase();
+  if (isLightTheme()) {
+    if (nt === 'company')                                    return 'rgba(100, 116, 139, 0.15)';
+    if (nt === 'source' || nt === 'gap' || nt === 'source_ref') return 'rgba(200, 200, 200, 0.4)';
+    return pressureFill(ele);
+  }
   if (nt === 'company')                                    return 'rgba(100, 116, 139, 0.3)';
   if (nt === 'source' || nt === 'gap' || nt === 'source_ref') return 'rgba(30, 38, 50, 0.6)';
   return pressureFill(ele);
@@ -103,17 +141,44 @@ function nodeFill(ele) {
 
 function nodeBorder(ele) {
   const nt = (ele.data('node_type') || '').toLowerCase();
+  if (isLightTheme()) {
+    if (nt === 'company')                                    return 'rgba(100, 116, 139, 0.30)';
+    if (nt === 'source' || nt === 'gap' || nt === 'source_ref') return 'rgba(160, 160, 160, 0.35)';
+    return pressureBorder(ele);
+  }
   if (nt === 'company')                                    return 'rgba(100, 116, 139, 0.4)';
   if (nt === 'source' || nt === 'gap' || nt === 'source_ref') return 'rgba(50, 60, 75, 0.5)';
   return pressureBorder(ele);
 }
 
-/* ── Edge color: faint domain-tinted or neutral white ── */
+/* ── Edge color: faint domain-tinted ── */
 function edgeColor(ele) {
   const srcL1 = (ele.source().data('l1_component') || '').trim();
   const accent = DOMAIN_TINTS[srcL1] || '#94A3B8';
   const { r, g, b } = hexRgb(accent);
-  return `rgba(${r}, ${g}, ${b}, 0.10)`;
+  const a = isLightTheme() ? 0.18 : 0.10;
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
+
+/* ── Hover color ── */
+function hoverColor() {
+  return isLightTheme() ? '#1C1714' : '#F1F5F9';
+}
+
+/* ── Focus accent (gold in light, teal in dark) ── */
+function focusAccent() {
+  return isLightTheme() ? '#B5872B' : '#38BDF8';
+}
+function focusAccentRgba(a) {
+  return isLightTheme() ? `rgba(181, 135, 43, ${a})` : `rgba(56, 189, 248, ${a})`;
+}
+
+/* ── Collapsed node colors ── */
+function collapsedBg() {
+  return isLightTheme() ? '#F0EBE3' : '#141B27';
+}
+function collapsedBorder() {
+  return isLightTheme() ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.15)';
 }
 
 export const cyStyles = [
@@ -132,10 +197,10 @@ export const cyStyles = [
       'font-size':          10,
       'font-family':        '"Inter", system-ui, -apple-system, sans-serif',
       'font-weight':        500,
-      'color':              '#CBD5E1',
-      'text-outline-color': '#0D1117',
+      'color':              labelColor,
+      'text-outline-color': labelOutlineColor,
       'text-outline-width': 2.2,
-      'text-background-color': 'rgba(13, 17, 23, 0.70)',
+      'text-background-color': labelBgColor,
       'text-background-opacity': 0.70,
       'text-background-shape': 'roundrectangle',
       'text-background-padding': 2,
@@ -173,8 +238,8 @@ export const cyStyles = [
       'font-size':              13,
       'font-weight':            700,
       'text-transform':         'uppercase',
-      'color':                  '#E2E8F0',
-      'text-outline-color':     '#0D1117',
+      'color':                  ele => isLightTheme() ? '#1C1714' : '#E2E8F0',
+      'text-outline-color':     labelOutlineColor,
       'text-outline-width':     3.2,
       'text-background-opacity': 0.82,
       'text-valign':            'center',
@@ -202,7 +267,7 @@ export const cyStyles = [
     style: {
       'font-size':              8,
       'font-weight':            420,
-      'color':                  '#64748B',
+      'color':                  ele => isLightTheme() ? '#6B5E52' : '#64748B',
       'text-background-opacity': 0.45,
       'text-outline-width':     1.6,
       'text-margin-y':          5
@@ -224,7 +289,7 @@ export const cyStyles = [
     style: {
       'font-size':  7.5,
       'font-weight': 450,
-      'color':      '#64748B'
+      'color':      ele => isLightTheme() ? '#8A7E72' : '#64748B'
     }
   },
 
@@ -275,8 +340,8 @@ export const cyStyles = [
     style: {
       'line-style':         'dotted',
       'width':              0.35,
-      'line-color':         'rgba(100, 116, 139, 0.06)',
-      'target-arrow-color': 'rgba(100, 116, 139, 0.06)'
+      'line-color':         ele => isLightTheme() ? 'rgba(100, 116, 139, 0.10)' : 'rgba(100, 116, 139, 0.06)',
+      'target-arrow-color': ele => isLightTheme() ? 'rgba(100, 116, 139, 0.10)' : 'rgba(100, 116, 139, 0.06)'
     }
   },
   {
@@ -292,8 +357,8 @@ export const cyStyles = [
       'curve-style': 'unbundled-bezier',
       'width': 0.5,
       'line-style': 'dotted',
-      'line-color': 'rgba(148, 163, 184, 0.05)',
-      'target-arrow-color': 'rgba(148, 163, 184, 0.05)'
+      'line-color': ele => isLightTheme() ? 'rgba(148, 163, 184, 0.08)' : 'rgba(148, 163, 184, 0.05)',
+      'target-arrow-color': ele => isLightTheme() ? 'rgba(148, 163, 184, 0.08)' : 'rgba(148, 163, 184, 0.05)'
     }
   },
 
@@ -303,7 +368,7 @@ export const cyStyles = [
     style: {
       'text-opacity':    1,
       'font-weight':     700,
-      'color':           '#F1F5F9',
+      'color':           hoverColor,
       'overlay-opacity': 0
     }
   },
@@ -321,19 +386,19 @@ export const cyStyles = [
   { selector: '.focus', style: {
     'opacity': 1, 'text-opacity': 1,
     'width': 'data(node_w_focus)', 'height': 'data(node_h_focus)',
-    'border-width': 2.8, 'border-color': '#38BDF8',
+    'border-width': 2.8, 'border-color': focusAccent,
     'overlay-opacity': 0,
     'z-index': 9999
   }},
   { selector: '.focus-context', style: {
     'opacity': 1, 'text-opacity': 1,
-    'border-width': 1.5, 'border-color': 'rgba(56, 189, 248, 0.35)',
+    'border-width': 1.5, 'border-color': () => focusAccentRgba(0.35),
     'overlay-opacity': 0,
     'z-index': 9998
   }},
   { selector: '.focus-edge', style: {
     'opacity': 1,
-    'line-color': 'rgba(56, 189, 248, 0.45)', 'target-arrow-color': 'rgba(56, 189, 248, 0.45)',
+    'line-color': () => focusAccentRgba(0.45), 'target-arrow-color': () => focusAccentRgba(0.45),
     'width': 1.6,
     'z-index': 9997
   }},
@@ -348,7 +413,7 @@ export const cyStyles = [
   }},
   { selector: '.chain-source', style: {
     'opacity': 1, 'text-opacity': 1,
-    'border-width': 3, 'border-color': '#38BDF8',
+    'border-width': 3, 'border-color': focusAccent,
     'overlay-opacity': 0
   }},
   { selector: '.chain-node', style: {
@@ -357,15 +422,15 @@ export const cyStyles = [
   }},
   { selector: '.chain-edge', style: {
     'opacity': 1,
-    'line-color': 'rgba(56, 189, 248, 0.40)', 'target-arrow-color': 'rgba(56, 189, 248, 0.40)',
+    'line-color': () => focusAccentRgba(0.40), 'target-arrow-color': () => focusAccentRgba(0.40),
     'width': 1.5
   }},
 
   /* ── Progressive disclosure classes ── */
   { selector: 'node.collapsed', style: {
     'width': 160, 'height': 56,
-    'border-width': 2.8, 'border-color': 'rgba(255, 255, 255, 0.15)',
-    'background-color': '#141B27',
+    'border-width': 2.8, 'border-color': collapsedBorder,
+    'background-color': collapsedBg,
     'font-size': 14, 'text-valign': 'center', 'text-margin-y': 0
   }},
   { selector: 'node.hotspot', style: {

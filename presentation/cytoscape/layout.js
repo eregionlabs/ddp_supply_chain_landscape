@@ -530,6 +530,7 @@ export function drawDomainBackgrounds(cy) {
 
   const pan = cy.pan();
   const zoom = cy.zoom();
+  const light = document.documentElement.dataset.theme === 'light';
 
   for (const [dk, bounds] of domainBounds) {
     const sx = bounds.x * zoom + pan.x;
@@ -540,33 +541,64 @@ export function drawDomainBackgrounds(cy) {
     const radius = 14 * zoom;
     const { r, g, b } = hexToRgb(bounds.tint);
 
-    /* Dark panel fill with domain accent gradient */
-    const grad = ctx.createLinearGradient(sx, sy, sx, sy + sh);
-    grad.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.06)`);
-    grad.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0.02)`);
-    ctx.fillStyle = '#111827';
-    ctx.beginPath();
-    roundRect(ctx, sx, sy, sw, sh, radius);
-    ctx.fill();
+    if (light) {
+      /* Light mode: white panel with subtle domain accent tint */
+      const grad = ctx.createLinearGradient(sx, sy, sx, sy + sh);
+      grad.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.06)`);
+      grad.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0.02)`);
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      roundRect(ctx, sx, sy, sw, sh, radius);
+      ctx.fill();
 
-    /* Domain accent overlay */
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    roundRect(ctx, sx, sy, sw, sh, radius);
-    ctx.fill();
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      roundRect(ctx, sx, sy, sw, sh, radius);
+      ctx.fill();
 
-    /* Accent-tinted border */
-    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.15)`;
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    roundRect(ctx, sx, sy, sw, sh, radius);
-    ctx.stroke();
+      ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.18)`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      roundRect(ctx, sx, sy, sw, sh, radius);
+      ctx.stroke();
+
+      /* Drop shadow for light mode cards */
+      ctx.save();
+      ctx.shadowColor = `rgba(${r}, ${g}, ${b}, 0.08)`;
+      ctx.shadowBlur = 12 * zoom;
+      ctx.shadowOffsetY = 4 * zoom;
+      ctx.fillStyle = 'rgba(0,0,0,0)';
+      ctx.beginPath();
+      roundRect(ctx, sx, sy, sw, sh, radius);
+      ctx.fill();
+      ctx.restore();
+    } else {
+      /* Dark mode: dark panel fill with domain accent gradient */
+      const grad = ctx.createLinearGradient(sx, sy, sx, sy + sh);
+      grad.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.06)`);
+      grad.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0.02)`);
+      ctx.fillStyle = '#111827';
+      ctx.beginPath();
+      roundRect(ctx, sx, sy, sw, sh, radius);
+      ctx.fill();
+
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      roundRect(ctx, sx, sy, sw, sh, radius);
+      ctx.fill();
+
+      ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.15)`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      roundRect(ctx, sx, sy, sw, sh, radius);
+      ctx.stroke();
+    }
 
     /* Top accent bar — thin colored strip at top of panel (clipped to panel shape) */
     const barH = Math.max(2, 3 * zoom);
     const barGrad = ctx.createLinearGradient(sx, sy, sx + sw, sy);
-    barGrad.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.5)`);
-    barGrad.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0.1)`);
+    barGrad.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${light ? 0.55 : 0.5})`);
+    barGrad.addColorStop(1, `rgba(${r}, ${g}, ${b}, ${light ? 0.15 : 0.1})`);
     ctx.save();
     ctx.beginPath();
     roundRect(ctx, sx, sy, sw, sh, radius);
@@ -578,7 +610,7 @@ export function drawDomainBackgrounds(cy) {
     /* Domain label — accent-tinted */
     const fontSize = Math.max(9, Math.min(13, 11 * zoom));
     ctx.font = `700 ${fontSize}px "Inter", system-ui, sans-serif`;
-    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.55)`;
+    ctx.fillStyle = light ? `rgba(${r}, ${g}, ${b}, 0.72)` : `rgba(${r}, ${g}, ${b}, 0.55)`;
     ctx.textBaseline = 'top';
 
     const labelX = sx + 12 * zoom;
@@ -589,10 +621,10 @@ export function drawDomainBackgrounds(cy) {
     const labelMetrics = ctx.measureText(bounds.label);
     const indicatorX = labelX + labelMetrics.width + 6 * zoom;
     if (bounds.expanded) {
-      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.35)`;
+      ctx.fillStyle = light ? `rgba(${r}, ${g}, ${b}, 0.50)` : `rgba(${r}, ${g}, ${b}, 0.35)`;
       ctx.fillText('\u25B4', indicatorX, labelY);
     } else {
-      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.45)`;
+      ctx.fillStyle = light ? `rgba(${r}, ${g}, ${b}, 0.60)` : `rgba(${r}, ${g}, ${b}, 0.45)`;
       ctx.fillText('\u25BE', indicatorX, labelY);
     }
   }
