@@ -1,15 +1,13 @@
 /* ── main.js ── Application entry point (extracted from inline script) ── */
 
-import { loadElements, loadCompanyOverlay, loadCompanyRollupL1, loadCompanyRollupL2, SPOTLIGHT_PATHS } from './graph_data.js';
+import { loadElements, loadCompanyOverlay, loadCompanyRollupL1, loadCompanyRollupL2 } from './graph_data.js';
 import { escHtml, isCoreLayerNode, compareBtiNodesDesc, getTightnessIndex } from './utils.js';
 import { cyStyles } from './styles.js';
 import { runLayout, initBackdropCanvas, drawDomainBackgrounds, laneKeyForNode, getCollapsedHotspots } from './layout.js';
 import { renderComponentDetail, renderCompanyDetail, closeMetricPopover, showMetricPopover } from './detail-panel.js';
 import {
-  getCurrentMode, setCurrentMode,
   getCompanyOverlayActive, setCompanyOverlayActive,
   getVisibleElements, applyFilters, clearFocusClasses,
-  buildSpotlightButtons, toggleSpotlight, clearSpotlight,
   renderTopBottlenecksPanel, updateKPI,
   isDomainExpanded, toggleDomainExpansion, getExpandedDomains, clearExpandedDomains
 } from './filters.js';
@@ -160,24 +158,11 @@ function rebuildGraph() {
   const toAdd = desired.filter(e => !presentIds.has(e.data.id));
   if (toAdd.length) cy.add(toAdd);
 
-  runLayout(cy, getCurrentMode());
+  runLayout(cy);
   drawDomainBackgrounds(cy);
   applyFilters(cy, filterEls);
-  updateKPI(cy, { kpiEl, topBottlenecksPanelEl, TOP_BOTTLENECK_LIMIT });
+  updateKPI(cy, { kpiEl, topBottlenecksPanelEl, TOP_BOTTLENECK_LIMIT, allNodes });
 }
-
-/* ── Mode toggle ── */
-document.querySelectorAll('.mode-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const mode = btn.dataset.mode;
-    if (mode === getCurrentMode()) return;
-    setCurrentMode(mode);
-    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    clearSpotlight(cy);
-    rebuildGraph();
-  });
-});
 
 /* ── Active filter highlight ── */
 function syncFilterHighlights() {
@@ -198,7 +183,6 @@ companyToggleEl.addEventListener('change', () => {
 });
 
 document.getElementById('showTop10').addEventListener('click', () => {
-  clearSpotlight(cy);
   cy.nodes().removeClass('top10');
   const topNodes = cy.nodes()
     .filter(n => isCoreLayerNode(n))
@@ -277,7 +261,6 @@ document.getElementById('reset').addEventListener('click', () => {
   confEl.value   = 'all';
   pressureEl.value = 'all';
   syncFilterHighlights();
-  clearSpotlight(cy);
   clearFocusClasses(cy);
   clearExpandedDomains();
   cy.elements().removeClass('dim top10 hover collapsed hotspot');
@@ -390,8 +373,8 @@ cy.on('tap', 'node', async (evt) => {
   const node = evt.target;
   const layer = String(node.data('layer') || '').toUpperCase();
 
-  /* ── L1 tap in executive mode → toggle expand/collapse (accordion) ── */
-  if (layer === 'L1' && getCurrentMode() === 'executive') {
+  /* ── L1 tap → toggle expand/collapse (accordion) ── */
+  if (layer === 'L1') {
     const domainKey = laneKeyForNode(node);
 
     /* Dismiss onboarding on first L1 click */
@@ -453,11 +436,9 @@ cy.on('mouseover', 'node', evt => evt.target.addClass('hover'));
 cy.on('mouseout',  'node', evt => evt.target.removeClass('hover'));
 
 /* ── Init ── */
-buildSpotlightButtons(SPOTLIGHT_PATHS, document.getElementById('spotlightButtons'),
-  (key) => toggleSpotlight(cy, key, SPOTLIGHT_PATHS, details));
-runLayout(cy, getCurrentMode());
+runLayout(cy);
 drawDomainBackgrounds(cy);
-updateKPI(cy, { kpiEl, topBottlenecksPanelEl, TOP_BOTTLENECK_LIMIT });
+updateKPI(cy, { kpiEl, topBottlenecksPanelEl, TOP_BOTTLENECK_LIMIT, allNodes });
 
 /* ── Backdrop: track pan/zoom and container resize ── */
 cy.on('viewport', () => drawDomainBackgrounds(cy));
@@ -468,8 +449,6 @@ setTimeout(() => {
   try {
     if (localStorage.getItem('ddp.cy.onboarded')) return;
   } catch { /* proceed */ }
-
-  if (getCurrentMode() !== 'executive') return;
 
   /* Find first L1 node */
   const firstL1 = cy.nodes().filter(n => String(n.data('layer') || '').toUpperCase() === 'L1')[0];

@@ -259,37 +259,6 @@ body.resizing-top-panel * {
   white-space: nowrap;
 }
 
-/* ── Mode toggle ── */
-.mode-toggle {
-  display: flex;
-  background: linear-gradient(180deg, #e8eaef 0%, #eceef3 100%);
-  border-radius: var(--r-sm);
-  border: 1px solid var(--border);
-  overflow: hidden;
-  box-shadow: inset 0 1px 2px rgba(15,23,42,0.06);
-}
-
-.mode-btn {
-  padding: 4px 14px;
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  font-size: 10.5px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
-  font-family: inherit;
-}
-.mode-btn:hover {
-  color: var(--text-secondary);
-  background: rgba(0, 0, 0, 0.04);
-}
-.mode-btn.active {
-  background: linear-gradient(180deg, #d8f3dc 0%, #b7e4c7 100%);
-  color: var(--pine);
-  box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.6);
-}
-
 /* ── Control bar inputs ── */
 .control-bar input,
 .control-bar select {
@@ -411,78 +380,7 @@ select:focus {
 
 
 /* ════════════════════════════════════════════════════════════
-   3. CANDIDATE PATHS STRIP
-   ════════════════════════════════════════════════════════════ */
-
-.idea-strip-wrap {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 5px 14px;
-  background: rgba(255,255,255,0.6);
-  -webkit-backdrop-filter: blur(10px) saturate(1.3);
-  backdrop-filter: blur(10px) saturate(1.3);
-  border-bottom: 1px solid rgba(228,231,236,0.45);
-  overflow-x: auto;
-  flex-shrink: 0;
-}
-
-.idea-strip-title {
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--text-dim);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.spotlight-group { display: flex; gap: 5px; flex-shrink: 0; }
-
-.spotlight-btn {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 5px 11px;
-  background: linear-gradient(180deg, #ffffff 0%, #fafcfd 100%);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  cursor: pointer;
-  color: var(--text-primary);
-  text-align: left;
-  transition: all var(--dur) var(--ease);
-  white-space: nowrap;
-  font-family: inherit;
-  box-shadow: var(--shadow-sm), inset 0 1px 0 0 rgba(255,255,255,0.7);
-}
-.spotlight-btn:hover {
-  background: linear-gradient(180deg, #ffffff 0%, #f7f9fb 100%);
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-hover), inset 0 1px 0 0 rgba(255,255,255,0.8);
-  transform: translateY(-1px);
-}
-.spotlight-btn:active {
-  transform: translateY(0);
-  box-shadow: var(--shadow-sm), inset 0 1px 0 0 rgba(255,255,255,0.7);
-}
-.spotlight-btn.active {
-  border-color: var(--blue-ring);
-  background: var(--blue-fill);
-  box-shadow: 0 0 0 2px rgba(59,111,181,0.08);
-}
-
-.spotlight-color {
-  width: 3px;
-  height: 18px;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-.spotlight-name { font-size: 10.5px; font-weight: 600; line-height: 1.2; }
-.spotlight-desc { font-size: 9.5px; color: var(--text-muted); line-height: 1.2; }
-
-
-/* ════════════════════════════════════════════════════════════
-   4. MAIN LAYOUT — graph + side panel
+   3. MAIN LAYOUT — graph + side panel
    ════════════════════════════════════════════════════════════ */
 
 main {
@@ -1159,18 +1057,6 @@ small { color: var(--text-secondary); font-size: 10.5px; }
   font-weight: 700;
   color: var(--text-primary);
 }
-.kpi-mode {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 9px;
-  border-radius: 999px;
-  font-size: 10px;
-  font-weight: 700;
-  background: var(--pine-light);
-  color: var(--pine);
-  border: 1px solid var(--pine-mid);
-  letter-spacing: 0.02em;
-}
 
 
 /* ════════════════════════════════════════════════════════════
@@ -1460,10 +1346,6 @@ small { color: var(--text-secondary); font-size: 10.5px; }
   .control-search input {
     min-width: 140px;
   }
-  .mode-btn {
-    padding: 6px 12px;
-    font-size: 11px;
-  }
   .control-actions button {
     height: 32px;
     padding: 4px 10px;
@@ -1471,23 +1353,7 @@ small { color: var(--text-secondary); font-size: 10.5px; }
     min-height: 36px;
   }
 
-  /* ── c) Spotlight strip: compact ── */
-  .idea-strip-wrap {
-    padding: 4px 8px;
-    gap: 6px;
-  }
-  .spotlight-desc {
-    display: none;
-  }
-  .spotlight-btn {
-    padding: 4px 8px;
-    gap: 5px;
-  }
-  .spotlight-name {
-    font-size: 10px;
-  }
-
-  /* ── d) Graph fills viewport ── */
+  /* ── c) Graph fills viewport ── */
   .graph-wrap {
     margin: 0;
     border-radius: 0;
@@ -1541,7 +1407,6 @@ small { color: var(--text-secondary); font-size: 10.5px; }
   /* ── Disable hover transforms on touch (performance) ── */
   .card:hover,
   .panel-metric:hover,
-  .spotlight-btn:hover,
   .top-bottleneck-row:hover,
   .company-row:hover {
     transform: none;

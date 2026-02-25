@@ -33,13 +33,6 @@
     </header>
 
     <section class="control-bar" role="toolbar" aria-label="Graph controls">
-      <div class="control-cluster control-mode">
-        <span class="cluster-label" id="viewLabel">View</span>
-        <div class="mode-toggle" id="modeToggle" role="group" aria-labelledby="viewLabel">
-          <button class="mode-btn active" data-mode="executive">Executive</button>
-          <button class="mode-btn" data-mode="analyst">Analyst</button>
-        </div>
-      </div>
       <div class="control-cluster control-search">
         <label class="cluster-label" for="search">Search</label>
         <input id="search" placeholder="Node, id, or company" />
@@ -88,10 +81,6 @@
       </div>
     </section>
 
-    <section class="idea-strip-wrap">
-      <div class="idea-strip-title">Candidate Paths</div>
-      <div id="spotlightButtons" class="spotlight-group"></div>
-    </section>
     </div>
     <div id="topPanelResizer" title="Drag to resize top panel"></div>
 
@@ -106,16 +95,6 @@
       </div>
       <div id="panelResizer" title="Drag to resize panel"></div>
       <aside id="panel" aria-label="Detail panel">
-        <div class="panel-metrics" id="panelMetrics">
-          <div class="panel-metric">
-            <span class="panel-metric-value metric-blue" id="pmNodes">--</span>
-            <span class="panel-metric-label">L1/L2/L3</span>
-          </div>
-          <div class="panel-metric">
-            <span class="panel-metric-value metric-amber" id="pmBottleneck">--</span>
-            <span class="panel-metric-label">Bottlenecks (Top List)</span>
-          </div>
-        </div>
         <div class="card detail-card">
           <div class="card-header">Details</div>
           <div id="details"><small>Select a node to inspect risk profile, dependencies, and linked companies.</small></div>

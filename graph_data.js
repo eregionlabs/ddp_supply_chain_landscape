@@ -1,30 +1,5 @@
 /* graph_data.js – v5: taxonomy coverage patch (missing categories + executive reps) */
 
-// ── Spotlight path definitions for 3 candidate ideas ──
-export const SPOTLIGHT_PATHS = {
-  idea_1: {
-    label: 'Sensors',
-    description: 'Navigation, perception, and altitude sensing chains',
-    color: '#3b6fb5'
-  },
-  idea_2: {
-    label: 'Camera / Payload',
-    description: 'EO/IR payload optics, stabilization, and encode path',
-    color: '#6e5ba8'
-  },
-  idea_3: {
-    label: 'Assembly / Integration / Manufacturing',
-    description: 'Final assembly cells, integration/test infrastructure, takt constraints',
-    color: '#a67c20'
-  }
-};
-
-const CATEGORY_SPOTLIGHT_MAP = {
-  sensors: 'idea_1',
-  camera_payload: 'idea_2',
-  assembly_integration_manufacturing: 'idea_3'
-};
-
 export const DOMAIN_TINTS = {
   airframe_structures:     '#dbeafe',  // blue-100
   energy_storage:          '#fef3c7',  // amber-100
@@ -279,7 +254,6 @@ function buildElementsFromHierarchyPanel(hierarchyPayload, panelPayload) {
         visibility: 'executive',
         layer,
         category: 'other',
-        thesis_tag: 'other',
         scenario_base: null,
         scenario_bull: null,
         scenario_bear: null,
@@ -721,7 +695,6 @@ export async function loadElements(options = {}) {
     const tier = tightnessTier(tightnessIndex);
 
     const category = inferNodeCategory(n);
-    const thesisTag = CATEGORY_SPOTLIGHT_MAP[category] || 'other';
 
     // ── Visibility & layer mapping for executive narrative density ──
     const sourceRef = isSourceReferencePseudoNode(n);
@@ -803,7 +776,6 @@ export async function loadElements(options = {}) {
         landed_cost_uplift_pct: t.landed_cost_uplift_pct ?? null,
         tariff_penalty_pct: t.tariff_penalty_pct ?? null,
         category,
-        thesis_tag: thesisTag,
         scenario_base: t.scenario_base ?? null,
         scenario_bull: t.scenario_bull ?? null,
         scenario_bear: t.scenario_bear ?? null,

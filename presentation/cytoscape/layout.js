@@ -1,6 +1,5 @@
 /* ── layout.js ── Compositional spine layout + grid-based collision resolution ── */
 
-import { getTightnessIndex, compareBtiNodesDesc } from './utils.js';
 import { DOMAIN_TINTS, DOMAIN_LABELS, DOMAIN_ORDER } from './graph_data.js';
 import { isDomainExpanded } from './filters.js';
 
@@ -743,31 +742,13 @@ function tuneViewportForDensity(cy) {
   }
 }
 
-export function runLayout(cy, currentMode) {
-  const isExec = currentMode === 'executive';
+export function runLayout(cy) {
   try {
-    if (isExec) {
-      /* Grid layout is deterministic — skip dagre entirely */
-      applyDomainClusterLayout(cy);
-      positionCompanyNodesInGrid(cy);
-      flagCrossDomainEdges(cy);
-      resolveCollisions(cy, 15);
-      tuneViewportForDensity(cy);
-    } else {
-      cy.layout({
-        name:    'dagre',
-        rankDir: 'LR',
-        ranker:  'network-simplex',
-        nodeSep: 48,
-        rankSep: 132,
-        edgeSep: 22,
-        sort: (a, b) => compareBtiNodesDesc(a, b),
-        animate: false,
-        fit: true,
-        padding: 28
-      }).run();
-      cy.fit(undefined, 26);
-    }
+    applyDomainClusterLayout(cy);
+    positionCompanyNodesInGrid(cy);
+    flagCrossDomainEdges(cy);
+    resolveCollisions(cy, 15);
+    tuneViewportForDensity(cy);
   } catch (e) {
     console.warn('primary layout failed, falling back to cose:', e);
     cy.layout({ name: 'cose', animate: false, fit: true, padding: 24 }).run();
