@@ -1,6 +1,6 @@
 /* ── main.js ── Application entry point (extracted from inline script) ── */
 
-import { loadElements, loadCompanyOverlay, loadCompanyRollupL1, loadCompanyRollupL2 } from './graph_data.js';
+import { loadElements, loadCompanyOverlay, loadCompanyRollupL1, loadCompanyRollupL2, DOMAIN_ORDER } from './graph_data.js';
 import { escHtml, isCoreLayerNode, compareBtiNodesDesc, getTightnessIndex } from './utils.js';
 import { cyStyles, isLightTheme } from './styles.js';
 import { runLayout, initBackdropCanvas, drawDomainBackgrounds, laneKeyForNode, getCollapsedHotspots } from './layout.js';
@@ -198,17 +198,62 @@ companyToggleEl.addEventListener('change', () => {
   rebuildGraph();
 });
 
+/* ── Expand All toggle ── */
+let _allExpanded = false;
+const expandAllBtn = document.getElementById('expandAll');
+
+function setExpandAllState(expanded) {
+  _allExpanded = expanded;
+  if (expandAllBtn) expandAllBtn.textContent = expanded ? 'Collapse All' : 'Expand All';
+}
+
+expandAllBtn.addEventListener('click', () => {
+  clearChainHighlight();
+  clearFocusClasses(cy);
+  if (_allExpanded) {
+    /* Collapse all */
+    clearExpandedDomains();
+  } else {
+    /* Expand all */
+    for (const dk of DOMAIN_ORDER) {
+      if (!isDomainExpanded(dk)) toggleDomainExpansion(dk);
+    }
+  }
+  setExpandAllState(!_allExpanded);
+  rebuildGraph();
+});
+
 document.getElementById('showTop10').addEventListener('click', () => {
   clearChainHighlight();
   clearFocusClasses(cy);
+
+  /* Ensure all domains are expanded so every node is visible */
+  if (!_allExpanded) {
+    for (const dk of DOMAIN_ORDER) {
+      if (!isDomainExpanded(dk)) toggleDomainExpansion(dk);
+    }
+    setExpandAllState(true);
+    rebuildGraph();
+  }
+
+  /* Find the top bottleneck nodes from the full graph */
   cy.nodes().removeClass('top10');
   const topNodes = cy.nodes()
     .filter(n => isCoreLayerNode(n))
     .sort(compareBtiNodesDesc)
     .slice(0, TOP_BOTTLENECK_LIMIT);
-  topNodes.forEach(n => n.addClass('top10'));
+
+  /* Dim everything, then highlight the top bottlenecks */
+  cy.elements().addClass('focus-dim');
+  topNodes.forEach(n => {
+    n.removeClass('focus-dim').addClass('top10');
+    n.connectedEdges().removeClass('focus-dim');
+    n.neighborhood('node').removeClass('focus-dim');
+  });
+
   const selectedId = topNodes.length > 0 ? topNodes[0].id() : '';
   renderTopBottlenecksPanel(cy, topBottlenecksPanelEl, { limit: TOP_BOTTLENECK_LIMIT, selectedId });
+  openMobilePanel();
 });
 
 topBottlenecksPanelEl.addEventListener('click', async (evt) => {
@@ -281,7 +326,9 @@ document.getElementById('reset').addEventListener('click', () => {
   pressureEl.value = 'all';
   syncFilterHighlights();
   clearFocusClasses(cy);
+  clearChainHighlight();
   clearExpandedDomains();
+  setExpandAllState(false);
   cy.elements().removeClass('dim top10 hover collapsed hotspot');
   rebuildGraph();
   renderTopBottlenecksPanel(cy, topBottlenecksPanelEl, { limit: TOP_BOTTLENECK_LIMIT });
