@@ -8,7 +8,7 @@
   },
   "counts": {
     "company_nodes": 62,
-    "company_edges": 80,
+    "company_edges": 40,
     "universe_only_company_nodes": 27,
     "mapped_company_rows": 40,
     "universe_only_rows": 27
@@ -1072,8 +1072,8 @@
   "edges": [
     {
       "data": {
-        "id": "e_n_l3_propulsion_esc_power_stageintegrateston_company_microchip_technology_inc",
-        "source": "n_l3_propulsion_esc_power_stage",
+        "id": "e_n_l3_propulsion_mosfet_half_bridgeintegrateston_company_microchip_technology_inc",
+        "source": "n_l3_propulsion_mosfet_half_bridge",
         "target": "n_company_microchip_technology_inc",
         "dependency_type": "integrates",
         "confidence": "medium",
@@ -1084,8 +1084,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_propulsion_esc_power_stagesupplied_byton_company_infineon_technologies_ag",
-        "source": "n_l3_propulsion_esc_power_stage",
+        "id": "e_n_l3_propulsion_mosfet_half_bridgesupplied_byton_company_infineon_technologies_ag",
+        "source": "n_l3_propulsion_mosfet_half_bridge",
         "target": "n_company_infineon_technologies_ag",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1096,8 +1096,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_propulsion_esc_control_mcusupplied_byton_company_microchip_technology_inc",
-        "source": "n_l3_propulsion_esc_control_mcu",
+        "id": "e_n_l3_propulsion_gate_driver_icsupplied_byton_company_microchip_technology_inc",
+        "source": "n_l3_propulsion_gate_driver_ic",
         "target": "n_company_microchip_technology_inc",
         "dependency_type": "supplied_by",
         "confidence": "medium",
@@ -1108,8 +1108,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_propulsion_esc_control_mcusupplied_byton_company_nxp_semiconductors_n_v",
-        "source": "n_l3_propulsion_esc_control_mcu",
+        "id": "e_n_l3_propulsion_gate_driver_icsupplied_byton_company_nxp_semiconductors_n_v",
+        "source": "n_l3_propulsion_gate_driver_ic",
         "target": "n_company_nxp_semiconductors_n_v",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1120,8 +1120,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_propulsion_motor_magnet_stacksupplied_byton_company_mp_materials_corp",
-        "source": "n_l3_propulsion_motor_magnet_stack",
+        "id": "e_n_l3_propulsion_rotor_magnet_ringsupplied_byton_company_mp_materials_corp",
+        "source": "n_l3_propulsion_rotor_magnet_ring",
         "target": "n_company_mp_materials_corp",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1132,8 +1132,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_propulsion_motor_magnet_stacksupplied_byton_company_proterial_ltd",
-        "source": "n_l3_propulsion_motor_magnet_stack",
+        "id": "e_n_l3_propulsion_rotor_magnet_ringsupplied_byton_company_proterial_ltd",
+        "source": "n_l3_propulsion_rotor_magnet_ring",
         "target": "n_company_proterial_ltd",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1144,8 +1144,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_propulsion_motor_windingsupplied_byton_company_nidec_corporation",
-        "source": "n_l3_propulsion_motor_winding",
+        "id": "e_n_l3_propulsion_stator_lamination_stacksupplied_byton_company_nidec_corporation",
+        "source": "n_l3_propulsion_stator_lamination_stack",
         "target": "n_company_nidec_corporation",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1156,8 +1156,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_propulsion_motor_windingsupplied_byton_company_t_motor",
-        "source": "n_l3_propulsion_motor_winding",
+        "id": "e_n_l3_propulsion_stator_lamination_stacksupplied_byton_company_t_motor",
+        "source": "n_l3_propulsion_stator_lamination_stack",
         "target": "n_company_t_motor",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1168,8 +1168,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_propulsion_bearing_shaftsupplied_byton_company_skf_group",
-        "source": "n_l3_propulsion_bearing_shaft",
+        "id": "e_n_l3_propulsion_motor_shaftsupplied_byton_company_skf_group",
+        "source": "n_l3_propulsion_motor_shaft",
         "target": "n_company_skf_group",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1180,8 +1180,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_propulsion_bearing_shaftsupplied_byton_company_nsk_ltd",
-        "source": "n_l3_propulsion_bearing_shaft",
+        "id": "e_n_l3_propulsion_motor_shaftsupplied_byton_company_nsk_ltd",
+        "source": "n_l3_propulsion_motor_shaft",
         "target": "n_company_nsk_ltd",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1192,8 +1192,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_propulsion_propeller_materialsupplied_byton_company_apc_propellers",
-        "source": "n_l3_propulsion_propeller_material",
+        "id": "e_n_l3_propulsion_propeller_bladesupplied_byton_company_apc_propellers",
+        "source": "n_l3_propulsion_propeller_blade",
         "target": "n_company_apc_propellers",
         "dependency_type": "supplied_by",
         "confidence": "medium",
@@ -1204,8 +1204,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_propulsion_propeller_materialintegrateston_company_farage_precision_llc",
-        "source": "n_l3_propulsion_propeller_material",
+        "id": "e_n_l3_propulsion_propeller_bladeintegrateston_company_farage_precision_llc",
+        "source": "n_l3_propulsion_propeller_blade",
         "target": "n_company_farage_precision_llc",
         "dependency_type": "integrates",
         "confidence": "low",
@@ -1216,8 +1216,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_energy_cell_lfpsupplied_byton_company_molicel",
-        "source": "n_l3_energy_cell_lfp",
+        "id": "e_n_l3_energy_prismatic_cell_cansupplied_byton_company_molicel",
+        "source": "n_l3_energy_prismatic_cell_can",
         "target": "n_company_molicel",
         "dependency_type": "supplied_by",
         "confidence": "medium",
@@ -1228,8 +1228,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_energy_cell_lfpsupplied_byton_company_panasonic_energy_co_ltd",
-        "source": "n_l3_energy_cell_lfp",
+        "id": "e_n_l3_energy_prismatic_cell_cansupplied_byton_company_panasonic_energy_co_ltd",
+        "source": "n_l3_energy_prismatic_cell_can",
         "target": "n_company_panasonic_energy_co_ltd",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1240,8 +1240,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_energy_cell_nmcsupplied_byton_company_panasonic_energy_co_ltd",
-        "source": "n_l3_energy_cell_nmc",
+        "id": "e_n_l3_energy_cathode_coated_foilsupplied_byton_company_panasonic_energy_co_ltd",
+        "source": "n_l3_energy_cathode_coated_foil",
         "target": "n_company_panasonic_energy_co_ltd",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1252,8 +1252,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_energy_cell_nmcsupplied_byton_company_lg_energy_solution",
-        "source": "n_l3_energy_cell_nmc",
+        "id": "e_n_l3_energy_cathode_coated_foilsupplied_byton_company_lg_energy_solution",
+        "source": "n_l3_energy_cathode_coated_foil",
         "target": "n_company_lg_energy_solution",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1264,8 +1264,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_energy_pack_busbar_fusesupplied_byton_company_littelfuse_inc",
-        "source": "n_l3_energy_pack_busbar_fuse",
+        "id": "e_n_l3_energy_pack_current_shuntsupplied_byton_company_littelfuse_inc",
+        "source": "n_l3_energy_pack_current_shunt",
         "target": "n_company_littelfuse_inc",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1276,8 +1276,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_energy_pack_busbar_fusesupplied_byton_company_te_connectivity_ltd",
-        "source": "n_l3_energy_pack_busbar_fuse",
+        "id": "e_n_l3_energy_pack_current_shuntsupplied_byton_company_te_connectivity_ltd",
+        "source": "n_l3_energy_pack_current_shunt",
         "target": "n_company_te_connectivity_ltd",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1288,8 +1288,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_energy_bms_monitor_icintegrateston_company_texas_instruments_incorporated",
-        "source": "n_l3_energy_bms_monitor_ic",
+        "id": "e_n_l3_energy_cell_monitor_asicintegrateston_company_texas_instruments_incorporated",
+        "source": "n_l3_energy_cell_monitor_asic",
         "target": "n_company_texas_instruments_incorporated",
         "dependency_type": "integrates",
         "confidence": "medium",
@@ -1300,8 +1300,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_energy_bms_monitor_icintegrateston_company_analog_devices_inc",
-        "source": "n_l3_energy_bms_monitor_ic",
+        "id": "e_n_l3_energy_cell_monitor_asicintegrateston_company_analog_devices_inc",
+        "source": "n_l3_energy_cell_monitor_asic",
         "target": "n_company_analog_devices_inc",
         "dependency_type": "integrates",
         "confidence": "low",
@@ -1312,8 +1312,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_energy_pack_thermalsupplied_byton_company_boyd_corporation",
-        "source": "n_l3_energy_pack_thermal",
+        "id": "e_n_l3_energy_silicone_gap_padsupplied_byton_company_boyd_corporation",
+        "source": "n_l3_energy_silicone_gap_pad",
         "target": "n_company_boyd_corporation",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1324,8 +1324,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_energy_pack_thermalsupplied_byton_company_henkel_ag_co_kgaa",
-        "source": "n_l3_energy_pack_thermal",
+        "id": "e_n_l3_energy_silicone_gap_padsupplied_byton_company_henkel_ag_co_kgaa",
+        "source": "n_l3_energy_silicone_gap_pad",
         "target": "n_company_henkel_ag_co_kgaa",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1336,8 +1336,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_energy_separator_supplysupplied_byton_company_celgard_llc",
-        "source": "n_l3_energy_separator_supply",
+        "id": "e_n_l3_energy_separator_film_rollsupplied_byton_company_celgard_llc",
+        "source": "n_l3_energy_separator_film_roll",
         "target": "n_company_celgard_llc",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1348,8 +1348,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_energy_separator_supplysupplied_byton_company_asahi_kasei_corporation",
-        "source": "n_l3_energy_separator_supply",
+        "id": "e_n_l3_energy_separator_film_rollsupplied_byton_company_asahi_kasei_corporation",
+        "source": "n_l3_energy_separator_film_roll",
         "target": "n_company_asahi_kasei_corporation",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1360,8 +1360,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_securecomms_rf_transceiversupplied_byton_company_doodle_labs",
-        "source": "n_l3_securecomms_rf_transceiver",
+        "id": "e_n_l3_securecomms_iq_transceiver_icsupplied_byton_company_doodle_labs",
+        "source": "n_l3_securecomms_iq_transceiver_ic",
         "target": "n_company_doodle_labs",
         "dependency_type": "supplied_by",
         "confidence": "medium",
@@ -1372,8 +1372,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_securecomms_rf_transceiversupplied_byton_company_l3harris_technologies_inc",
-        "source": "n_l3_securecomms_rf_transceiver",
+        "id": "e_n_l3_securecomms_iq_transceiver_icsupplied_byton_company_l3harris_technologies_inc",
+        "source": "n_l3_securecomms_iq_transceiver_ic",
         "target": "n_company_l3harris_technologies_inc",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1384,8 +1384,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_securecomms_crypto_key_storesupplied_byton_company_thales_group",
-        "source": "n_l3_securecomms_crypto_key_store",
+        "id": "e_n_l3_securecomms_secure_element_icsupplied_byton_company_thales_group",
+        "source": "n_l3_securecomms_secure_element_ic",
         "target": "n_company_thales_group",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1396,8 +1396,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_securecomms_crypto_key_storesupplied_byton_company_microchip_technology_inc",
-        "source": "n_l3_securecomms_crypto_key_store",
+        "id": "e_n_l3_securecomms_secure_element_icsupplied_byton_company_microchip_technology_inc",
+        "source": "n_l3_securecomms_secure_element_ic",
         "target": "n_company_microchip_technology_inc",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1408,8 +1408,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_securecomms_antenna_rf_frontendsupplied_byton_company_gps_source_inc",
-        "source": "n_l3_securecomms_antenna_rf_frontend",
+        "id": "e_n_l3_securecomms_patch_antenna_elementsupplied_byton_company_gps_source_inc",
+        "source": "n_l3_securecomms_patch_antenna_element",
         "target": "n_company_gps_source_inc",
         "dependency_type": "supplied_by",
         "confidence": "medium",
@@ -1420,8 +1420,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_securecomms_antenna_rf_frontendintegrateston_company_doodle_labs",
-        "source": "n_l3_securecomms_antenna_rf_frontend",
+        "id": "e_n_l3_securecomms_patch_antenna_elementintegrateston_company_doodle_labs",
+        "source": "n_l3_securecomms_patch_antenna_element",
         "target": "n_company_doodle_labs",
         "dependency_type": "integrates",
         "confidence": "low",
@@ -1432,8 +1432,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_securecomms_ground_terminalintegrateston_company_collins_aerospace",
-        "source": "n_l3_securecomms_ground_terminal",
+        "id": "e_n_l3_securecomms_frequency_synthesizerintegrateston_company_collins_aerospace",
+        "source": "n_l3_securecomms_frequency_synthesizer",
         "target": "n_company_collins_aerospace",
         "dependency_type": "integrates",
         "confidence": "medium",
@@ -1444,8 +1444,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_securecomms_ground_terminalintegrateston_company_l3harris_technologies_inc",
-        "source": "n_l3_securecomms_ground_terminal",
+        "id": "e_n_l3_securecomms_frequency_synthesizerintegrateston_company_l3harris_technologies_inc",
+        "source": "n_l3_securecomms_frequency_synthesizer",
         "target": "n_company_l3harris_technologies_inc",
         "dependency_type": "integrates",
         "confidence": "low",
@@ -1456,8 +1456,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_pnt_gnss_multibandsupplied_byton_company_ark_electronics",
-        "source": "n_l3_pnt_gnss_multiband",
+        "id": "e_n_l3_pnt_rf_front_end_icsupplied_byton_company_ark_electronics",
+        "source": "n_l3_pnt_rf_front_end_ic",
         "target": "n_company_ark_electronics",
         "dependency_type": "supplied_by",
         "confidence": "medium",
@@ -1468,8 +1468,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_pnt_gnss_multibandintegrateston_company_u_blox_ag",
-        "source": "n_l3_pnt_gnss_multiband",
+        "id": "e_n_l3_pnt_rf_front_end_icintegrateston_company_u_blox_ag",
+        "source": "n_l3_pnt_rf_front_end_ic",
         "target": "n_company_u_blox_ag",
         "dependency_type": "integrates",
         "confidence": "medium",
@@ -1480,8 +1480,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_pnt_antijam_modulesupplied_byton_company_bae_systems_plc",
-        "source": "n_l3_pnt_antijam_module",
+        "id": "e_n_l3_pnt_beamforming_icsupplied_byton_company_bae_systems_plc",
+        "source": "n_l3_pnt_beamforming_ic",
         "target": "n_company_bae_systems_plc",
         "dependency_type": "supplied_by",
         "confidence": "medium",
@@ -1492,8 +1492,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_pnt_antijam_modulesupplied_byton_company_raytheon_technologies_corp",
-        "source": "n_l3_pnt_antijam_module",
+        "id": "e_n_l3_pnt_beamforming_icsupplied_byton_company_raytheon_technologies_corp",
+        "source": "n_l3_pnt_beamforming_ic",
         "target": "n_company_raytheon_technologies_corp",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1504,8 +1504,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_pnt_imu_gradesupplied_byton_company_honeywell_international_inc",
-        "source": "n_l3_pnt_imu_grade",
+        "id": "e_n_l3_pnt_fog_rate_sensorsupplied_byton_company_honeywell_international_inc",
+        "source": "n_l3_pnt_fog_rate_sensor",
         "target": "n_company_honeywell_international_inc",
         "dependency_type": "supplied_by",
         "confidence": "medium",
@@ -1516,8 +1516,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_pnt_imu_gradesupplied_byton_company_northrop_grumman_corporation",
-        "source": "n_l3_pnt_imu_grade",
+        "id": "e_n_l3_pnt_fog_rate_sensorsupplied_byton_company_northrop_grumman_corporation",
+        "source": "n_l3_pnt_fog_rate_sensor",
         "target": "n_company_northrop_grumman_corporation",
         "dependency_type": "supplied_by",
         "confidence": "low",
@@ -1528,8 +1528,8 @@
     },
     {
       "data": {
-        "id": "e_n_l3_pnt_vision_aided_navintegrateston_company_auterion_government_solutions_inc",
-        "source": "n_l3_pnt_vision_aided_nav",
+        "id": "e_n_l3_fcg_soc_moduleintegrateston_company_auterion_government_solutions_inc",
+        "source": "n_l3_fcg_soc_module",
         "target": "n_company_auterion_government_solutions_inc",
         "dependency_type": "integrates",
         "confidence": "low",
@@ -1540,494 +1540,14 @@
     },
     {
       "data": {
-        "id": "e_n_l3_pnt_vision_aided_navintegrateston_company_skydio_inc",
-        "source": "n_l3_pnt_vision_aided_nav",
+        "id": "e_n_l3_fcg_soc_moduleintegrateston_company_skydio_inc",
+        "source": "n_l3_fcg_soc_module",
         "target": "n_company_skydio_inc",
         "dependency_type": "integrates",
         "confidence": "low",
         "source_count": 1,
         "composite_score": null,
         "confidence_penalty": null
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_propulsion_esc_power_stagedepends_on_companyton_company_microchip_technology_inc",
-        "source": "n_l3_propulsion_esc_power_stage",
-        "target": "n_company_microchip_technology_inc",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 10,
-        "composite_score": 17.28,
-        "confidence_penalty": 0.63
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_propulsion_esc_power_stagedepends_on_companyton_company_infineon_technologies_ag",
-        "source": "n_l3_propulsion_esc_power_stage",
-        "target": "n_company_infineon_technologies_ag",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 8,
-        "composite_score": 9.82,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_propulsion_esc_control_mcudepends_on_companyton_company_microchip_technology_inc",
-        "source": "n_l3_propulsion_esc_control_mcu",
-        "target": "n_company_microchip_technology_inc",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 9,
-        "composite_score": 19.71,
-        "confidence_penalty": 0.57
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_propulsion_esc_control_mcudepends_on_companyton_company_nxp_semiconductors_n_v",
-        "source": "n_l3_propulsion_esc_control_mcu",
-        "target": "n_company_nxp_semiconductors_n_v",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 9,
-        "composite_score": 12.71,
-        "confidence_penalty": 0.71
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_propulsion_motor_magnet_stackdepends_on_companyton_company_mp_materials_corp",
-        "source": "n_l3_propulsion_motor_magnet_stack",
-        "target": "n_company_mp_materials_corp",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 8,
-        "composite_score": 12.6,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_propulsion_motor_magnet_stackdepends_on_companyton_company_proterial_ltd",
-        "source": "n_l3_propulsion_motor_magnet_stack",
-        "target": "n_company_proterial_ltd",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 8,
-        "composite_score": 13.29,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_propulsion_motor_windingdepends_on_companyton_company_nidec_corporation",
-        "source": "n_l3_propulsion_motor_winding",
-        "target": "n_company_nidec_corporation",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 8,
-        "composite_score": 13.52,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_propulsion_motor_windingdepends_on_companyton_company_t_motor",
-        "source": "n_l3_propulsion_motor_winding",
-        "target": "n_company_t_motor",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 8,
-        "composite_score": 13.52,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_propulsion_bearing_shaftdepends_on_companyton_company_skf_group",
-        "source": "n_l3_propulsion_bearing_shaft",
-        "target": "n_company_skf_group",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 6,
-        "composite_score": 9.82,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_propulsion_bearing_shaftdepends_on_companyton_company_nsk_ltd",
-        "source": "n_l3_propulsion_bearing_shaft",
-        "target": "n_company_nsk_ltd",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 6,
-        "composite_score": 9.82,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_propulsion_propeller_materialdepends_on_companyton_company_apc_propellers",
-        "source": "n_l3_propulsion_propeller_material",
-        "target": "n_company_apc_propellers",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 10,
-        "composite_score": 18.55,
-        "confidence_penalty": 0.63
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_propulsion_propeller_materialdepends_on_companyton_company_farage_precision_llc",
-        "source": "n_l3_propulsion_propeller_material",
-        "target": "n_company_farage_precision_llc",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 10,
-        "composite_score": 10.61,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_energy_cell_lfpdepends_on_companyton_company_molicel",
-        "source": "n_l3_energy_cell_lfp",
-        "target": "n_company_molicel",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 7,
-        "composite_score": 26.09,
-        "confidence_penalty": 0.57
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_energy_cell_lfpdepends_on_companyton_company_panasonic_energy_co_ltd",
-        "source": "n_l3_energy_cell_lfp",
-        "target": "n_company_panasonic_energy_co_ltd",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 6,
-        "composite_score": 17.02,
-        "confidence_penalty": 0.71
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_energy_cell_nmcdepends_on_companyton_company_panasonic_energy_co_ltd",
-        "source": "n_l3_energy_cell_nmc",
-        "target": "n_company_panasonic_energy_co_ltd",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 6,
-        "composite_score": 17.02,
-        "confidence_penalty": 0.71
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_energy_cell_nmcdepends_on_companyton_company_lg_energy_solution",
-        "source": "n_l3_energy_cell_nmc",
-        "target": "n_company_lg_energy_solution",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 6,
-        "composite_score": 17.02,
-        "confidence_penalty": 0.71
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_energy_pack_busbar_fusedepends_on_companyton_company_littelfuse_inc",
-        "source": "n_l3_energy_pack_busbar_fuse",
-        "target": "n_company_littelfuse_inc",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 8,
-        "composite_score": 11.25,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_energy_pack_busbar_fusedepends_on_companyton_company_te_connectivity_ltd",
-        "source": "n_l3_energy_pack_busbar_fuse",
-        "target": "n_company_te_connectivity_ltd",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 8,
-        "composite_score": 11.25,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_energy_bms_monitor_icdepends_on_companyton_company_texas_instruments_incorporated",
-        "source": "n_l3_energy_bms_monitor_ic",
-        "target": "n_company_texas_instruments_incorporated",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 10,
-        "composite_score": 20.57,
-        "confidence_penalty": 0.57
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_energy_bms_monitor_icdepends_on_companyton_company_analog_devices_inc",
-        "source": "n_l3_energy_bms_monitor_ic",
-        "target": "n_company_analog_devices_inc",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 9,
-        "composite_score": 13.29,
-        "confidence_penalty": 0.71
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_energy_pack_thermaldepends_on_companyton_company_boyd_corporation",
-        "source": "n_l3_energy_pack_thermal",
-        "target": "n_company_boyd_corporation",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 6,
-        "composite_score": 10.51,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_energy_pack_thermaldepends_on_companyton_company_henkel_ag_co_kgaa",
-        "source": "n_l3_energy_pack_thermal",
-        "target": "n_company_henkel_ag_co_kgaa",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 6,
-        "composite_score": 9.82,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_energy_separator_supplydepends_on_companyton_company_celgard_llc",
-        "source": "n_l3_energy_separator_supply",
-        "target": "n_company_celgard_llc",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 8,
-        "composite_score": 12.47,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_energy_separator_supplydepends_on_companyton_company_asahi_kasei_corporation",
-        "source": "n_l3_energy_separator_supply",
-        "target": "n_company_asahi_kasei_corporation",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 8,
-        "composite_score": 12.47,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_securecomms_rf_transceiverdepends_on_companyton_company_doodle_labs",
-        "source": "n_l3_securecomms_rf_transceiver",
-        "target": "n_company_doodle_labs",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 7,
-        "composite_score": 17.99,
-        "confidence_penalty": 0.63
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_securecomms_rf_transceiverdepends_on_companyton_company_l3harris_technologies_inc",
-        "source": "n_l3_securecomms_rf_transceiver",
-        "target": "n_company_l3harris_technologies_inc",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 7,
-        "composite_score": 10.73,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_securecomms_crypto_key_storedepends_on_companyton_company_thales_group",
-        "source": "n_l3_securecomms_crypto_key_store",
-        "target": "n_company_thales_group",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 6,
-        "composite_score": 7.33,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_securecomms_crypto_key_storedepends_on_companyton_company_microchip_technology_inc",
-        "source": "n_l3_securecomms_crypto_key_store",
-        "target": "n_company_microchip_technology_inc",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 7,
-        "composite_score": 7.33,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_securecomms_antenna_rf_frontenddepends_on_companyton_company_gps_source_inc",
-        "source": "n_l3_securecomms_antenna_rf_frontend",
-        "target": "n_company_gps_source_inc",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 7,
-        "composite_score": 18.11,
-        "confidence_penalty": 0.63
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_securecomms_antenna_rf_frontenddepends_on_companyton_company_doodle_labs",
-        "source": "n_l3_securecomms_antenna_rf_frontend",
-        "target": "n_company_doodle_labs",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 7,
-        "composite_score": 10.33,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_securecomms_ground_terminaldepends_on_companyton_company_collins_aerospace",
-        "source": "n_l3_securecomms_ground_terminal",
-        "target": "n_company_collins_aerospace",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 8,
-        "composite_score": 16.4,
-        "confidence_penalty": 0.63
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_securecomms_ground_terminaldepends_on_companyton_company_l3harris_technologies_inc",
-        "source": "n_l3_securecomms_ground_terminal",
-        "target": "n_company_l3harris_technologies_inc",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 8,
-        "composite_score": 9.74,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_pnt_gnss_multibanddepends_on_companyton_company_ark_electronics",
-        "source": "n_l3_pnt_gnss_multiband",
-        "target": "n_company_ark_electronics",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 11,
-        "composite_score": 19.38,
-        "confidence_penalty": 0.63
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_pnt_gnss_multibanddepends_on_companyton_company_u_blox_ag",
-        "source": "n_l3_pnt_gnss_multiband",
-        "target": "n_company_u_blox_ag",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 12,
-        "composite_score": 19.01,
-        "confidence_penalty": 0.63
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_pnt_antijam_moduledepends_on_companyton_company_bae_systems_plc",
-        "source": "n_l3_pnt_antijam_module",
-        "target": "n_company_bae_systems_plc",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 8,
-        "composite_score": 16.42,
-        "confidence_penalty": 0.63
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_pnt_antijam_moduledepends_on_companyton_company_raytheon_technologies_corp",
-        "source": "n_l3_pnt_antijam_module",
-        "target": "n_company_raytheon_technologies_corp",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 8,
-        "composite_score": 9.75,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_pnt_imu_gradedepends_on_companyton_company_honeywell_international_inc",
-        "source": "n_l3_pnt_imu_grade",
-        "target": "n_company_honeywell_international_inc",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 7,
-        "composite_score": 16.26,
-        "confidence_penalty": 0.63
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_pnt_imu_gradedepends_on_companyton_company_northrop_grumman_corporation",
-        "source": "n_l3_pnt_imu_grade",
-        "target": "n_company_northrop_grumman_corporation",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 7,
-        "composite_score": 9.64,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_pnt_vision_aided_navdepends_on_companyton_company_auterion_government_solutions_inc",
-        "source": "n_l3_pnt_vision_aided_nav",
-        "target": "n_company_auterion_government_solutions_inc",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 8,
-        "composite_score": 9.6,
-        "confidence_penalty": 0.77
-      }
-    },
-    {
-      "data": {
-        "id": "e_n_l3_pnt_vision_aided_navdepends_on_companyton_company_skydio_inc",
-        "source": "n_l3_pnt_vision_aided_nav",
-        "target": "n_company_skydio_inc",
-        "dependency_type": "depends_on_company",
-        "confidence": "low",
-        "source_count": 7,
-        "composite_score": 9.6,
-        "confidence_penalty": 0.77
       }
     }
   ],
