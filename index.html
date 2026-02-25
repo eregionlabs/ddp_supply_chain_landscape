@@ -8,7 +8,7 @@
     <meta property="og:title" content="DDP Supply Chain Landscape" />
     <meta property="og:description" content="Interactive dependency intelligence mapping bottleneck pressure, supplier exposure, and evidence sourcing across defense supply chain layers." />
     <meta property="og:type" content="website" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data:;" />
     <title>DDP Supply Chain Landscape</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect rx='18' width='100' height='100' fill='%233b6fb5'/><text x='50' y='72' font-size='60' text-anchor='middle' fill='white' font-family='system-ui'>G</text></svg>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,13 +25,19 @@
     <div id="topPanel">
     <header class="top-header">
       <div class="brand-lockup">
-        <div class="brand-title-row">
-          <strong>Defense Industrial Base Constraint Map</strong>
-          <span class="header-version">Live</span>
+        <img src="assets/logo.jpg" alt="Eregion Research" class="brand-logo" />
+        <div class="brand-text">
+          <div class="brand-title-row">
+            <strong>Defense Industrial Base Constraint Map</strong>
+            <span class="header-version">Live</span>
+          </div>
+          <span class="brand-subtitle">Supply-chain dependency intelligence &middot; bottleneck pressure &middot; supplier exposure</span>
         </div>
-        <span class="brand-subtitle">Supply-chain dependency intelligence &middot; bottleneck pressure &middot; supplier exposure</span>
       </div>
-      <div id="kpi" class="kpi">loading&hellip;</div>
+      <div class="header-right">
+        <div id="kpi" class="kpi">loading&hellip;</div>
+        <div class="brand-wordmark">Eregion Research</div>
+      </div>
     </header>
 
     <section class="control-bar" role="toolbar" aria-label="Graph controls">
@@ -128,6 +134,15 @@
     </main>
 
     <button id="panelToggle" class="panel-toggle-btn" aria-label="Toggle detail panel" aria-expanded="false" aria-controls="panel">Details</button>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <img src="assets/logo.jpg" alt="Eregion Research" class="footer-logo" />
+        <span class="footer-name">Eregion Research</span>
+      </div>
+      <span class="footer-sep">&middot;</span>
+      <a href="mailto:info@eregionlabs.com" class="footer-contact">info@eregionlabs.com</a>
+    </footer>
 
     <script type="module" src="main.js"></script>
   </body>
