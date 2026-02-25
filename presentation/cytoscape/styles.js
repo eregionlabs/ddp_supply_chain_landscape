@@ -373,7 +373,22 @@ export const cyStyles = [
     }
   },
 
-  /* ── State classes ── */
+  /* ── Progressive disclosure classes (before state classes so they can be overridden) ── */
+  { selector: 'node.collapsed', style: {
+    'width': 160, 'height': 56,
+    'border-width': 2.8, 'border-color': collapsedBorder,
+    'background-color': collapsedBg,
+    'font-size': 14, 'text-valign': 'center', 'text-margin-y': 0
+  }},
+  { selector: 'node.hotspot', style: {
+    'opacity': 0.75, 'border-width': 1.8,
+    'border-color': 'rgba(239, 68, 68, 0.50)', 'text-opacity': 0.58
+  }},
+  { selector: '.expanding', style: {
+    'transition-property': 'opacity', 'transition-duration': '400ms'
+  }},
+
+  /* ── State classes (after progressive disclosure so they win) ── */
   { selector: '.dim', style: {
     'opacity': 0.06, 'text-opacity': 0.02
   }},
@@ -424,20 +439,5 @@ export const cyStyles = [
     'opacity': 1,
     'line-color': () => focusAccentRgba(0.40), 'target-arrow-color': () => focusAccentRgba(0.40),
     'width': 1.5
-  }},
-
-  /* ── Progressive disclosure classes ── */
-  { selector: 'node.collapsed', style: {
-    'width': 160, 'height': 56,
-    'border-width': 2.8, 'border-color': collapsedBorder,
-    'background-color': collapsedBg,
-    'font-size': 14, 'text-valign': 'center', 'text-margin-y': 0
-  }},
-  { selector: 'node.hotspot', style: {
-    'opacity': 0.75, 'border-width': 1.8,
-    'border-color': 'rgba(239, 68, 68, 0.50)', 'text-opacity': 0.58
-  }},
-  { selector: '.expanding', style: {
-    'transition-property': 'opacity', 'transition-duration': '400ms'
   }}
 ];
