@@ -99,12 +99,7 @@ export function applyFilters(cy, { searchEl, domainEl, confEl, pressureEl }) {
     const isCompany = n.data('node_type') === 'company';
 
     let ok = true;
-    if (q && !(label.includes(q) || id.includes(q))) {
-      const cos = n.data('top_companies');
-      const coMatch = Array.isArray(cos) && cos.some(c =>
-        String(c.company_name || '').toLowerCase().includes(q));
-      if (!coMatch) ok = false;
-    }
+    if (q && !(label.includes(q) || id.includes(q))) ok = false;
 
     if (!isCompany) {
       if (domain !== 'all' && String(n.data('l1_component') || '').toLowerCase() !== domain) ok = false;
@@ -123,6 +118,16 @@ export function applyFilters(cy, { searchEl, domainEl, confEl, pressureEl }) {
 
     if (!ok) n.addClass('dim');
   });
+
+  /* Propagate: un-dim components connected to matched company nodes */
+  if (q) {
+    cy.nodes('[node_type = "company"]').filter(n => !n.hasClass('dim')).forEach(cn => {
+      cn.connectedEdges().forEach(e => {
+        const other = e.source().id() === cn.id() ? e.target() : e.source();
+        other.removeClass('dim');
+      });
+    });
+  }
 
   cy.edges().forEach(e => {
     if (e.source().hasClass('dim') || e.target().hasClass('dim')) e.addClass('dim');
