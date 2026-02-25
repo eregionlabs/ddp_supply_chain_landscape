@@ -533,46 +533,62 @@ export function drawDomainBackgrounds(cy) {
     const sw = bounds.w * zoom;
     const sh = bounds.h * zoom;
 
-    const radius = 12 * zoom;
-
-    /* Dark panel fill — slightly lighter than #13171C base */
-    ctx.fillStyle = '#1A1F26';
-    ctx.beginPath();
-    roundRect(ctx, sx, sy, sw, sh, radius);
-    ctx.fill();
-
-    /* Faint tint overlay — preserves domain identity without competing */
+    const radius = 14 * zoom;
     const { r, g, b } = hexToRgb(bounds.tint);
-    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.06)`;
+
+    /* Dark panel fill with domain accent gradient */
+    const grad = ctx.createLinearGradient(sx, sy, sx, sy + sh);
+    grad.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.06)`);
+    grad.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0.02)`);
+    ctx.fillStyle = '#111827';
     ctx.beginPath();
     roundRect(ctx, sx, sy, sw, sh, radius);
     ctx.fill();
 
-    /* Subtle division border */
-    ctx.strokeStyle = '#222831';
+    /* Domain accent overlay */
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    roundRect(ctx, sx, sy, sw, sh, radius);
+    ctx.fill();
+
+    /* Accent-tinted border */
+    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.15)`;
     ctx.lineWidth = 1;
     ctx.beginPath();
     roundRect(ctx, sx, sy, sw, sh, radius);
     ctx.stroke();
 
-    /* Domain label — muted white */
+    /* Top accent bar — thin colored strip at top of panel (clipped to panel shape) */
+    const barH = Math.max(2, 3 * zoom);
+    const barGrad = ctx.createLinearGradient(sx, sy, sx + sw, sy);
+    barGrad.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.5)`);
+    barGrad.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0.1)`);
+    ctx.save();
+    ctx.beginPath();
+    roundRect(ctx, sx, sy, sw, sh, radius);
+    ctx.clip();
+    ctx.fillStyle = barGrad;
+    ctx.fillRect(sx, sy, sw, barH);
+    ctx.restore();
+
+    /* Domain label — accent-tinted */
     const fontSize = Math.max(9, Math.min(13, 11 * zoom));
     ctx.font = `700 ${fontSize}px "Inter", system-ui, sans-serif`;
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.28)';
+    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.55)`;
     ctx.textBaseline = 'top';
 
-    const labelX = sx + 10 * zoom;
-    const labelY = sy + 6 * zoom;
+    const labelX = sx + 12 * zoom;
+    const labelY = sy + 8 * zoom;
     ctx.fillText(bounds.label, labelX, labelY);
 
     /* Expand / collapse indicator */
     const labelMetrics = ctx.measureText(bounds.label);
     const indicatorX = labelX + labelMetrics.width + 6 * zoom;
     if (bounds.expanded) {
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.20)';
+      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.35)`;
       ctx.fillText('\u25B4', indicatorX, labelY);
     } else {
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.30)';
+      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.45)`;
       ctx.fillText('\u25BE', indicatorX, labelY);
 
       /* Child count badge for collapsed domains */
@@ -580,7 +596,7 @@ export function drawDomainBackgrounds(cy) {
       if (counts) {
         const badgeFontSize = Math.max(7, Math.min(10, 9 * zoom));
         ctx.font = `500 ${badgeFontSize}px "Inter", system-ui, sans-serif`;
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.20)';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
         const badgeText = `${counts.l2} subsystems \u00b7 ${counts.l3} components`;
         ctx.fillText(badgeText, labelX, labelY + fontSize + 4 * zoom);
       }

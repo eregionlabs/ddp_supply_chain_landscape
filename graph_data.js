@@ -1,14 +1,14 @@
 /* graph_data.js – v5: taxonomy coverage patch (missing categories + executive reps) */
 
 export const DOMAIN_TINTS = {
-  airframe_structures:     '#dbeafe',  // blue-100
-  energy_storage:          '#fef3c7',  // amber-100
-  flight_control_guidance: '#d1fae5',  // emerald-100
-  manufacturing_system:    '#e0e7ff',  // indigo-100
-  pnt:                     '#e0f2fe',  // sky-100
-  propulsion:              '#ffedd5',  // orange-100
-  secure_comms:            '#ede9fe',  // violet-100
-  other:                   '#f1f5f9'
+  airframe_structures:     '#06B6D4',  // cyan
+  energy_storage:          '#EAB308',  // gold
+  flight_control_guidance: '#10B981',  // emerald
+  manufacturing_system:    '#6366F1',  // indigo
+  pnt:                     '#0EA5E9',  // sky
+  propulsion:              '#F97316',  // orange
+  secure_comms:            '#8B5CF6',  // violet
+  other:                   '#64748B'
 };
 
 export const DOMAIN_LABELS = {
