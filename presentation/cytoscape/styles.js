@@ -390,7 +390,7 @@ export const cyStyles = [
 
   /* ── State classes (after progressive disclosure so they win) ── */
   { selector: '.dim', style: {
-    'opacity': 0.06, 'text-opacity': 0.02
+    'opacity': 0.35, 'text-opacity': 0.2
   }},
   { selector: '.top10', style: {
     'opacity': 1, 'text-opacity': 1,
@@ -419,12 +419,12 @@ export const cyStyles = [
   }},
   /* Dim everything not connected to the focused node */
   { selector: '.focus-dim', style: {
-    'opacity': 0.08, 'text-opacity': 0.03
+    'opacity': 0.35, 'text-opacity': 0.2
   }},
 
   /* ── Chain highlight ── */
   { selector: '.chain-dim', style: {
-    'opacity': 0.04, 'text-opacity': 0
+    'opacity': 0.3, 'text-opacity': 0.15
   }},
   { selector: '.chain-source', style: {
     'opacity': 1, 'text-opacity': 1,
