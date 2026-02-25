@@ -7,10 +7,10 @@
     "company_competitiveness": "analysis/company/company_competitiveness_v2.jsonl"
   },
   "counts": {
-    "company_nodes": 62,
-    "company_edges": 40,
+    "company_nodes": 71,
+    "company_edges": 50,
     "universe_only_company_nodes": 27,
-    "mapped_company_rows": 40,
+    "mapped_company_rows": 44,
     "universe_only_rows": 27
   },
   "nodes": [
@@ -1067,6 +1067,159 @@
         "universe_ticker": null,
         "universe_segment": null
       }
+    },
+    {
+      "data": {
+        "id": "n_company_silvus_technologies",
+        "label": "Silvus Technologies",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "medium",
+        "source_count": 3,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_persistent_systems",
+        "label": "Persistent Systems",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "medium",
+        "source_count": 3,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_motorola_solutions",
+        "label": "Motorola Solutions",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 2,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": "MSI",
+        "universe_segment": "Comms / Defense"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_shield_ai",
+        "label": "Shield AI",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 1,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "medium",
+        "source_count": 3,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_stmicroelectronics",
+        "label": "STMicroelectronics",
+        "node_type": "company",
+        "company_type": "Tier1",
+        "component_count": 2,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 2,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": "STM",
+        "universe_segment": "Semiconductors"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_lyten",
+        "label": "Lyten",
+        "node_type": "company",
+        "company_type": "Tier2",
+        "component_count": 1,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_enovix",
+        "label": "Enovix",
+        "node_type": "company",
+        "company_type": "Tier2",
+        "component_count": 1,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": "ENVX",
+        "universe_segment": "Battery Technology"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_amprius",
+        "label": "Amprius",
+        "node_type": "company",
+        "company_type": "Tier2",
+        "component_count": 1,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": "AMPX",
+        "universe_segment": "Battery Technology"
+      }
+    },
+    {
+      "data": {
+        "id": "n_company_aevex_aerospace",
+        "label": "AEVEX Aerospace",
+        "node_type": "company",
+        "company_type": "Tier2",
+        "component_count": 1,
+        "avg_composite_score": null,
+        "best_composite_score": null,
+        "confidence": "low",
+        "source_count": 1,
+        "universe_member": false,
+        "universe_only": false,
+        "universe_ticker": null,
+        "universe_segment": null
+      }
     }
   ],
   "edges": [
@@ -1544,6 +1697,126 @@
         "source": "n_l3_fcg_soc_module",
         "target": "n_company_skydio_inc",
         "dependency_type": "integrates",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l2_secure_comms_rf_transceiver_modulesupplied_byton_n_company_silvus_technologies",
+        "source": "n_l2_secure_comms_rf_transceiver_module",
+        "target": "n_company_silvus_technologies",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l2_secure_comms_rf_transceiver_modulesupplied_byton_n_company_persistent_systems",
+        "source": "n_l2_secure_comms_rf_transceiver_module",
+        "target": "n_company_persistent_systems",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l2_secure_comms_rf_transceiver_modulesupplied_byton_n_company_motorola_solutions",
+        "source": "n_l2_secure_comms_rf_transceiver_module",
+        "target": "n_company_motorola_solutions",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l2_flight_control_guidance_compute_carrier_boardsupplied_byton_n_company_shield_ai",
+        "source": "n_l2_flight_control_guidance_compute_carrier_board",
+        "target": "n_company_shield_ai",
+        "dependency_type": "supplied_by",
+        "confidence": "medium",
+        "source_count": 2,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_fcg_main_mcusupplied_byton_n_company_stmicroelectronics",
+        "source": "n_l3_fcg_main_mcu",
+        "target": "n_company_stmicroelectronics",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l3_propulsion_gate_driver_icsupplied_byton_n_company_stmicroelectronics",
+        "source": "n_l3_propulsion_gate_driver_ic",
+        "target": "n_company_stmicroelectronics",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l2_energy_storage_li_ion_cell_blocksupplied_byton_n_company_lyten",
+        "source": "n_l2_energy_storage_li_ion_cell_block",
+        "target": "n_company_lyten",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l2_energy_storage_li_ion_cell_blocksupplied_byton_n_company_enovix",
+        "source": "n_l2_energy_storage_li_ion_cell_block",
+        "target": "n_company_enovix",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l2_energy_storage_li_ion_cell_blocksupplied_byton_n_company_amprius",
+        "source": "n_l2_energy_storage_li_ion_cell_block",
+        "target": "n_company_amprius",
+        "dependency_type": "supplied_by",
+        "confidence": "low",
+        "source_count": 1,
+        "composite_score": null,
+        "confidence_penalty": null
+      }
+    },
+    {
+      "data": {
+        "id": "e_n_l2_manufacturing_system_final_assembly_test_racksupplied_byton_n_company_aevex_aerospace",
+        "source": "n_l2_manufacturing_system_final_assembly_test_rack",
+        "target": "n_company_aevex_aerospace",
+        "dependency_type": "supplied_by",
         "confidence": "low",
         "source_count": 1,
         "composite_score": null,
