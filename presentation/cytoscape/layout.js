@@ -608,7 +608,7 @@ export function drawDomainBackgrounds(cy) {
     ctx.restore();
 
     /* Domain label — accent-tinted */
-    const fontSize = Math.max(9, Math.min(13, 11 * zoom));
+    const fontSize = Math.max(11, Math.min(13, 11 * zoom));
     ctx.font = `700 ${fontSize}px "Inter", system-ui, sans-serif`;
     ctx.fillStyle = light ? `rgba(${r}, ${g}, ${b}, 0.72)` : `rgba(${r}, ${g}, ${b}, 0.55)`;
     ctx.textBaseline = 'top';

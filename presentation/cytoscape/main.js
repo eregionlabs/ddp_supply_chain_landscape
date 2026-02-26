@@ -105,6 +105,77 @@ if (panelToggleBtn && panelEl) {
   });
 }
 
+/* ── Panel close button ── */
+const panelCloseBtn = document.getElementById('panelClose');
+function closeMobilePanel() {
+  if (panelEl) {
+    panelEl.classList.remove('panel-open');
+    panelEl.style.transform = '';
+    if (panelToggleBtn) panelToggleBtn.setAttribute('aria-expanded', 'false');
+  }
+}
+if (panelCloseBtn) panelCloseBtn.addEventListener('click', closeMobilePanel);
+
+/* ── Swipe-to-close gesture on panel ── */
+if (panelEl) {
+  let _swipeStartY = 0;
+  let _swipeActive = false;
+
+  panelEl.addEventListener('touchstart', (e) => {
+    /* Only activate on touches near the top of the panel (drag handle area) */
+    const panelRect = panelEl.getBoundingClientRect();
+    const touchY = e.touches[0].clientY - panelRect.top;
+    if (touchY > 44) return;
+    _swipeStartY = e.touches[0].clientY;
+    _swipeActive = true;
+  }, { passive: true });
+
+  panelEl.addEventListener('touchmove', (e) => {
+    if (!_swipeActive) return;
+    const dy = e.touches[0].clientY - _swipeStartY;
+    if (dy > 0) {
+      panelEl.style.transform = `translateY(${dy}px)`;
+    }
+  }, { passive: true });
+
+  panelEl.addEventListener('touchend', (e) => {
+    if (!_swipeActive) return;
+    _swipeActive = false;
+    const dy = (e.changedTouches[0]?.clientY || 0) - _swipeStartY;
+    if (dy > 80) {
+      closeMobilePanel();
+    } else {
+      panelEl.style.transform = '';
+    }
+  }, { passive: true });
+}
+
+/* ── Mobile filter drawer toggle ── */
+const filterToggleBtn = document.getElementById('filterToggle');
+const filterDrawerEl  = document.getElementById('filterDrawer');
+const filterBadgeEl   = document.getElementById('filterBadge');
+
+if (filterToggleBtn && filterDrawerEl) {
+  filterToggleBtn.addEventListener('click', () => {
+    const open = filterDrawerEl.classList.toggle('filter-drawer-open');
+    filterToggleBtn.setAttribute('aria-expanded', String(open));
+  });
+}
+
+function updateFilterBadge() {
+  if (!filterBadgeEl) return;
+  const domainActive   = domainEl && domainEl.value !== 'all';
+  const confActive     = confEl && confEl.value !== 'all';
+  const pressureActive = pressureEl && pressureEl.value !== 'all';
+  const count = (domainActive ? 1 : 0) + (confActive ? 1 : 0) + (pressureActive ? 1 : 0);
+  if (count > 0) {
+    filterBadgeEl.textContent = String(count);
+    filterBadgeEl.hidden = false;
+  } else {
+    filterBadgeEl.hidden = true;
+  }
+}
+
 /* ── Load data ── */
 let allNodes = [];
 let allEdges = [];
@@ -240,6 +311,7 @@ function syncFilterHighlights() {
   domainEl.classList.toggle('filter-active', domainEl.value !== 'all');
   confEl.classList.toggle('filter-active', confEl.value !== 'all');
   pressureEl.classList.toggle('filter-active', pressureEl.value !== 'all');
+  updateFilterBadge();
 }
 
 /* ── Filter listeners ── */

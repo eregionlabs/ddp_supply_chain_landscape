@@ -153,48 +153,55 @@
         <label class="cluster-label" for="search">Search</label>
         <input id="search" placeholder="Node, id, or company" />
       </div>
-      <div class="control-cluster">
-        <label class="cluster-label" for="domainFilter">Domain</label>
-        <select id="domainFilter">
-          <option value="all">All</option>
-          <option value="airframe_structures">Airframe</option>
-          <option value="energy_storage">Energy</option>
-          <option value="flight_control_guidance">Flight Ctrl</option>
-          <option value="manufacturing_system">Manufacturing</option>
-          <option value="pnt">PNT</option>
-          <option value="propulsion">Propulsion</option>
-          <option value="secure_comms">Secure Comms</option>
-        </select>
-      </div>
-      <div class="control-cluster">
-        <label class="cluster-label" for="confFilter">Confidence</label>
-        <select id="confFilter">
-          <option value="all">All</option>
-          <option value="high">High</option>
-          <option value="medium">Medium</option>
-          <option value="low">Low</option>
-        </select>
-      </div>
-      <div class="control-cluster">
-        <label class="cluster-label" for="pressureFilter">Pressure</label>
-        <select id="pressureFilter">
-          <option value="all">All</option>
-          <option value="high">High (&ge;70)</option>
-          <option value="med">Medium (40&ndash;69)</option>
-          <option value="low">Low (&lt;40)</option>
-        </select>
-      </div>
-      <div class="control-cluster control-toggle">
-        <label class="toggle-switch" for="companyToggle">
-          <input type="checkbox" id="companyToggle" />
-          <span class="toggle-slider"></span>
-        </label>
-        <span class="toggle-label" id="companyToggleLabel">Company overlay (0)</span>
-      </div>
-      <div class="control-cluster control-actions">
-        <button id="expandAll">Expand All</button>
-        <button id="showTop10">Top Bottlenecks</button>
-        <button id="reset">Reset</button>
+      <button id="filterToggle" class="filter-toggle-btn" aria-expanded="false" aria-controls="filterDrawer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        Filters
+        <span id="filterBadge" class="filter-badge" hidden></span>
+      </button>
+      <div id="filterDrawer" class="filter-drawer">
+        <div class="control-cluster">
+          <label class="cluster-label" for="domainFilter">Domain</label>
+          <select id="domainFilter">
+            <option value="all">All</option>
+            <option value="airframe_structures">Airframe</option>
+            <option value="energy_storage">Energy</option>
+            <option value="flight_control_guidance">Flight Ctrl</option>
+            <option value="manufacturing_system">Manufacturing</option>
+            <option value="pnt">PNT</option>
+            <option value="propulsion">Propulsion</option>
+            <option value="secure_comms">Secure Comms</option>
+          </select>
+        </div>
+        <div class="control-cluster">
+          <label class="cluster-label" for="confFilter">Confidence</label>
+          <select id="confFilter">
+            <option value="all">All</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+        <div class="control-cluster">
+          <label class="cluster-label" for="pressureFilter">Pressure</label>
+          <select id="pressureFilter">
+            <option value="all">All</option>
+            <option value="high">High (&ge;70)</option>
+            <option value="med">Medium (40&ndash;69)</option>
+            <option value="low">Low (&lt;40)</option>
+          </select>
+        </div>
+        <div class="control-cluster control-toggle">
+          <label class="toggle-switch" for="companyToggle">
+            <input type="checkbox" id="companyToggle" />
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label" id="companyToggleLabel">Company overlay (0)</span>
+        </div>
+        <div class="control-cluster control-actions">
+          <button id="expandAll">Expand All</button>
+          <button id="showTop10">Top Bottlenecks</button>
+          <button id="reset">Reset</button>
+        </div>
       </div>
     </section>
 
@@ -212,6 +219,10 @@
       </div>
       <div id="panelResizer" title="Drag to resize panel"></div>
       <aside id="panel" aria-label="Detail panel">
+        <div class="panel-sheet-header">
+          <div class="panel-drag-handle"></div>
+          <button id="panelClose" class="panel-close-btn" aria-label="Close panel">&times;</button>
+        </div>
         <div class="card detail-card">
           <div class="card-header">Details</div>
           <div id="details"><small>Select a node to inspect risk profile, dependencies, and linked companies.</small></div>

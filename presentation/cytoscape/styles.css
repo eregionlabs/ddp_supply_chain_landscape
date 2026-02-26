@@ -427,6 +427,7 @@
 
 html, body {
   height: 100%;
+  height: 100dvh;       /* iOS Safari: respects dynamic toolbar height */
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   background: var(--bg-page);
   color: var(--text-primary);
@@ -720,6 +721,67 @@ select:focus {
   box-shadow: 0 0 0 2px rgba(56,189,248,0.12);
 }
 .control-bar input::placeholder { color: #64748B; font-size: 11px; }
+
+/* ── Filter toggle button (mobile only) ── */
+.filter-toggle-btn {
+  display: none;          /* hidden on desktop */
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: var(--r-sm);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--dur) var(--ease);
+  white-space: nowrap;
+  height: 34px;
+  flex-shrink: 0;
+}
+.filter-toggle-btn:hover {
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(255,255,255,0.24);
+  color: var(--text-primary);
+}
+.filter-toggle-btn svg { flex-shrink: 0; }
+
+.filter-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--accent);
+  color: #0B1120;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Filter drawer — transparent wrapper on desktop */
+.filter-drawer {
+  display: contents;
+}
+
+[data-theme="light"] .filter-toggle-btn {
+  background: #FFFFFF;
+  border-color: rgba(0,0,0,0.16);
+  color: #4A4139;
+}
+[data-theme="light"] .filter-toggle-btn:hover {
+  background: #F9F6F2;
+  border-color: rgba(0,0,0,0.24);
+  color: #1C1714;
+}
+[data-theme="light"] .filter-badge {
+  background: var(--accent);
+  color: #FFFFFF;
+}
 
 /* ── Action buttons ── */
 .control-actions { display: flex; gap: 8px; }
@@ -1813,6 +1875,62 @@ small { color: var(--text-primary); font-size: 10.5px; }
 
 
 /* ════════════════════════════════════════════════════════════
+   17b. PANEL SHEET HEADER (mobile drag handle + close)
+   ════════════════════════════════════════════════════════════ */
+
+.panel-sheet-header {
+  display: none;          /* hidden on desktop */
+}
+
+.panel-drag-handle {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.25);
+  margin: 0 auto;
+}
+
+.panel-close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  color: var(--text-secondary);
+  font-size: 18px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--dur) var(--ease);
+  line-height: 1;
+}
+.panel-close-btn:hover {
+  background: rgba(255,255,255,0.16);
+  border-color: rgba(255,255,255,0.24);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .panel-drag-handle {
+  background: rgba(0,0,0,0.18);
+}
+[data-theme="light"] .panel-close-btn {
+  border-color: rgba(0,0,0,0.12);
+  background: rgba(0,0,0,0.05);
+  color: var(--text-secondary);
+}
+[data-theme="light"] .panel-close-btn:hover {
+  background: rgba(0,0,0,0.10);
+  border-color: rgba(0,0,0,0.20);
+  color: var(--text-primary);
+}
+
+
+/* ════════════════════════════════════════════════════════════
    18. RESPONSIVE — tablet (≤940px)
    ════════════════════════════════════════════════════════════ */
 
@@ -1836,10 +1954,20 @@ small { color: var(--text-primary); font-size: 10.5px; }
     border-left: none;
     border-top: 1px solid var(--border);
     border-radius: var(--r-lg) var(--r-lg) 0 0;
-    top: 20vh;
+    top: 30vh;
   }
   #panel.panel-open {
     transform: translateY(0);
+  }
+
+  /* Show drag handle + close on tablet/phone */
+  .panel-sheet-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 10px 0 6px;
+    flex-shrink: 0;
   }
 
   /* Header: stack KPI below brand on tablets */
@@ -1894,13 +2022,42 @@ small { color: var(--text-primary); font-size: 10.5px; }
     display: none;
   }
 
-  /* ── b) Control bar: wrap into grid rows ── */
+  /* ── b) Control bar: compact with collapsible filter drawer ── */
   .control-bar {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 6px;
     padding: 8px 10px;
   }
+  .control-search {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border-right: none;
+  }
+  .control-search input {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* Show filter toggle on mobile */
+  .filter-toggle-btn {
+    display: inline-flex;
+    height: 38px;
+    font-size: 13px;
+  }
+
+  /* Filter drawer: hidden by default on mobile, grid when open */
+  .filter-drawer {
+    display: none;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .filter-drawer.filter-drawer-open {
+    display: grid;
+  }
+
   .control-cluster {
     padding: 0;
     border-right: none;
@@ -1910,7 +2067,7 @@ small { color: var(--text-primary); font-size: 10.5px; }
   }
   .cluster-label {
     display: block;
-    font-size: 8px;
+    font-size: 11px;
     color: #64748B;
     margin-bottom: 0;
   }
@@ -1919,15 +2076,8 @@ small { color: var(--text-primary); font-size: 10.5px; }
     width: 100%;
     min-width: 0;
     height: 38px;
-    font-size: 13px;
+    font-size: 16px;    /* ≥16px prevents iOS Safari auto-zoom on focus */
     min-height: 38px;
-  }
-  .control-search {
-    grid-column: 1 / -1;
-  }
-  .control-search input {
-    min-width: 0;
-    width: 100%;
   }
 
   /* Toggle — inline row */
@@ -1979,7 +2129,7 @@ small { color: var(--text-primary); font-size: 10.5px; }
   }
   #panel {
     padding: 10px;
-    top: 10vh;
+    top: 40vh;           /* leaves 40% viewport for graph behind panel */
     border-radius: var(--r-lg) var(--r-lg) 0 0;
   }
 
@@ -2011,7 +2161,7 @@ small { color: var(--text-primary); font-size: 10.5px; }
     min-height: 44px;
   }
 
-  /* ── h) Footer: compact single line ── */
+  /* ── h) Footer: compact single line with touch targets ── */
   .site-footer {
     padding: 5px 12px;
     gap: 6px;
@@ -2026,9 +2176,19 @@ small { color: var(--text-primary); font-size: 10.5px; }
   }
   .footer-contact {
     font-size: 9px;
+    padding: 8px 4px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
   }
   .footer-sep {
     font-size: 10px;
+  }
+  .footer-disclaimer summary {
+    padding: 8px 4px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
   }
 
   /* ── i) Disable hover transforms on touch ── */
@@ -2037,6 +2197,13 @@ small { color: var(--text-primary); font-size: 10.5px; }
   .top-bottleneck-row:hover,
   .company-row:hover {
     transform: none;
+  }
+
+  /* ── j) BTI rubric table: horizontal scroll on narrow screens ── */
+  .bti-rubric-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -2518,5 +2685,103 @@ small { color: var(--text-primary); font-size: 10.5px; }
   }
   .intro-dismiss-label {
     justify-content: center;
+  }
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   24. ACCESSIBILITY — prefers-reduced-motion
+   ════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  #panel {
+    transition: none;
+  }
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   25. LANDSCAPE ORIENTATION (phone held sideways)
+   ════════════════════════════════════════════════════════════ */
+
+@media (max-height: 500px) and (orientation: landscape) {
+  /* Compact header */
+  .top-header {
+    padding: 4px 12px;
+    min-height: 32px;
+  }
+  .brand-logo {
+    width: 22px;
+    height: 22px;
+  }
+  .brand-title-row strong {
+    font-size: 12px;
+  }
+  .brand-subtitle,
+  .header-version {
+    display: none;
+  }
+
+  /* Auto-collapse filter drawer */
+  .filter-drawer {
+    display: none;
+  }
+  .filter-drawer.filter-drawer-open {
+    display: grid;
+  }
+  .filter-toggle-btn {
+    display: inline-flex;
+  }
+
+  /* Control bar: single compact row */
+  .control-bar {
+    padding: 4px 10px;
+    gap: 4px;
+  }
+  .control-bar input,
+  .control-bar select {
+    height: 32px;
+    min-height: 32px;
+  }
+
+  /* Panel: side drawer instead of bottom sheet */
+  #panel {
+    top: 0;
+    left: auto;
+    right: 0;
+    bottom: 0;
+    width: 50vw;
+    max-width: 50vw;
+    border-radius: 0;
+    border-top: none;
+    border-left: 1px solid var(--border);
+    transform: translateX(100%);
+  }
+  #panel.panel-open {
+    transform: translateX(0);
+  }
+
+  /* Hide drag handle in landscape (panel is side drawer) */
+  .panel-drag-handle {
+    display: none;
+  }
+
+  .panel-toggle-btn {
+    bottom: 8px;
+    right: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    min-height: 36px;
+  }
+
+  /* Footer: minimal */
+  .site-footer {
+    padding: 2px 10px;
   }
 }
